@@ -413,30 +413,28 @@
 
 
         function buscarEndereco(host, quale) {
-    var prefix = "#"+ quale + "\\:",
-        cep = $j(prefix+'postcode').val().replace(/[^0-9]+/g, '');
-    if (cep.toString().length != 8) {
-        return false;
-    }
+            var prefix = "#"+ quale + "\\:",
+                cep = $j(prefix+'postcode').val().replace(/[^0-9]+/g, '');
+            if (cep.toString().length != 8) {
+                return false;
+            }
     			$j.ajax({
-        url: host + 'frontend/base/default/deivison/buscacep.php?cep=' + cep,
+                    url: host + 'frontend/base/default/deivison/buscacep.php?cep=' + cep,
     				type:'GET',
     				dataType: 'html',
     				success:function(respostaCEP){
-    					//alert(respostaCEP); //para testes
+                        //alert(respostaCEP); //para testes
 
                         var obj = eval ("(" + respostaCEP + ")");
-                        
-            $j(prefix+'street1').val(obj.logradouro);
-            $j(prefix+'street4').val(obj.bairro);
-            $j(prefix+'city').val(obj.cidade);
-                        
-                        
 
-            $j('select[id*="'+quale+':region"]').children("option:contains('"+obj.uf_extenso+"')").attr('selected', 'selected');
-            $j('select[id*="'+quale+':region_id"]').children("option:contains('"+obj.codigo+"')").attr('selected', 'selected');
+                        $j(prefix+'street1').val(obj.logradouro);
+                        $j(prefix+'street4').val(obj.bairro);
+                        $j(prefix+'city').val(obj.cidade);
 
-            setTimeout(function() { $j(prefix+'street2').focus(); }, 1);
+                        $j('select[id*="'+quale+':region"]').children("option:contains('"+obj.uf_extenso+"')").attr('selected', 'selected');
+                        $j('select[id*="'+quale+':region_id"]').children("option:contains('"+obj.codigo+"')").attr('selected', 'selected');
+
+                        setTimeout(function() { $j(prefix+'street2').focus(); }, 1);
     				}
     			});
 
