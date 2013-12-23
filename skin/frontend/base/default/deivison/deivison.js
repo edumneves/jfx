@@ -50,7 +50,6 @@
             $j('input[name*="year"]').attr('maxlength','4');
             $j('input[name*="postcode"]').attr('maxlength','8');
 
-            $j('input[name*="day"], input[name*="month"],input[name*="year"]').autotab_magic().autotab_filter('numeric');
 
 
 /*===================================================== Click ===========================================================*/
