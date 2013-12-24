@@ -2,7 +2,7 @@
 <config>
 	<tabs>
 		<ultimo translate="label" module="ultimo">
-			<label>Ultimo (1.5.9)</label>
+			<label>Ultimo (1.5.10)</label>
 			<sort_order>151</sort_order>
 			<class>ultimo</class>
 		</ultimo>
