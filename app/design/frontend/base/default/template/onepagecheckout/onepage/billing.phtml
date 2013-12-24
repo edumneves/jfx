@@ -89,9 +89,18 @@ $has_addr	= $this->customerHasAddresses();
 					<div class="data_area">
 						<input type="text" name="billing[email]" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text t1 validate-email required-entry" />
 					</div>
+                </div>
+
+                <div class="full">
+
+                    <label for="billing:confirm_email" class="required">
+                        <?php echo $this->__('Confirm Email Address') ?>
+                    </label>
+                    <sup>*</sup>
+                    <div class="data_area">
+                        <input type="text" name="billing[confirm_email]" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text t1 validate-cemail required-entry" />
+                    </div>
 				</div>
-
-
 
            <!--
                 BLOCO TIPO PESSOA -----------------------------------------
