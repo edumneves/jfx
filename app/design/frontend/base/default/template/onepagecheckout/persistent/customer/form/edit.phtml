@@ -139,8 +139,8 @@ if ($jquery !== '0') :
                           </div>
                       <?php endif; ?>
                       <?php
-            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/general/taxvat');
-            			if ($cpfcnpj !== '1') : ?>
+            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/cpfcnpjregistro');
+            			if ($cpfcnpj !== 'hidden') : ?>
                           <div class="field">
           	                <label <?php if ( $cpfcnpj  === 'required' ){ echo 'class="required"'; }?> > <?php if ( $cpfcnpj  === 'required' ){ echo '<em>*</em>'; }?><?php echo $this->__('CPF') ?></label>
                               <div class="input-box">
@@ -189,8 +189,8 @@ if ($jquery !== '0') :
             <li class="fields boxpj" style="display: none">
                 <div class="customer-name">
                       <?php
-            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/general/taxvat');
-            			if ($cpfcnpj !== '1') : ?>
+            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/cpfcnpjregistro');
+            			if ($cpfcnpj !== 'hidden') : ?>
                           <div class="field">
           	                <label <?php if ( $cpfcnpj  === 'required' ){ echo 'class="required"'; }?> > <?php if ( $cpfcnpj  === 'required' ){ echo '<em>*</em>'; }?><?php echo $this->__('CNPJ') ?></label>
                               <div class="input-box">

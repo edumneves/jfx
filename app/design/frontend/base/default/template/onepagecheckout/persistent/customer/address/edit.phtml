@@ -170,8 +170,8 @@ if ($jquery !== '0') :
                           </div>
                       <?php endif; ?>
                       <?php
-            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/general/taxvat');
-            			if ($cpfcnpj !== '1') : ?>
+            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/cpfcnpjregistro');
+            			if ($cpfcnpj !== 'hidden') : ?>
                           <div class="field">
           	                <label <?php if ( $cpfcnpj  === 'required' ){ echo 'class="required"'; }?> > <?php if ( $cpfcnpj  === 'required' ){ echo '<em>*</em>'; }?><?php echo $this->__('CPF') ?></label>
                               <div class="input-box">
@@ -220,8 +220,8 @@ if ($jquery !== '0') :
             <li class="fields boxpj" style="display: none">
                 <div class="customer-name">
                       <?php
-            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/general/taxvat');
-            			if ($cpfcnpj !== '1') : ?>
+            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/cpfcnpjregistro');
+            			if ($cpfcnpj !== 'hidden') : ?>
                           <div class="field">
           	                <label <?php if ( $cpfcnpj  === 'required' ){ echo 'class="required"'; }?> > <?php if ( $cpfcnpj  === 'required' ){ echo '<em>*</em>'; }?><?php echo $this->__('CNPJ') ?></label>
                               <div class="input-box">
@@ -362,7 +362,7 @@ if ($jquery !== '0') :
 			if ($endereco !== 'hidden') : ?>
                 <!-- endereco-->
 				<li  class="wide">
-                    <label for="endereco" <?php if ( $endereco  === 'required' ){ echo 'class="required"'; }?> ><?php echo $this->__('Endere&ccedil;o') ?></label>
+                    <label for="billing:street1" <?php if ( $endereco  === 'required' ){ echo 'class="required"'; }?> ><?php echo $this->__('Endere&ccedil;o') ?></label>
 					<?php if($endereco === 'required') { echo ' <sup>*</sup> ';}?>
 					<div class="data_area">
 						<input type="text" id="billing:street1" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1))   ?> " title="<?php echo $this->__('Endere&ccedil;o') ?>" class="input-text t1<?php if($endereco === 'required'){ echo ' required-entry';} ?>" />
@@ -410,7 +410,7 @@ if ($jquery !== '0') :
 			if ($bairro !== 'hidden') : ?>
                 <!-- endereco-->
 				<li class="wide">
-                    <label for="bairro" <?php if ( $bairro  === 'required' ){ echo 'class="required"'; }?> ><?php echo $this->__('Bairro') ?></label>
+                    <label for="billing:street4" <?php if ( $bairro  === 'required' ){ echo 'class="required"'; }?> ><?php echo $this->__('Bairro') ?></label>
 					<?php if($bairro === 'required') { echo ' <sup>*</sup> ';}?>
 					<div class="data_area">
 						<input type="text" id="billing:street4" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(4))  ?>" title="<?php echo $this->__('Bairro') ?>" class="input-text t1<?php if($bairro === 'required'){ echo ' required-entry';} ?>" />

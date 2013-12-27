@@ -123,8 +123,7 @@ if ($jquery !== '0') :
                           </div>
                       <?php endif; ?>
                       <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
-
-                    <?php if ($_taxvat->isEnabled() && $cpfcnpj === '1'): ?>
+                      <?php if ($_taxvat->isEnabled() && $cpfcnpj === '1'): ?>
                           <div class="field">
                                 <?php echo $_taxvat->setTaxvat($this->getFormData()->getTaxvat())->toHtml() ?>
                           </div>
