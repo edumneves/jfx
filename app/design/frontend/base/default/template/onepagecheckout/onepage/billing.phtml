@@ -170,8 +170,8 @@ $has_addr	= $this->customerHasAddresses();
                           BLOCO CPF -----------------------------------------
                      -->
                       <?php
-            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/taxvat');
-                        if ($cpfcnpj) : ?>
+                        $cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/cpfcnpjregistro');
+                        if ($cpfcnpj !== 'hidden') : ?>
                         <div class="short">
           	                <label <?php if ( $cpfcnpj  === 'required' ){ echo 'class="required"'; }?> >          				      	
                             <?php echo $this->__('CPF') ?>
@@ -236,7 +236,7 @@ $has_addr	= $this->customerHasAddresses();
                           IF BLOCO CNPJ -----------------------------------------
                      -->
                       <?php
-            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/taxvat');
+            			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/taxvatregistro');
             			if ($cpfcnpj) : ?>
                         <div class="short">
                             <label class="required">          				      	
