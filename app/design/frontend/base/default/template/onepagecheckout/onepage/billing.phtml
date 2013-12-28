@@ -772,3 +772,18 @@ $has_addr	= $this->customerHasAddresses();
     Validation.add('validar_cpfcnpj', 'O CPF/CNPJ informado \xE9 invalido', function(v){return validaCPF(v,0);});
 //]]>
 </script>
+
+<!-- Se estiver logado, faz um update no formulário. -->
+<?php if ($logged && $has_addr) : ?>
+    <script type="text/javascript">
+        //<![CDATA[
+        $j(document).ready(function(){
+            checkout.update({
+                 'review': 1,
+                'shipping-method': 1,
+                'payment-method': 1
+            });
+        });
+        //]]>
+    </script>
+<?php endif; ?>
