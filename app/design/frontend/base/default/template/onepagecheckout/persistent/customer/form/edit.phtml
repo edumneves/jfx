@@ -61,10 +61,16 @@ if ($jquery !== '0') :
                 <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getCustomer())->toHtml() ?>
             </li>
             <li>
-                <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
-                <div class="input-box">
+                <div class="field">
+                    <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
                     <input type="text" name="email" id="email" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry validate-email" />
                 </div>
+
+                <div class="field">
+                    <label for="confirm_email" class="required"><em>*</em><?php echo $this->__('Confirm Email Address') ?></label>
+                    <input type="text" name="confirm_email" id="confirm_email" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Confirm Email Address') ?>" class="input-text required-entry validate-cemail" />
+                </div>
+
             </li>
 
 
@@ -408,4 +414,17 @@ if ($jquery !== '0') :
         }
 
 //]]>
+</script>
+
+
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try{
+        var pageTracker = _gat._getTracker("<?php echo Mage::getStoreConfig('onepagecheckout/general/analytics')?>");
+        pageTracker._trackPageview();
+    } catch(err) {}
+
 </script>

@@ -431,7 +431,7 @@
                         $j(prefix+'city').val(obj.cidade);
 
                         $j('select[id*="'+quale+':region"]').children("option:contains('"+obj.uf_extenso+"')").attr('selected', 'selected');
-                        $j('select[id*="'+quale+':region_id"]').children("option:contains('"+obj.codigo+"')").attr('selected', 'selected');
+                        $j('select[id*="'+quale+':region_id"]').val(obj.codigo);
 
                         setTimeout(function() { $j(prefix+'street2').focus(); }, 1);
     				}
