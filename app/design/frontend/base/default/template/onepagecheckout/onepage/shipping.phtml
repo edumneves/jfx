@@ -455,13 +455,6 @@ if (!$this->getQuote()->isVirtual() && Mage::helper('onepagecheckout')->isShippi
 //<![CDATA[
 	var shipping = new ShippingAddress('onepagecheckout_orderform');
 	var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', countryRegions, undefined, 'shipping:postcode');
-
-
-
-
-    // Adicionar validacao de cpf e cnpj ao campo Taxvat
-    Validation.add('validar_cpf', 'O CPF ou CNPJ informado \xE9 invalido', function(v){return validaCPF(v,0);});
-
 //]]>
 </script>
 <?php

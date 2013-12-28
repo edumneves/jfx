@@ -2,6 +2,7 @@
  * Created by edumneves on 24/12/13.
  */
 if (Validation){
+    // adicionar validação de cep
     Validation.add('validate-cemail', 'Certifique-se que seus e-mails correspondem.', function(v) {
         var conf = $$('.validate-cemail')[0];
         var pass = false;
@@ -20,6 +21,9 @@ if (Validation){
         }
         return (pass.value == conf.value);
     });
+
+    // Adicionar validacao de cpf e cnpj ao campo Taxvat
+    Validation.add('validar_cpf', 'O CPF informado \xE9 invalido', function(v){return validaCPF(v,0);});
+    Validation.add('validar_cpf2', 'O CNPJ informado \xE9 invalido', function(v){return validaCPF(v,0);});
+    Validation.add('validar_cpfcnpj', 'O CPF/CNPJ informado \xE9 invalido', function(v){return validaCPF(v,0);});
 }
-
-
