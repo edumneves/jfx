@@ -419,7 +419,7 @@ $has_addr	= $this->customerHasAddresses();
                          -->
             			<?php if ($celular !== 'hidden') : ?>
             				<div class="short">
-            					<label for="billing:fax"<?php if($celular === 'required') {echo ' class="required" ';}?>>
+            					<label for="celular"<?php if($celular === 'required') {echo ' class="required" ';}?>>
             						<?php echo $this->__('Celular') ?>
             					</label>
             					<?php
@@ -430,7 +430,7 @@ $has_addr	= $this->customerHasAddresses();
                                 }
                                 ?>
             					<div class="data_area">
-            						<input type="text" id="celular" name="billing[celular]" value="<?php echo $this->htmlEscape($this->getBillAddress()->getCelular()) ?>" title="<?php echo $this->__('Celular') ?>" class="input-text t1<?php if($celular === 'required') {echo ' class=" required-entry" ';}?>" id="billing:fax" />
+            						<input type="text" id="celular" name="billing[celular]" value="<?php echo $this->htmlEscape($this->getBillAddress()->getCelular()) ?>" title="<?php echo $this->__('Celular') ?>" class="input-text t1<?php if($celular === 'required') {echo ' required-entry ';}?>" id="billing:fax" />
             					</div>
             				</div>
                         <?php endif ?>

@@ -33,33 +33,33 @@
 /*=========================================================================================================================================================
  */
 
-
-
-
-
-
         $j(document).ready(function(){
 
 
-
-
-
-            /*Limita os campos da data nascimento*/
+            // Mascaras
+            // Data de nascimento
             $j('input[name*="day"]').attr('maxlength','2');
             $j('input[name*="month"]').attr('maxlength','2');
             $j('input[name*="year"]').attr('maxlength','4');
-            $j('input[name*="postcode"]').attr('maxlength','8');
 
+            // CEP
+            $j('input[name*="postcode"]').mask('99999-999');
 
+            // CPF
+            $j('input[name*="taxvat"]').mask('999.999.999-99');
+            $j('input[name="cpfcnpj"]').mask('999.999.999-99');
+            $j('input[name="billing[cpfcnpj]"]').mask('999.999.999-99');
 
-/*===================================================== Click ===========================================================*/
+            /*===================================================== Click ===========================================================*/
             /*Roda o clique para selecionar o tipo pessoa*/
             $j('input[name*="tipopessoa"]').click( function(){
 
                 var existe;
 
+
+
                 /*Pega do click tipo pessoa*/
-                queme = this.value;
+                queme = $j('input[name=tipopessoa]:checked').val();
 
                 /*Verifica se existe o Taxvat*/
                 existe = $j('input[name*="taxvat"]').length;
@@ -87,6 +87,12 @@
 
                         /*ADD CLASS TAXVAT*/
                         $j('input[name*="taxvat"]').attr('class', 'validar_cpfcnpj input-text');
+
+                        // Mascaras
+                        $j('input[name*="taxvat"]').unmask();
+                        $j('input[name*="taxvat"]').mask('999.999.999-99');
+                        //$('#id_cnpj').mask('99.999.999/9999-99');
+
                     }else{
                         /*CADASTRO*/
                         $j('.inputcnpj').attr('name', 'NULL');
@@ -99,6 +105,13 @@
                         /*LIMPA CAMPOS*/
                         $j('input[name="cpfcnpj"]').val('');
                         $j('input[name="billing[cpfcnpj]"]').val('');
+
+                        // Mascaras
+                        $j('input[name="cpfcnpj"]').unmask();
+                        $j('input[name="cpfcnpj"]').mask('999.999.999-99');
+                        $j('input[name="billing[cpfcnpj]"]').unmask();
+                        $j('input[name="billing[cpfcnpj]"]').mask('999.999.999-99');
+                        //$('#id_cnpj').mask('99.999.999/9999-99');
                     }
 
                     /*Exibe ou oculta os boxs*/
@@ -131,6 +144,12 @@
 
                         /*ADD CLASS TAXVAT*/
                         $j('input[name*="taxvat"]').attr('class', 'validar_cpfcnpj input-text');
+
+                        // Mascaras
+                        $j('input[name*="taxvat"]').unmask();
+                        $j('input[name*="taxvat"]').mask('99.999.999/9999-99');
+                        //$('#id_cnpj').mask('99.999.999/9999-99');
+
                     }else{
                         /*CADASTRO*/
                         $j('.inputcnpj').attr('name', 'cpfcnpj');
@@ -143,6 +162,14 @@
                         /*LIMPA CAMPOS*/
                         $j('input[name="cpfcnpj"]').val('');
                         $j('input[name="billing[cpfcnpj]"]').val('');
+
+                        // Mascaras
+                        $j('input[name="cpfcnpj"]').unmask();
+                        $j('input[name="billing[cpfcnpj]"]').unmask();
+                        $j('input[name="cpfcnpj"]').mask('99.999.999/9999-99');
+                        $j('input[name="billing[cpfcnpj]"]').mask('99.999.999/9999-99');
+                        //$('#id_cnpj').mask('99.999.999/9999-99');
+
                     }
 
                     /*Exibe ou oculta os boxs*/
@@ -155,8 +182,6 @@
                 }
             });
 /*===================================================== End Click ===========================================================*/
-
-
 
             /*Faz o checkout do IE para isento*/
             $j('input[name*="isento"]').click( function(){
@@ -174,8 +199,6 @@
                 }
             });
 
-
-
             /*Botao aguarde*/
             var erro1;
             var erro2;
@@ -187,8 +210,6 @@
                 erro1 = $j('.error-msg').length;
                 erro2 = $j('.validation-failed').length;
 
-                //alert(erro1); alert(erro2);
-
                 if(erro1 > 0 || erro2 > 0){
                     $j(this).attr('class', 'buttons-set');
                     $j('#review-please-wait').hide();
@@ -196,199 +217,37 @@
             });
 
 
-            //Ao se coloca o "-" no CEP n�o ir� calcular o frete caso use o m�dulo Matrix Rates, pois ele n�o trabalha com o "-"
-            /*Essa op��o � caso queira que toda vez ao se entrar no campo ele limpe-o*/
-            $j('input[class*="tracoAtivo"]').focus(function(){
-              $j(this).val('');
-            });
-
-             /*Script do tra�o do cep*/
-             /*   mexer
-            $j('input[class*="tracoAtivo"]').keydown( function(e){
-                  $j(this).attr('maxlength','9');
-                  if (e.keyCode >= 9){
-                    //length = this.value.length;
-                    length = $j(this).length;
-                    if (length == 5)
-                        //this.value += "-";
-                        $j(this).value += "-";
-                  }
-            });
-            */
-
-
-            //$j('input[class*="tracoAtivo"]').mask("99999-999");     apresenta erro e nao calcula o frete
-
-
-
-            $j('input[name*="telephone"]').focus(function(){
-              $j(this).val('');
-            });
-
-            $j('input[name*="telephone"]').keypress( function(e){
-                if (e.keyCode >= 9){
-                    length = this.value.length;
-                    if (length == 0)
-                      this.value += "(";
-
-                    if (length == 3)
-                      this.value += ")";
-                    /*
-                    Testa para ver se o ddd come�a com 11 e coloca maxlength para 14
-                            exemplo: (11)95345-1234 que antes era assim (11)5345-1234
-                    */
-                    if(/(\(11\)9(5[0-9]|6[0-9]|7[01234569]|8[0-9]|9[0-9])).+/i.test(this.value)){
-                        $j(this).attr('maxlength','14');
-                        if (length == 9)
-                          this.value += "-";
-                    } else {
-                        $j(this).attr('maxlength','13');
-                        if (length == 8)
-                          this.value += "-";
-                    }
+            var telefone_selector = 'input[name*="celular"], input[name*="telephone"], input[name*="fax"]';
+            $j(telefone_selector).mask('(99) 9999-9999?9');
+            $j(telefone_selector).live("keyup",function() {
+                var tmp = $j(this).val();
+                tmp = tmp.replace(/[^0-9]/g,'');
+                var ddd = tmp.slice(0, 2);
+                var servico_regex = new RegExp('0[0-9]00');
+                var servico = servico_regex.exec(tmp.slice(0,4));
+                var primeiro_numero_ddd = tmp.slice(0, 1);
+                var primeiro_numero = tmp[2];
+                // console.log('trigger');
+                if (tmp.length == 11 && (primeiro_numero_ddd == '1' || primeiro_numero_ddd == '2') && primeiro_numero == '9') {
+                    $j(this).unmask();
+                    $j(this).val(tmp);
+                    $j(this).mask("(99) 99999-999?9");
                 }
-            });
-
-
-            $j('input[name*="fax"]').focus(function(){
-              $j(this).val('');
-            });
-
-            $j('input[name*="fax"]').keypress( function(e){
-                if (e.keyCode >= 9){
-                    length = this.value.length;
-                    if (length == 0)
-                      this.value += "(";
-
-                    if (length == 3)
-                      this.value += ")";
-                    /*
-                    Testa para ver se o ddd come�a com 11 e coloca maxlength para 14
-                            exemplo: (11)95345-1234 que antes era assim (11)5345-1234
-                    */
-                    if(/(\(11\)9(5[0-9]|6[0-9]|7[01234569]|8[0-9]|9[0-9])).+/i.test(this.value)){
-                        $j(this).attr('maxlength','14');
-                        if (length == 9)
-                          this.value += "-";
-                    } else {
-                        $j(this).attr('maxlength','13');
-                        if (length == 8)
-                          this.value += "-";
-                    }
+                else if (servico && (tmp.length == 11 || tmp.length == 10)) {
+                    $j(this).unmask();
+                    $j(this).val(tmp);
+                    $j(this).mask("9999-999999?9");
                 }
-            });
-
-            $j('input[name*="celular"]').focus(function(){
-              $j(this).val('');
-            });
-
-            $j('input[name*="celular"]').keypress( function(e){
-                if (e.keyCode >= 9){
-                    length = this.value.length;
-                    if (length == 0)
-                      this.value += "(";
-
-                    if (length == 3)
-                      this.value += ")";
-                    /*
-                    Testa para ver se o ddd come�a com 11 e coloca maxlength para 14
-                            exemplo: (11)95345-1234 que antes era assim (11)5345-1234
-                    */
-                    if(/(\(11\)9(5[0-9]|6[0-9]|7[01234569]|8[0-9]|9[0-9])).+/i.test(this.value)){
-                        $j(this).attr('maxlength','14');
-                        if (length == 9)
-                          this.value += "-";
-                    } else {
-                        $j(this).attr('maxlength','13');
-                        if (length == 8)
-                          this.value += "-";
-                    }
+                else if (tmp.length == 10 && (primeiro_numero_ddd == '1' || primeiro_numero_ddd == '2') && primeiro_numero == '9') {
+                    $j(this).unmask();
+                    $j(this).val(tmp);
+                    $j(this).mask("(99) 9999-9999?9");
+                } else if (tmp.length == 10) {
+                    $j(this).unmask();
+                    $j(this).val(tmp);
+                    $j(this).mask("(99) 9999-9999");
                 }
-            });
-
-            $j('input[name*="taxvat"]').blur( function(){
-
-                v = $j(this).val();
-
-                //para testar cnpj: 78.425.986/0036-15 ou 78425986003615
-
-                //Remove tudo o que n�o � d�gito
-                v = v.replace(/\D/g,"");
-
-                if (v.length <= 11) { //CPF
-
-                    //Coloca um ponto entre o terceiro e o quarto d�gitos
-                    v=v.replace(/(\d{3})(\d)/,"$1.$2");
-
-                    //Coloca um ponto entre o terceiro e o quarto d�gitos
-                    //de novo (para o segundo bloco de n�meros)
-                    v=v.replace(/(\d{3})(\d)/,"$1.$2");
-
-                    //Coloca um h�fen entre o terceiro e o quarto d�gitos
-                    v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
-
-                } else { //CNPJ
-
-                    //Coloca ponto entre o segundo e o terceiro d�gitos
-                    v=v.replace(/^(\d{2})(\d)/,"$1.$2");
-
-                    //Coloca ponto entre o quinto e o sexto d�gitos
-                    v=v.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3");
-
-                    //Coloca uma barra entre o oitavo e o nono d�gitos
-                    v=v.replace(/\.(\d{3})(\d)/,".$1/$2");
-
-                    //Coloca um h�fen depois do bloco de quatro d�gitos
-                    v=v.replace(/(\d{4})(\d)/,"$1-$2");
-                }
-
-                $j(this).val(v);
-
-            });
-
-
-            $j('input[name*="cpfcnpj"]').blur( function(){
-
-                v = $j(this).val();
-
-                //para testar cnpj: 78.425.986/0036-15 ou 78425986003615
-
-                //Remove tudo o que n�o � d�gito
-                v = v.replace(/\D/g,"");
-
-                if (v.length <= 11) { //CPF
-
-                    //Coloca um ponto entre o terceiro e o quarto d�gitos
-                    v=v.replace(/(\d{3})(\d)/,"$1.$2");
-
-                    //Coloca um ponto entre o terceiro e o quarto d�gitos
-                    //de novo (para o segundo bloco de n�meros)
-                    v=v.replace(/(\d{3})(\d)/,"$1.$2");
-
-                    //Coloca um h�fen entre o terceiro e o quarto d�gitos
-                    v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
-
-                } else { //CNPJ
-
-                    //Coloca ponto entre o segundo e o terceiro d�gitos
-                    v=v.replace(/^(\d{2})(\d)/,"$1.$2");
-
-                    //Coloca ponto entre o quinto e o sexto d�gitos
-                    v=v.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3");
-
-                    //Coloca uma barra entre o oitavo e o nono d�gitos
-                    v=v.replace(/\.(\d{3})(\d)/,".$1/$2");
-
-                    //Coloca um h�fen depois do bloco de quatro d�gitos
-                    v=v.replace(/(\d{4})(\d)/,"$1-$2");
-                }
-
-                $j(this).val(v);
-
-            });
-
-
-
+            }).keyup();
 
             $j('input').click( function(){
                     $j('html head').find('title').text(  "OSC: Finalizando compra no campo [ " + $j(this).attr('title') + " ]"  );
@@ -433,7 +292,14 @@
                         $j('select[id*="'+quale+':region"]').children("option:contains('"+obj.uf_extenso+"')").attr('selected', 'selected');
                         $j('select[id*="'+quale+':region_id"]').val(obj.codigo);
 
-                        setTimeout(function() { $j(prefix+'street2').focus(); }, 1);
+                        if ($j('#billing\\:street1').is($j(document.activeElement)) && $j('#billing\\:street1').val() != ""){
+                            setTimeout(function() { $j(prefix+'street2').focus(); }, 1);
+                        }
+                        checkout.update({
+                            // 'review': 1
+                            'shipping-method': 1
+                        });
+
     				}
     			});
 
