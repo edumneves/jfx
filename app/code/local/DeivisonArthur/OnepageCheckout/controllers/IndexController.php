@@ -8,7 +8,7 @@ class DeivisonArthur_OnepageCheckout_IndexController extends Mage_Checkout_Contr
     	'shipping-method' => '_getShippingMethodsHtml',
         'payment-method'  => '_getPaymentMethodsHtml',
     );
-	
+
     public function preDispatch()
     {
         parent::preDispatch();
@@ -141,6 +141,11 @@ class DeivisonArthur_OnepageCheckout_IndexController extends Mage_Checkout_Contr
         if (!$lastQuoteId || (!$lastOrderId && empty($lastRecurringProfiles))) {
             $this->_redirect('checkout/cart');
             return;
+        }
+
+        // Limpa o carrinho após a compra
+        foreach( Mage::getSingleton('checkout/session')->getQuote()->getItemsCollection() as $item ){
+            Mage::getSingleton('checkout/cart')->removeItem( $item->getId() )->save();
         }
 
         $session->clear();

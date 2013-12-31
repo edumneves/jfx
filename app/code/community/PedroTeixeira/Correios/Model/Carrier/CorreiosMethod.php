@@ -91,12 +91,19 @@ class PedroTeixeira_Correios_Model_Carrier_CorreiosMethod
             return $this->_result;
         }
 
+        // Se estiver vazio, não faz a validação
+        if ($this->_toZip == ""){
+            return true;
+        }
+
         // Check ZIP Code
         if(!preg_match("/^([0-9]{8})$/", $this->_toZip))
         {
+
             // Invalid Zip Code
             $this->_throwError('zipcodeerror', 'Invalid Zip Code', __LINE__);
             return $this->_result;
+
         }
 		
         // Fix weight
