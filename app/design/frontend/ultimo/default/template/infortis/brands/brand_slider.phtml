@@ -1,125 +1,176 @@
 <?php
 /**
- *
+ * Brands sldier
  */
 ?>
-<?php $helper = Mage::helper('brands'); ?>
-<?php if ($helper->getCfg('slider/enable')): ?>
+<?php
+    $helper = Mage::helper('brands');
+    if ($helper->getCfg('slider/all_brands'))
+    {
+        $brands = $this->getAllBrands();
+    }
+    else
+    {
+        $brands = $this->getAllBrandsInUse();
+    }
+?>
+<?php if ($brands): ?>
+<?php
+    $sliderClasses = '';
+    $imgClasses = '';
 
-	<?php
-	if ($helper->getCfg('slider/all_brands'))
-	{
-		$brands = $this->getAllBrands();
-	}
-	else
-	{
-		$brands = $this->getAllBrandsInUse();
-	}
-	
-	//Block parameters
-	$isResponsive = $this->getIsResponsive(); //is_responsive
-	$breakpoints = $this->getBreakpoints(); //breakpoints
-	$showItems = $this->getShowItems(); //show_products
-	if (!$showItems)
-	{
-		$showItems = 5; //IMPORTANT: set default number of visible items
-	}
-	
-	//Slider timeout (if set: automatic slideshow)
-	$timeout = $this->getTimeout(); //param: timeout
-	if ($timeout === NULL) //Param not set
-	{
-		$timeout = intval($helper->getCfg('slider/timeout'));
-	}
-	else
-	{
-		$timeout = intval($timeout);
-	}
+    //Slider parameters
+    //--------------------------------------------------------------
+    //Responsive mode on/off
+    $isResponsive = $this->getIsResponsive(); //param: is_responsive
+    if ($isResponsive === NULL) //Param not set
+    {
+        $isResponsive = true; //IMPORTANT: enabled by default
+    }
 
-	//Slider initial delay
-	$initDelay = intval($this->getInitDelay()); //param: init_delay
+    //Assign number of items in a row to specific viewport width
+    $breakpoints = $this->getBreakpoints(); //param: breakpoints
+    if ($breakpoints === NULL) //Param not set
+    {
+        $breakpoints = '[0, 1], [320, 2], [480, 2], [768, 3], [960, 4], [1280, 5]'; //Set default breakpoints
+    }
 
-	//Number of items that should move on animation
-	$move = intval($this->getMove()); //param: move
-		
-	//Additional CSS classes
-	$sliderClasses = '';
-	if($isResponsive)
-	{
-		$sliderClasses .= ' itemslider-responsive';
-	}
-	?>
+    //Number of items in a row displayed if responsive mode is off
+    $showItems = $this->getShowItems(); //param: show_items
+    if (!$showItems) //Param not set or equals zero
+    {
+        $showItems = 5; //Set default number of items
+    }
+
+    //Pagination on/off
+    $pagination = $this->getPagination(); //param: pagination
+
+    //Slider timeout. Set to enable automatic scrolling.
+    $timeout = $this->getTimeout(); //param: timeout
+    if ($timeout === NULL) //Param not set
+    {
+        $timeout = intval($helper->getCfg('slider/timeout'));
+    }
+    else
+    {
+        $timeout = intval($timeout);
+    }
+
+    //Number of items that should move on scrolling
+    $move = $this->getMove(); //param: move
+    if ($move === NULL) //Param not set
+    {
+        $move = 0; //By default scroll all visible items
+    }
+    else
+    {
+        $move = intval($move);
+    }
+
+    //If set, slider will loop.
+    $loop = $this->getLoop(); //param: loop
+    if ($loop === NULL) //Param not set
+    {
+        $loop = $helper->getCfg('slider/loop');
+    }
+
+    //Scrolling speed
+    $speed = intval($helper->getCfg('slider/speed'));
+
+    //Speed (automatic scrolling / pagination)
+    $autoSpeed = intval($helper->getCfg('slider/auto_speed'));
+
+    //Pause slider on mouse hover
+    $pause = $helper->getCfg('slider/pause');
+
+    //Lazy loading
+    $lazy = $helper->getCfg('slider/lazy');
+
+    //Slider classes
+    //--------------------------------------------------------------
+    if($isResponsive)
+    {
+        $sliderClasses .= ' itemslider-responsive';
+    }
+
+    $sliderId = "itemslider-brands";
+?>
 
 <h3 class="section-title padding-right"><?php echo $this->getBlockName(); ?></h3>
-<div class="brand-slider-wrapper itemslider-wrapper">
-
-	<div class="nav-wrapper gen-slider-arrows1 gen-slider-arrows1-pos-top-right"></div>
-    
-	<div class="brand-slider itemslider itemslider-horizontal<?php if($sliderClasses) echo $sliderClasses; ?>">
-        <ul class="slides">
-            <?php foreach ($brands as $brand): ?>
-                <li class="item">
-                	<?php
-					$brandPageUrl = $this->getBrandPageUrl($brand);
-					//$brandDetailsHtml = '<img src="'. $this->getBrandImageUrl($brand) .'" alt="' . $brand . '" />';
-					?>
-                    <a href="<?php echo $this->getBrandPageUrl($brand); ?>" title="<?php echo $this->__('Click to see more products from %s', $brand); ?>">
-                    	<img src="<?php echo $this->getBrandImageUrl($brand); ?>" alt="<?php echo $brand; ?>" />
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul> <!-- end: slides -->
+<div class="itemslider-wrapper brand-slider-wrapper slider-arrows1 slider-arrows1-pos-top-right slider-pagination1 slider-pagination1-centered">
+    <div id="<?php echo $sliderId; ?>" class="itemslider<?php if($sliderClasses) echo $sliderClasses; ?> brand-slider">
+    <?php foreach ($brands as $brand): ?>
+        <div class="item">
+            <?php $brandPageUrl = $this->getBrandPageUrl($brand); ?>
+            <a href="<?php echo $brandPageUrl; ?>" title="<?php echo $this->__('Click to see more products from %s', $brand); ?>">
+                <?php if ($lazy): ?>
+                    <img class="lazyOwl" data-src="<?php echo $this->getBrandImageUrl($brand); ?>" alt="<?php echo $brand; ?>" />
+                <?php else: ?>
+                    <img src="<?php echo $this->getBrandImageUrl($brand); ?>" alt="<?php echo $brand; ?>" />
+                <?php endif; ?>
+            </a>
+        </div>
+    <?php endforeach; ?>
     </div> <!-- end: itemslider -->
-
-</div> <!-- end: brand-slider-wrapper -->
+</div> <!-- end: itemslider-wrapper -->
 <script type="text/javascript">
 //<![CDATA[
-	jQuery(function($) {
+    jQuery(function($) {
 
-		$('.brand-slider-wrapper .itemslider').flexslider({
-			namespace: "",
-			animation: "slide",
-			animationLoop: <?php echo $helper->getCfg('slider/loop'); ?>,
-			
-			<?php if ($helper->getCfg('slider/easing')): ?>
-				easing: "<?php echo $helper->getCfg('slider/easing'); ?>",
-				useCSS: false,
-			<?php endif; ?>
-			
-			<?php if ($timeout): ?>
-				slideshowSpeed: <?php echo $timeout; ?>,
-			<?php else: ?>
-				slideshow: false,
-			<?php endif; ?>
-			
-			<?php if ($initDelay): ?>
-				initDelay: <?php echo $initDelay; ?>,
-			<?php endif; ?>
-			
-			<?php if ($speed = intval($helper->getCfg('slider/speed'))): ?>
-				animationSpeed: <?php echo $speed; ?>,
-			<?php endif; ?>
-			
-			pauseOnHover: <?php echo $helper->getCfg('slider/pause'); ?>,
-			controlNav: false,
-			controlsContainer: ".brand-slider-wrapper .nav-wrapper",
+        var owl = $('#<?php echo $sliderId; ?>');
+        owl.owlCarousel({
 
-			itemWidth: 188,
-			<?php if ($showItems): ?>
-				minItems: <?php echo $showItems; ?>,
-				maxItems: <?php echo $showItems; ?>,
-			<?php endif; ?>
+        <?php if ($lazy): ?>
+            lazyLoad: true,
+        <?php endif; ?>
 
-			move: <?php echo $move; ?>
-		})
-		<?php if ($breakpoints): ?>
-			.data("breakpoints", [ <?php echo $breakpoints; ?> ] )
-		<?php elseif ($showItems): ?>
-			.data("showItems", <?php echo $showItems; ?> )
-		<?php endif; ?>
-		; //IMPORTANT: don't remove semicolon!
+        <?php if (!$isResponsive): ?>
+            responsive: false,
+            items: <?php echo $showItems; ?>,
+        <?php else: ?>
+            itemsCustom: [ <?php echo $breakpoints; ?> ],
+            responsiveRefreshRate: 50,
+        <?php endif; ?>
 
-	});
+        <?php if ($speed): ?>
+            slideSpeed: <?php echo $speed; ?>,
+        <?php endif; ?>
+
+        <?php if ($autoSpeed): ?>
+            paginationSpeed: <?php echo $autoSpeed; ?>,
+        <?php endif; ?>
+
+        <?php if ($move !== 1): ?>
+            scrollPerPage: true,
+        <?php endif; ?>
+
+        <?php if ($timeout): ?>
+            autoPlay: <?php echo $timeout; ?>,
+        <?php endif; ?>
+
+        <?php if ($pause): ?>
+            stopOnHover: true,
+        <?php endif; ?>
+
+        <?php if ($loop): ?>
+            rewindNav: true,
+            rewindSpeed: 600,
+        <?php else: ?>
+            rewindNav: false,
+        <?php endif; ?>
+
+        <?php if ($pagination): ?>
+            pagination: true,
+            paginationSpeed: 600,
+        <?php else: ?>
+            pagination: false,
+        <?php endif; ?>
+
+            navigation: true
+
+        }); //end: owl
+
+    });
 //]]>
 </script>
 <?php endif; ?>

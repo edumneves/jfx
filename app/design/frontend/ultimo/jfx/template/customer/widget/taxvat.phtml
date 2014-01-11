@@ -20,19 +20,11 @@
  *
  * @category    design
  * @package     base_default
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
-<?php $_product = $this->getProduct() ?>
-
-<?php echo $this->getChildHtml('product_type_data_extra') ?>
-<?php if ($this->displayProductStockStatus()): ?>
-	<?php if ($_product->isAvailable()): ?>
-	    <p class="availability in-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
-	<?php else: ?>
-	    <p class="availability out-of-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
-	<?php endif; ?>
-<?php endif; ?>
-<?php echo $this->getPriceHtml($_product) ?>
+<label for="<?php echo $this->getFieldId('taxvat')?>"<?php if ($this->isRequired()) echo ' class="required"' ?>><?php echo $this->__('Tax/VAT number') ?><?php if ($this->isRequired()) echo '<sup>*</sup>' ?></label>
+<div class="data-area">
+    <input type="text" id="<?php echo $this->getFieldId('taxvat')?>" name="<?php echo $this->getFieldName('taxvat')?>" value="<?php echo $this->escapeHtml($this->getTaxvat()) ?>" title="<?php echo $this->__('Tax/VAT number') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('taxvat') ?>" <?php echo $this->getFieldParams() ?> />
+</div>

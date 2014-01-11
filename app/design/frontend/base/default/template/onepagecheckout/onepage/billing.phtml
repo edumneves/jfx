@@ -73,8 +73,11 @@ $has_addr	= $this->customerHasAddresses();
 
             <script type="text/javascript">
                 //<![CDATA[
-                $j('input[name="billing[firstname]"]').addClass("input-text");
-                $j('input[name="billing[lastname]"]').addClass("input-text");
+                jQuery(document).ready(function(){
+                    jQuery('input[name="billing[firstname]"]').addClass("input-text");
+                    jQuery('input[name="billing[lastname]"]').addClass("input-text");
+                    jQuery('input[name="billing[taxvat]"]').addClass("t1 required-entry");
+                });
                 //]]>
             </script>
 
@@ -108,7 +111,7 @@ $has_addr	= $this->customerHasAddresses();
                     <div style="clear: both; height: 0px;" ></div>
                       <?php
           			$tipopessoa = Mage::getStoreConfig('onepagecheckout/billing/tipopessoa');
-          			if ($tipopessoa !== 'hidden') :
+          			if (false) :
                       ?>
 
                 	 	<?php
@@ -130,7 +133,7 @@ $has_addr	= $this->customerHasAddresses();
                                         $tipoPessoa = $this->htmlEscape($this->getCustomer()->getTipopessoa()); 
                                         if (!$tipoPessoa) $tipoPessoa = 'Fisica';  //ccd: conserta default errado no IE 
                                       ?>
-                                      $j('input[value*="<?php echo $tipoPessoa;?>"]').attr('checked', true);
+                                      jQuery('input[value*="<?php echo $tipoPessoa;?>"]').attr('checked', true);
                               //]]>
                               </script>
 
@@ -184,8 +187,8 @@ $has_addr	= $this->customerHasAddresses();
                       <?php else: ?>
                           <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
                           <?php if ($_taxvat->isEnabled()): ?>
-                          <div class="short">
-                                <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?>
+                          <div class="full">
+                                <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
                           </div>
                           <?php endif; ?>
                       <?php endif; ?>
@@ -237,7 +240,7 @@ $has_addr	= $this->customerHasAddresses();
                      -->
                       <?php
             			$cpfcnpj = Mage::getStoreConfig('onepagecheckout/outrasopcoes/cpfcnpjregistro');
-            			if ($cpfcnpj) : ?>
+            			if ($cpfcnpj !== 'hidden') : ?>
                         <div class="short">
                             <label class="required">          				      	
                                 <?php echo $this->__('CNPJ') ?>
@@ -248,12 +251,14 @@ $has_addr	= $this->customerHasAddresses();
                             </div>
                         </div>
                       <?php else: ?>
+
                           <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
                           <?php if ($_taxvat->isEnabled()): ?>
                           <div class="short">
-                                <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?>
+                                <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
                           </div>
                           <?php endif; ?>
+
                       <?php endif; ?>
                       
                      <!--
@@ -350,7 +355,7 @@ $has_addr	= $this->customerHasAddresses();
                 <input type="hidden" name="billing[tipopessoa]" value="<?php echo $this->htmlEscape($this->getCustomer()->getTipopessoa()) ?>"/>
                 <input type="hidden" name="billing[rg]" value="<?php echo $this->htmlEscape($this->getCustomer()->getRg()) ?>"/>
                 <input type="hidden" name="billing[cpfcnpj]" value="<?php echo $this->htmlEscape($this->getCustomer()->getCpfcnpj()) ?>"/>
-                <input type="hidden" name="billing[taxvat]" value="<?php echo $this->htmlEscape($this->getCustomer()->getTaxvat()) ?>"/>
+                <!-- <input type="hidden" name="billing[taxvat]" value="<?php echo $this->htmlEscape($this->getCustomer()->getTaxvat()) ?>"/> -->
                 <input type="hidden" name="billing[ie]" value="<?php echo $this->htmlEscape($this->getCustomer()->getIe()) ?>"/>
                 <input type="hidden" name="billing[empresa]" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmpresa()) ?>"/>
                 <input type="hidden" name="billing[nomefantasia]" value="<?php echo $this->htmlEscape($this->getCustomer()->getNomefantasia()) ?>"/>
@@ -465,11 +470,14 @@ $has_addr	= $this->customerHasAddresses();
                         }
                         ?>
 						<div class="data_area">
-							<input maxlength="8" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getBillAddress()->getPostcode()) ?>" class="input-text t1 validate-zip-international<?php if($zip_r === 'required'){echo ' required-entry ';}?> <?php if($tracoAtivo === '1'){ echo ' tracoAtivo';} ?>   " onblur="buscarEndereco('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)?>','billing');"/>
+							<input maxlength="8" type="text" title="<?php echo $this->__('Zip/Postal Code') ?>" name="billing[postcode]" id="billing:postcode" value="<?php echo $this->htmlEscape($this->getBillAddress()->getPostcode()) ?>" class="input-text t1 validate-zip-international<?php if($zip_r === 'required'){echo ' required-entry ';}?> <?php if($tracoAtivo === '1'){ echo ' tracoAtivo';} ?>   " />
 						</div>
 					</div>
 			<?php endif; ?>
             <div class="clr"></div>
+
+
+            <div id="view-address-more">
            <!--
                 IF BLOCO ENDEREÇO -----------------------------------------
            -->
@@ -639,7 +647,7 @@ $has_addr	= $this->customerHasAddresses();
 			</div>
 
 
-
+            </div>
 
 
 
@@ -733,14 +741,92 @@ $has_addr	= $this->customerHasAddresses();
 
 
 
-<script type="text/javascript">
-//<![CDATA[
-	var billing = new BillingAddress();
-	RegionUpdater.prototype.setMarkDisplay = function(){};
-	ZipUpdater.prototype._setPostcodeOptional = function(){};
-	var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', countryRegions, undefined, 'billing:postcode');
 
-//]]>
+    <script type="text/javascript">
+
+        /**
+         * Request AJAX para o servi?o de buscar endere?o do UOL HOST
+         *
+         */
+        var FN_CALLBACK_BILLING    = 'exibeEnderecoCobranca';
+        var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
+        var billingCEP             = jQuery('#billing\\:postcode');
+
+
+        getRegionIdByUF = function(UF){
+            for(a in countryRegions.BR){
+                if(countryRegions.BR[a].code==UF){
+                    return a;
+                }
+            }
+        }
+
+
+        exibeEnderecoCobranca = function(data) {
+            if (data.status=="sucesso") {
+                jQuery("#billing\\:street1").val(data.endereco);
+                jQuery("#billing\\:street4").val(data.bairro);
+
+                jQuery("#billing\\:city").val(data.cidade);
+
+                regionId = getRegionIdByUF(data.uf);
+                jQuery("#billing\\:region_id").val(regionId);
+
+
+                // estilizando os campos
+                // hack para deixar o bairro em maiuscula
+                jQuery("#billing\\:street4").css("text-transform", "uppercase");
+            }
+        }
+
+        getJSONP = {
+            url: '',
+            insertHead: function(){
+                tagScript = document.createElement('script')
+                tagScript.src = this.url;
+                document.getElementsByTagName('head')[0].appendChild(tagScript)
+            },
+
+            run: function(){
+                if(arguments.length!=0){
+                    this.url = arguments[0];
+                }
+                this.insertHead();
+            }
+        }
+
+        billingCEP.on("keyup", function() {
+            if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
+                jQuery("#view-address-more").show("slide");
+                updateReviewAndLoadAddress();
+            };
+        });
+
+        billingCEP.on("blur",
+            updateReviewAndLoadAddress
+        );
+
+
+        function updateReviewAndLoadAddress(){
+            // update product cart
+            checkout.update({
+                'review': 1
+            });
+            getJSONP.run( URL_SERVICO + "?cep=" + jQuery('#billing\\:postcode').val() + "&format=json&callback=" + FN_CALLBACK_BILLING);
+        }
+
+        //<![CDATA[
+        var billing = new BillingAddress();
+        RegionUpdater.prototype.setMarkDisplay = function(){};
+        ZipUpdater.prototype._setPostcodeOptional = function(){};
+        var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', countryRegions, undefined, 'billing:postcode');
+
+        //]]>
+
+        jQuery(function(){
+            jQuery("#taxvat").unmask();
+            jQuery("#taxvat").mask("999.999.999-99");
+        })
 </script>
 
 
@@ -751,27 +837,20 @@ $has_addr	= $this->customerHasAddresses();
 
      /*One Step Checkout
      Verifica se tem value no cep
-     */
 
       var temcep = $j('input[name*="[postcode]"]').val();
       if(temcep != ''){
           buscarEndereco('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)?>','billing');
       }
+ */
 
 //]]>
 </script>
 
-<!-- Se estiver logado, faz um update no formulário. -->
-<?php if ($logged && $has_addr) : ?>
-    <script type="text/javascript">
-        //<![CDATA[
-        $j(document).ready(function(){
-            checkout.update({
-                 'review': 1,
-                'shipping-method': 1,
-                'payment-method': 1
-            });
-        });
-        //]]>
-    </script>
-<?php endif; ?>
+<style type="text/css">
+
+    #view-address-more {
+        display: none;
+    }
+
+</style>

@@ -694,7 +694,7 @@ class PedroTeixeira_Correios_Model_Carrier_CorreiosMethod
      *
      * @return boolean
      */
-    public function isZipCodeRequired()
+    public function isZipCodeRequired($countryId = null)
     {
         return true;
     }

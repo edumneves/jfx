@@ -207,9 +207,11 @@
                 });
             });
 
+            var isTouchDevice = ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);
             jQuery(window).on("load", function() {
 
-                if(/iPhone|iPad|iPod/i.test(navigator.userAgent))
+                //if(/iPhone|iPad|iPod/i.test(navigator.userAgent))
+                if (isTouchDevice)
                 {
                     jQuery('#nav a.level-top').click(function(e) {
                         $t = jQuery(this);

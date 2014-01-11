@@ -49,6 +49,7 @@ $seq_http   = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']==='on');
     var http_type   = '<?php if($seq_http){echo 'https';}else{echo 'http';}?>';
 </script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/onepagecheckout.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/event.simulate.js') ?>"></script>
 
 <script type="text/javascript">countryRegions = <?php echo $this->helper('directory')->getRegionJson() ?></script>
 

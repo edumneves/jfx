@@ -29,7 +29,7 @@
         
 		<div class="box-brand">
 			<?php if ($brandPageUrl): ?>
-				<a href="<?php echo $brandPageUrl; ?>" title="<?php echo $this->__('Click to see more products from %s', $brand); ?>"><?php echo $brandDetailsHtml; ?></a>
+				<a class="fade-on-hover" href="<?php echo $brandPageUrl; ?>" title="<?php echo $this->__('Click to see more products from %s', $brand); ?>"><?php echo $brandDetailsHtml; ?></a>
 			<?php else: ?>
             	<?php echo $brandDetailsHtml; ?>
 			<?php endif; ?>

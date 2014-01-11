@@ -43,6 +43,7 @@
     <div class="page">
         <?php echo $this->getChildHtml('header') ?>
         <div class="main-container col2-left-layout">
+            <div class="main-before-top-container"><?php echo $this->getChildHtml('main_before_top') ?></div>
             <div class="main container">
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <div class="preface grid-full in-col1"><?php echo $this->getChildHtml('preface') ?></div>
@@ -55,6 +56,7 @@
             </div>
         </div>
         <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('global_cookie_notice') ?>
         <?php echo $this->getChildHtml('before_body_end') ?>
     </div>
 </div>

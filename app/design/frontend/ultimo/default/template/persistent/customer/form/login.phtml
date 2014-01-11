@@ -40,6 +40,7 @@
     
     
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+        <?php echo $this->getBlockHtml('formkey'); ?>
         <div class="new-users grid12-6">
             <div class="content">
                 <h2><?php echo $this->__('New Customers') ?></h2>

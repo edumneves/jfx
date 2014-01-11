@@ -155,7 +155,7 @@ if ($jquery !== '0') :
                           </div>
                       <?php endif; ?>
                       <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
-                      <?php if ($_taxvat->isEnabled() && $cpfcnpj === '1'): ?>
+                      <?php if ($_taxvat->isEnabled()): ?>
                           <div class="field">
                                 <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?>
                           </div>
@@ -418,4 +418,13 @@ if ($jquery !== '0') :
         pageTracker._trackPageview();
     } catch(err) {}
 
+</script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var taxvat = '<?php echo $this->htmlEscape($this->getCustomer()->getTaxvat()) ?>';
+        if (jQuery("#taxvat") && (taxvat != '')) {
+            jQuery("#taxvat").val(taxvat);
+        }
+    });
 </script>

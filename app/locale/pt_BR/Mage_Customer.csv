@@ -9,7 +9,7 @@
 * Required Fields,*Campos Obrigatórios
 ALL GROUPS,TODOS OS GRUPOS
 Account Dashboard,Painel Geral
-Account Information,Informações de Conta
+Account Information,Dados de Acesso
 Account Sharing Options,Opções de Compartilhamento
 "Account confirmation is required. Please, check your e-mail for confirmation link. To resend confirmation email please <a href=""%s"">click here</a>.","Confirme seu cadastro. Verifique o link enviado por Email. Para re-enviar o Email de confirmação <a href=""%s"">clique aqui</a>."
 Action,Ação
@@ -370,7 +370,7 @@ Text,Texto
 Text One Line,Texto Uma Linha
 Thank you for registering with %s.,Obrigado por se registrar na %s.
 The Date of Birth is required.,Data de Nascimento é obrigatória.
-The TAX/VAT number is required.,CPF/CNPJ é obrigatório.
+The TAX/VAT number is required.,CPF/CNPJ é obrigatório (TAXVAT).
 The VAT ID entered (%s) is not a valid VAT ID.,O ID de imposto informado (%s) não é um ID de imposto válido.
 The VAT ID entered (%s) is not a valid VAT ID. The customer would belong to Customer Group %s.,O ID de imposto informado (%s) não é um ID de imposto válido. O cliente precisa pertencer ao Grupo de Cliente %s.
 The VAT ID is valid. The current Customer Group will be used.,O ID de imposto é válido. O Grupo de Cliente atual será usado.
