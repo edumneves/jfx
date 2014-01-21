@@ -1,38 +1,3 @@
-/*=========================================================================================================================================================
- *
- *  PROJETO OSC MAGENTO BRASIL - VERSÃO FINAL V3.0
- *  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *  O módulo One Step Checkout normatizado para a localização brasileira.
- *  site do projeto: http://onestepcheckout.com.br/
- *  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *
- *
- *
- *  Mmantenedores do Projeto:
- *  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *
- *  Deivison Arthur Lemos Serpa
- *  deivison.arthur@gmail.com
- *  www.deivison.com.br
- *  (21)9203-8986
- *
- *  Denis Colli Spalenza
- *  http://www.xpdev.com.br
- *
- *  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *
- *
- *
- *  GOSTOU DO MÓDULO?
- *  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *  Se você gostou, se foi útil para você, se fez você economizar aquela grana pois estava prestes a pagar caro por aquele módulo pago, pois não achava uma
- *  solução gratuita que te atendesse e queira prestigiar o trabalho feito efetuando uma doação de qualquer valor, não vou negar e vou ficar grato! você
- *  pode fazer isso visitando a página do projeto em: http://onestepcheckout.com.br/
- *  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *
-/*=========================================================================================================================================================
- */
-
 var lastPostCode = "";
 
 $j(document).ready(function(){
@@ -60,10 +25,6 @@ $j(document).ready(function(){
     /*BILLING*/
     $j('input[name="billing[taxvat-old]"]').attr('name', 'billing[taxvat]');
     $j('input[name="billing[taxvat]"]:eq(1)').attr('name', 'billing[taxvat-old]"]');
-
-    /*LIMPA CAMPOS*/
-    $j('input[name="taxvat"]').val('');
-    $j('input[name="billing[taxvat]"]').val('');
 
     /*ADD CLASS TAXVAT*/
     $j('input[name*="taxvat"]').attr('class', 'validar_cpfcnpj input-text');
@@ -118,6 +79,95 @@ $j(document).ready(function(){
     }).keyup();
 
 
+
+
+    /**
+     * Request AJAX para o servi?o de buscar endere?o do UOL HOST
+     *
+     */
+    var FN_CALLBACK_BILLING    = 'exibeEnderecoCobranca';
+    var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
+    var billingCEP             = jQuery('#billing\\:postcode');
+
+
+    getRegionIdByUF = function(UF){
+        for(a in countryRegions.BR){
+            if(countryRegions.BR[a].code==UF){
+                return a;
+            }
+        }
+    }
+
+
+    exibeEnderecoCobranca = function(data) {
+        if (data.status=="sucesso") {
+            jQuery("#billing\\:street1").val(data.endereco);
+            jQuery("#billing\\:street4").val(data.bairro);
+
+            jQuery("#billing\\:city").val(data.cidade);
+
+            regionId = getRegionIdByUF(data.uf);
+            jQuery("#billing\\:region_id").val(regionId);
+
+
+            // estilizando os campos
+            // hack para deixar o bairro em maiuscula
+            jQuery("#billing\\:street4").css("text-transform", "uppercase");
+        }
+    }
+
+    getJSONP = {
+        url: '',
+        insertHead: function(){
+            tagScript = document.createElement('script')
+            tagScript.src = this.url;
+            document.getElementsByTagName('head')[0].appendChild(tagScript)
+        },
+
+        run: function(){
+            if(arguments.length!=0){
+                this.url = arguments[0];
+            }
+            this.insertHead();
+        }
+    }
+
+    billingCEP.on("keyup", function() {
+        if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
+            jQuery("#view-address-more").show("slide");
+            updateReviewAndLoadAddress();
+        };
+    });
+
+    billingCEP.on("blur",
+        updateReviewAndLoadAddress
+    );
+
+
+    function updateReviewAndLoadAddress(){
+        // update product cart
+        if (typeof checkout !== 'undefined' ) {
+            checkout.update({
+                'review': 1
+            });
+        }
+        getJSONP.run( URL_SERVICO + "?cep=" + jQuery('#billing\\:postcode').val() + "&format=json&callback=" + FN_CALLBACK_BILLING);
+    }
+
+    //<![CDATA[
+    if (typeof BillingAddress !== 'undefined' ) {
+        var billing = new BillingAddress();
+        RegionUpdater.prototype.setMarkDisplay = function(){};
+        ZipUpdater.prototype._setPostcodeOptional = function(){};
+        var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', countryRegions, undefined, 'billing:postcode');
+    }
+    //]]>
+
+    jQuery(function(){
+        jQuery("#taxvat").unmask();
+        jQuery("#taxvat").mask("999.999.999-99");
+    })
+
 });
 
 
@@ -126,8 +176,6 @@ $j(document).ready(function(){
 /********************* Valida CPF e CNPJ *********************/
 
 // Adicionar classe de validacao de cpf e cnpj ao Taxvat
-//$j('#billing:taxvat"]').addClassName('validar_cpf'); //removido e colocado na m?o
-
 function validaCPF(cpf,pType){
     var cpf_filtrado = "", valor_1 = " ", valor_2 = " ", ch = "";
     var valido = false;
@@ -160,8 +208,6 @@ function validaCPF(cpf,pType){
     return false;
 }
 
-
-
 function checkCNPJ(vCNPJ){
     var mControle = "";
     var aTabCNPJ = new Array(5,4,3,2,9,8,7,6,5,4,3,2);
@@ -180,8 +226,6 @@ function checkCNPJ(vCNPJ){
     return( (mControle1 * 10) + mControle );
 }
 
-
-
 function checkCPF(vCPF){
     var mControle = ""
     var mContIni = 2, mContFim = 10, mDigito = 0;
@@ -196,11 +240,8 @@ function checkCPF(vCPF){
         mControle = mDigito;
         mContIni = 3;
         mContFim = 11;
-    }32060-040
-
-        return( (mControle1 * 10) + mControle );
+    }
+    return( (mControle1 * 10) + mControle );
 }
-
-
 
 

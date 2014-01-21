@@ -415,9 +415,21 @@ if ($jquery !== '0') :
 
                 </div>
             </li>
-            <li class="fields" >
+
+
+            <?php
+            $country_r = Mage::getStoreConfig('onepagecheckout/address_form/country');
+            ?>
+            <li class="fields" <?php if($country_r === 'hidden'){ echo ' style="display:none" ';}?>>
                 <div class="field">
-                    <label for="country" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                    <label for="country" <?php if($country_r === 'required') { echo ' class="required" ';}?>><?php echo $this->__('Country') ?></label>
+                    <?php
+                    if($country_r === 'required') {
+                        echo ' <sup>*</sup> ';
+                    }else{
+                        echo ' <sup>&nbsp;</sup> ';
+                    }
+                    ?>
                     <div class="input-box">
                         <?php //echo $this->getCountryHtmlSelect() ?>
                         <select name="country_id" id="country" class="validate-select" title="Pais" >
@@ -537,11 +549,6 @@ if ($jquery !== '0') :
 
 </script>
 
-<script type="text/javascript">
-    jQuery(document).ready(function(){
-        var taxvat = '<?php echo $this->htmlEscape($this->getCustomer()->getTaxvat()) ?>';
-        if (jQuery("#taxvat") && (taxvat != '')) {
-            jQuery("#taxvat").val(taxvat);
-        }
-    });
-</script>
+
+
+<script type="text/javascript">countryRegions = <?php echo $this->helper('directory')->getRegionJson() ?></script>

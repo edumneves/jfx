@@ -419,12 +419,3 @@ if ($jquery !== '0') :
     } catch(err) {}
 
 </script>
-
-<script type="text/javascript">
-    jQuery(document).ready(function(){
-        var taxvat = '<?php echo $this->htmlEscape($this->getCustomer()->getTaxvat()) ?>';
-        if (jQuery("#taxvat") && (taxvat != '')) {
-            jQuery("#taxvat").val(taxvat);
-        }
-    });
-</script>
