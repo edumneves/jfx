@@ -8,20 +8,20 @@
  */
 -->
 <config>
-    <modules>
-        <Infortis_Ultimo>
-            <version>1.5.10</version>
-        </Infortis_Ultimo>
-    </modules>
+	<modules>
+		<Infortis_Ultimo>
+			<version>1.6.0</version>
+		</Infortis_Ultimo>
+	</modules>
 	<!--<frontend>
-        <layout>
-            <updates>
-                <ultimo module="ultimo">
-                    <file>infortis_ultimo.xml</file>
-                </ultimo>
-            </updates>
-        </layout>
-    </frontend>-->
+		<layout>
+			<updates>
+				<ultimo module="ultimo">
+					<file>infortis_ultimo.xml</file>
+				</ultimo>
+			</updates>
+		</layout>
+	</frontend>-->
 	<!--<frontend>
 		<routers>
 			<ultimo>
@@ -44,22 +44,22 @@
 			</ultimo>
 		</routers>
 	</admin>
-    <global>
-        <blocks>
-            <ultimo>
-                <class>Infortis_Ultimo_Block</class>
-            </ultimo>
-        </blocks>
-        <helpers>
-            <ultimo>
-                <class>Infortis_Ultimo_Helper</class>
-            </ultimo>
-        </helpers>
-        <models>
-            <ultimo>
-                <class>Infortis_Ultimo_Model</class>
-            </ultimo>
-        </models>
+	<global>
+		<blocks>
+			<ultimo>
+				<class>Infortis_Ultimo_Block</class>
+			</ultimo>
+		</blocks>
+		<helpers>
+			<ultimo>
+				<class>Infortis_Ultimo_Helper</class>
+			</ultimo>
+		</helpers>
+		<models>
+			<ultimo>
+				<class>Infortis_Ultimo_Model</class>
+			</ultimo>
+		</models>
 		<resources>
 			<ultimo_setup>
 				<setup>
@@ -82,7 +82,7 @@
 				</connection>
 			</ultimo_read>
 		</resources>
-    </global>
+	</global>
 	<adminhtml>
 		<events>            	
 			<controller_action_postdispatch_adminhtml_system_config_save>
@@ -149,9 +149,11 @@
 				<secondary_column>3</secondary_column>
 				<replace_related>2</replace_related>
 				<related_template>catalog/product/list/related_multi.phtml</related_template>
-				<related_position>11</related_position>
+				<related_position>20</related_position>
 				<related_count>3</related_count>
+				<related_timeout>6000</related_timeout>
 				<replace_upsell>1</replace_upsell>
+				<upsell_timeout></upsell_timeout>
 				<sku>0</sku>
 			</product_page>
 			<product_labels>
@@ -163,8 +165,11 @@
 			</footer>
 			<product_slider>
 				<timeout></timeout>
-				<speed>400</speed>
-				<move_items>0</move_items>
+				<speed>200</speed>
+				<auto_speed>500</auto_speed>
+				<pause>1</pause>
+				<loop>1</loop>
+				<lazy>1</lazy>
 			</product_slider>
 			<magento_blocks>
 				<top_links>1</top_links>
@@ -278,8 +283,17 @@
 				<color></color>
 				<link_color></link_color>
 				<link_hover_color></link_hover_color>
+				<padding_top></padding_top>
+				<padding_bottom></padding_bottom>
 				<content_padding_top></content_padding_top>
+				<content_padding_bottom></content_padding_bottom>
 			</header_top>
+			<header_primary>
+				<padding_top></padding_top>
+				<padding_bottom></padding_bottom>
+				<content_padding_top>10</content_padding_top>
+				<content_padding_bottom>10</content_padding_bottom>
+			</header_primary>
 			<nav>
 				<outer_bg_color></outer_bg_color>
 				<inner_bg_color></inner_bg_color>
@@ -343,6 +357,11 @@
 				<acco_active_bg_color>#eee</acco_active_bg_color>
 				<acco_active_color>#00a9c7</acco_active_color>
 			</product_page>
+			<slideshow>
+				<tool_icon_bg_color>#fff</tool_icon_bg_color>
+				<tool_icon_hover_bg_color>#000</tool_icon_hover_bg_color>
+				<tool_icon_active_bg_color>#de2666</tool_icon_active_bg_color>
+			</slideshow>
 			<footer>
 				<bg_color>#f5f5f5</bg_color>
 				<tex>1</tex>

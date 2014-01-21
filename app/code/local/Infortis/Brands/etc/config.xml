@@ -54,13 +54,13 @@
 				<show_image>1</show_image>
 			</product_view>
 			<slider>
-				<enable>1</enable>
 				<all_brands>1</all_brands>
-				<easing>easeInOutCubic</easing>
-				<timeout>6000</timeout>
-				<speed>300</speed>
+				<timeout></timeout>
+                <speed>200</speed>
+                <auto_speed>500</auto_speed>
 				<pause>1</pause>
 				<loop>1</loop>
+                <lazy>1</lazy>
 			</slider>
 		</brands>
 	</default>

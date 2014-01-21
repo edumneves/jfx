@@ -42,23 +42,28 @@
 	<default>
 		<ultraslideshow>
 			<general>
-				<enabled>1</enabled>
-				<blocks>block_slide1,block_slide2,block_slide3</blocks>
-				<hide>0</hide>
-				<fx>fade</fx>
-				<easing>easeInOutCubic</easing>
+				<effect></effect>
+				<!--<easing>easeInOutCubic</easing>-->
 				<timeout>10000</timeout>
 				<speed>600</speed>
-				<smooth_height>0</smooth_height>
+				<smooth_height>1</smooth_height>
 				<pause>1</pause>
 				<loop>1</loop>
+                <hide>0</hide>
+                <blocks>block_slide1,block_slide2,block_slide3</blocks>
+                <position1>0</position1>
+                <position2>1</position2>
 				<margin_top></margin_top>
 			</general>
 			<banners>
-				<banners>block_slideshow_banners</banners>
 				<position>right</position>
 				<hide>1</hide>
+                <banners>block_slideshow_banners</banners>
 			</banners>
+            <navigation>
+                <pagination>slider-pagination2</pagination>
+                <pagination_position>pagination-pos-over-bottom-centered</pagination_position>
+            </navigation>
 		</ultraslideshow>
 	</default>
 </config>

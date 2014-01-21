@@ -1,4 +1,7 @@
 <?php
+/**
+ * @deprecated
+ */
 
 class Infortis_UltraSlideshow_Model_Source_Fx
 {

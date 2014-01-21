@@ -59,7 +59,20 @@
 				<aspect_ratio>1</aspect_ratio>
 				<main_width>364</main_width>
 				<main_height>364</main_height>
+                <!--<thumbnail_width>80</thumbnail_width>
+                <thumbnail_height>80</thumbnail_height>-->
 			</images>
+            <thumbnails>
+                <slider>1</slider>
+                <!--<show_items>5</show_items>-->
+                <!--<breakpoints>[0, 2], [240, 3], [320, 4], [480, 5], [768, 3], [1280, 4]</breakpoints>-->
+                <timeout>5000</timeout>
+                <speed>200</speed>
+                <auto_speed>500</auto_speed>
+                <loop>1</loop>
+                <move>1</move>
+                <lazy>1</lazy>
+            </thumbnails>
 			<lightbox>
 				<enable>1</enable>
 				<max_width>95%</max_width>
