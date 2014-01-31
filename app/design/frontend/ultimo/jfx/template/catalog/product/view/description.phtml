@@ -36,5 +36,10 @@
     <div class="std">
         <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?>
     </div>
+    <?php
+    $_product = $this->getProduct();
+    $cmsstatic = $_product->getResource()->getAttribute('manufacturer')->getFrontend()->getValue($_product);
+    echo $this->getLayout()->createBlock('cms/block')->setBlockID($cmsstatic)->tohtml();
+    ?>
 
 <?php endif; ?>

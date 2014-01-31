@@ -459,9 +459,9 @@ $has_addr	= $this->customerHasAddresses();
             $postCodeCustomer = $this->htmlEscape($this->getBillAddress()->getPostcode());
             $postCodeSession = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getPostcode();
             $postCodeQuery = $_GET['cep'];
-            echo "POSTCODE CUSTOMER = " . $postCodeCustomer . "<br>";
-            echo "POSTCODE SESSION = " . $postCodeSession . "<br>";
-            echo "POSTCODE QUERY = " . $postCodeQuery . "<br>";
+//            echo "POSTCODE CUSTOMER = " . $postCodeCustomer . "<br>";
+//            echo "POSTCODE SESSION = " . $postCodeSession . "<br>";
+//            echo "POSTCODE QUERY = " . $postCodeQuery . "<br>";
 
             $postCodeFinal =$postCodeQuery;
             if ($postCodeSession != '')
