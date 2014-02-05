@@ -31,8 +31,11 @@
         $loop = $h->getCfg('general/loop');
     }
 
-    //Transition speed
+    //Speed (arrows / touch swipe)
     $speed = intval($h->getCfg('general/speed'));
+
+    //Speed (automatic scrolling / pagination)
+    $autoSpeed = intval($h->getCfg('general/auto_speed'));
 
     //Pause slider on mouse hover
     $pause = $h->getCfg('general/pause');
@@ -94,16 +97,7 @@
     ?>
 
     <?php if($this->isPredefined()): ?>
-        <?php
-            //Slideshow margin
-            $slideshowMarginStyle = '';
-            $marginTop = intval($h->getCfg('general/margin_top'));
-            if ($marginTop !== 0)
-            {
-                $slideshowMarginStyle = 'style="margin-top:' . $marginTop . 'px;"';
-            }
-        ?>
-        <div class="the-slideshow-wrapper-outer" <?php echo $slideshowMarginStyle; ?>>
+        <div class="the-slideshow-wrapper-outer" <?php echo $this->getMarginStyles(); ?>>
     <?php endif; ?>
 
             <div class="the-slideshow-wrapper">
@@ -146,6 +140,10 @@
 
         <?php if ($speed): ?>
             slideSpeed: <?php echo $speed; ?>,
+        <?php endif; ?>
+
+        <?php if ($autoSpeed): ?>
+            paginationSpeed: <?php echo $autoSpeed; ?>,
         <?php endif; ?>
 
         <?php if ($timeout): ?>

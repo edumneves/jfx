@@ -1,5 +1,5 @@
 /**
- * Infortis Themes
+ * Infortis themes styles
  */
 
 
@@ -297,3 +297,15 @@ a:hover .caption.light2 p { background-color:rgba(255,255,255, 0.85); color:#000
 .caption.light3 p { background-color:rgba(255,255,255, 0.8); color:#000; }
 a:hover .caption.light3 .heading,
 a:hover .caption.light3 p { background-color:rgba(255,255,255, 1); color:#000; }
+
+
+/* Other
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+/* Disable transitions, fade effect applied with JS */
+.fade-on-hover {
+	transition:			none;
+	-moz-transition:	none;
+	-webkit-transition:	none;
+	-o-transition:		none;
+}

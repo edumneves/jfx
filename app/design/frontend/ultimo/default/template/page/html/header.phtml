@@ -32,6 +32,7 @@
     $headerInnerBgColor     = $theme->getCfgDesign('header/inner_bg_color');
     $navStretched           = $theme->getCfgDesign('nav/stretched');
     $navInnerBgColor        = $theme->getCfgDesign('nav/inner_bg_color');
+    $navDropShadow          = $theme->getCfgDesign('effects/shadow_nav');
     $mainInnerBgColor       = $theme->getCfgDesign('main/inner_bg_color');
     
     //Header settings
@@ -43,7 +44,7 @@
     }
     else
     {
-        //If header has no color and menu is stretched, header is also stretched
+        //If header has no inner background color and menu is stretched, header is also stretched
         if ($navStretched)
         {
             $headerCss[] = 'stretched';
@@ -53,13 +54,33 @@
     //Menu settings
     $navCss = array();
     
-    //Is menu stretched (full available width, margins are removed)
+    //If menu is stretched, it is as wide as container and side margins are removed
     if ($navStretched)
     {
         $navCss[] = 'stretched';
     }
-    
-    //If header or menu have bg color, nav also has bg color
+
+    //If menu has inner background color, add class indicating that it also has an outline
+    if ($theme->isColor($navInnerBgColor))
+    {
+        $navCss[] = 'has-outline';
+    }
+
+
+
+    //TODO
+    //$navDropShadow = 'bar';
+    if ($navDropShadow === 'inner-container')
+    {
+        $navCss[] = 'show-bg';
+    }
+    elseif ($navDropShadow === 'bar')
+    {
+        $navCss[] = 'nav-bar-drop-shadow';
+    }
+
+    //If header or menu has inner background color, nav also has inner background color
+/*
     if ($theme->isColor($headerInnerBgColor))
     {
         $navCss[] = 'show-bg';
@@ -68,11 +89,9 @@
     {
         $navCss[] = 'show-bg';
     }
+*/
 
-    if ($theme->isColor($navInnerBgColor))
-    {
-        $navCss[] = 'has-outline';
-    }
+
 ?>
 <?php
     //Search box classes

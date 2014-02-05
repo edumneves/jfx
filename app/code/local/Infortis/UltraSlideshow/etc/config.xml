@@ -45,7 +45,8 @@
 				<effect></effect>
 				<!--<easing>easeInOutCubic</easing>-->
 				<timeout>10000</timeout>
-				<speed>600</speed>
+				<speed>200</speed>
+                <auto_speed>500</auto_speed>
 				<smooth_height>1</smooth_height>
 				<pause>1</pause>
 				<loop>1</loop>
@@ -54,6 +55,7 @@
                 <position1>0</position1>
                 <position2>1</position2>
 				<margin_top></margin_top>
+                <margin_bottom></margin_bottom>
 			</general>
 			<banners>
 				<position>right</position>

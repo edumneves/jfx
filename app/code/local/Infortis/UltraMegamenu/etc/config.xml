@@ -99,7 +99,7 @@
 				<parent>current</parent>
 				<depth>2</depth>
 				<fallback>1</fallback>
-				<block_name_fallback>Main Categories</block_name_fallback>
+				<block_name_fallback></block_name_fallback>
 				<hide_on_mobile>1</hide_on_mobile>
 				<hide_laynav_categories>1</hide_laynav_categories>
             </sidemenu>

@@ -27,7 +27,7 @@
 					<fields>
 						<effect translate="label">
 							<label>Transition Effect</label>
-							<comment><![CDATA[<strong>Important:</strong> Leave empty to use simple horizontal slide animation.]]></comment>
+							<comment><![CDATA[<strong style="color:red;">Important:</strong> Leave empty to use simple horizontal scrolling animation.]]></comment>
 							<frontend_type>select</frontend_type>
 							<source_model>ultraslideshow/source_effects</source_model>
 							<sort_order>50</sort_order>
@@ -66,19 +66,28 @@
 						</timeout>
 						<speed translate="label">
 							<label>Transition Speed</label>
-							<comment>Duration (in milliseconds) of slide transition animation.</comment>
+							<comment>Duration (in milliseconds) of scrolling animation. Applied to horizontal scrolling with arrows (and touch swipe).</comment>
 							<frontend_type>text</frontend_type>
 							<sort_order>80</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</speed>
+						<auto_speed translate="label">
+							<label>Automatic Scrolling Speed</label>
+							<comment><![CDATA[Duration (in milliseconds) of scrolling animation. Applied to automatic horizontal scrolling (if <strong>Timeout</strong> was specified) and to horizontal scrolling with pagination.]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>85</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</auto_speed>
 						<smooth_height translate="label">
 							<label>Smooth Height</label>
 							<comment><![CDATA[Enable, if your slides do not have the same height. It will allow height of the slideshow to animate smoothly.]]></comment>
 							<frontend_type>select</frontend_type>
 							<source_model>adminhtml/system_config_source_enabledisable</source_model>
-							<sort_order>85</sort_order>
+							<sort_order>90</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
@@ -88,7 +97,7 @@
 							<comment>If enabled, when the slideshow is mouseovered then the automatic transition functionality will pause.</comment>
 							<frontend_type>select</frontend_type>
 							<source_model>adminhtml/system_config_source_enabledisable</source_model>
-							<sort_order>90</sort_order>
+							<sort_order>100</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
@@ -98,7 +107,7 @@
 							<comment>If enabled, animation will loop.</comment>
 							<frontend_type>select</frontend_type>
 							<source_model>adminhtml/system_config_source_enabledisable</source_model>
-							<sort_order>100</sort_order>
+							<sort_order>110</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
@@ -108,7 +117,7 @@
 							<comment>If set to "Yes", slideshow will be hidden on narrow screens (if browser viewport width is less than 768 pixels). Important: additional banners can be hidden separately, see options below.</comment>
 							<frontend_type>select</frontend_type>
 							<source_model>adminhtml/system_config_source_yesno</source_model>
-							<sort_order>110</sort_order>
+							<sort_order>120</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
@@ -167,11 +176,21 @@
 							<comment>Additional top margin for the slideshow. You can set margin to add extra space above the slideshow. Enter negative value to pull the slideshow up.</comment>
 							<frontend_type>text</frontend_type>
 							<validate>validate-number</validate>
-							<sort_order>600</sort_order>
+							<sort_order>700</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</margin_top>
+						<margin_bottom translate="label">
+							<label>Bottom Margin</label>
+							<comment>Additional bottom margin for the slideshow. You can set margin to add extra space below the slideshow.</comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number</validate>
+							<sort_order>710</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</margin_bottom>
 					</fields>
 				</general>
 				<banners translate="label">

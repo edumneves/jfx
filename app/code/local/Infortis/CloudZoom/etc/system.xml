@@ -163,7 +163,7 @@
 						</aspect_ratio>
 						<main_width translate="label">
 							<label>Main Image Width</label>
-							<comment><![CDATA[Width of the main product image. If width is not specified, default width will be used (364 pixels).<br/><strong>Important:</strong><br/>Adjust the size of the image to the width of the image column on product page (under <em>System > Configuration > Theme Settings > Product Page > Width of Columns</em>).]]></comment>
+							<comment><![CDATA[Width of the main product image. If width is not specified, default width will be used (363 pixels).<br/><strong>Important:</strong><br/>Adjust the size of the image to the width of the image column on product page (under <em>System > Configuration > Theme Settings > Product Page > Width of Columns</em>).]]></comment>
 							<frontend_type>text</frontend_type>
 							<validate>validate-number</validate>
 							<sort_order>10</sort_order>

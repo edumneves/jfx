@@ -5,6 +5,7 @@ class Infortis_UltraSlideshow_Block_Slideshow extends Mage_Core_Block_Template
 	protected $_slides = NULL;
 	protected $_banners = NULL;
 	protected $_cacheKeyArray = NULL;
+	protected $_coreHelper;
 
 	/**
 	 * Initialize block's cache
@@ -12,6 +13,8 @@ class Infortis_UltraSlideshow_Block_Slideshow extends Mage_Core_Block_Template
 	protected function _construct()
 	{
 		parent::_construct();
+
+		$this->_coreHelper = Mage::helper('ultraslideshow');
 
 		$this->addData(array(
 			'cache_lifetime'    => 99999999,
@@ -110,7 +113,7 @@ class Infortis_UltraSlideshow_Block_Slideshow extends Mage_Core_Block_Template
 	 */
 	public function getConfigStaticBlockIds()
 	{
-		$blockIdsString = Mage::helper('ultraslideshow')->getCfg('general/blocks');
+		$blockIdsString = $this->_coreHelper->getCfg('general/blocks');
 
 		$blockIds = explode(",", str_replace(" ", "", $blockIdsString));
 		return $blockIds;
@@ -138,7 +141,7 @@ class Infortis_UltraSlideshow_Block_Slideshow extends Mage_Core_Block_Template
 				if ($this->_isPredefinedHomepageSlideshow)
 				{
 					//Get banners from module config
-					$bid = Mage::helper('ultraslideshow')->getCfg('banners/banners');
+					$bid = $this->_coreHelper->getCfg('banners/banners');
 				}
 			}
 		}
@@ -152,69 +155,97 @@ class Infortis_UltraSlideshow_Block_Slideshow extends Mage_Core_Block_Template
 		return '';
 	}
 
-    /**
-     * Add slides ids
-     *
-     * @param string $ids
-     * @return Infortis_UltraSlideshow_Block_Slideshow
-     */
-    public function addSlides($ids)
-    {
-        $this->_slides = $ids;
-        return $this;
-    }
+	/**
+	 * Add slides ids
+	 *
+	 * @param string $ids
+	 * @return Infortis_UltraSlideshow_Block_Slideshow
+	 */
+	public function addSlides($ids)
+	{
+		$this->_slides = $ids;
+		return $this;
+	}
 
-    /**
-     * Add banner id
-     *
-     * @param string $ids
-     * @return Infortis_UltraSlideshow_Block_Slideshow
-     */
-    public function addBanner($ids)
-    {
-        $this->_banners = $ids;
-        return $this;
-    }
+	/**
+	 * Add banner id
+	 *
+	 * @param string $ids
+	 * @return Infortis_UltraSlideshow_Block_Slideshow
+	 */
+	public function addBanner($ids)
+	{
+		$this->_banners = $ids;
+		return $this;
+	}
 
-    /**
-     * Set/Unset as predefined slideshow (e.g. for homepage)
-     *
-     * @param string $value
-     * @return Infortis_UltraSlideshow_Block_Slideshow
-     */
-    public function setPredefined($value)
-    {
-        $this->_isPredefinedHomepageSlideshow = $value;
-        return $this;
-    }
+	/**
+	 * Set/Unset as predefined slideshow (e.g. for homepage)
+	 *
+	 * @param string $value
+	 * @return Infortis_UltraSlideshow_Block_Slideshow
+	 */
+	public function setPredefined($value)
+	{
+		$this->_isPredefinedHomepageSlideshow = $value;
+		return $this;
+	}
 
-    /**
-     * Check if slideshow is set as predefined
-     *
-     * @return bool
-     */
-    public function isPredefined()
-    {
-    	return $this->_isPredefinedHomepageSlideshow;
-    }
+	/**
+	 * Check if slideshow is set as predefined
+	 *
+	 * @return bool
+	 */
+	public function isPredefined()
+	{
+		return $this->_isPredefinedHomepageSlideshow;
+	}
 
-    /**
-     * If slideshow position retrieved from config is different than expected position, set flag to not display the slideshow
-     *
-     * @param int $position
-     * @param int $expectedPosition
-     * @return Infortis_UltraSlideshow_Block_Slideshow
-     */
-    /*
-    public function displayOnExpectedPosition($position, $expectedPosition)
-    {
-    	if ($position !== $expectedPosition)
-    	{
-    		$this->_canBeDisplayed = false;
-    	}
-        return $this;
-    }
-    */
+	/**
+	 * Get CSS style string with margins for slideshow wrapper
+	 *
+	 * @return string
+	 */
+	public function getMarginStyles()
+	{
+		//Slideshow margin
+		$slideshowMarginStyleProperties = '';
+
+		$marginTop = intval($this->_coreHelper->getCfg('general/margin_top'));
+		if ($marginTop !== 0)
+		{
+			$slideshowMarginStyleProperties .= "margin-top:{$marginTop}px;";
+		}
+
+		$marginBottom = intval($this->_coreHelper->getCfg('general/margin_bottom'));
+		if ($marginBottom !== 0)
+		{
+			$slideshowMarginStyleProperties .= "margin-bottom:{$marginBottom}px;";
+		}
+
+		if ($slideshowMarginStyleProperties)
+		{
+			return 'style="' . $slideshowMarginStyleProperties . '"';
+		}
+	}
+
+	/**
+	 * If slideshow position retrieved from config is different than expected position, set flag to not display the slideshow
+	 *
+	 * @param int $position
+	 * @param int $expectedPosition
+	 * @return Infortis_UltraSlideshow_Block_Slideshow
+	 */
+	/*
+	public function displayOnExpectedPosition($position, $expectedPosition)
+	{
+		if ($position !== $expectedPosition)
+		{
+			$this->_canBeDisplayed = false;
+		}
+		return $this;
+	}
+	*/
 
 	/**
 	 * @deprecated
@@ -224,7 +255,7 @@ class Infortis_UltraSlideshow_Block_Slideshow extends Mage_Core_Block_Template
 	 */
 	public function getSlideshowCfg()
 	{
-		$h = Mage::helper('ultraslideshow');
+		$h = $this->_coreHelper;
 		
 		$cfg = array();
 		$cfg['fx']			= "'" . $h->getCfg('general/fx') . "'";

@@ -252,11 +252,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
       <cms_block>
          <title>Cart - below table</title>
          <identifier>block_cart_below_table</identifier>
-         <content><![CDATA[
-	<a href="#" title="Click to see more exemples of banners">
-		<img src="{{media url="wysiwyg/infortis/ultimo/custom/banners/cart.png"}}" alt="Sample banner" />
-	</a>
-]]></content>
+         <content><![CDATA[<img src="{{media url="wysiwyg/infortis/ultimo/custom/banners/cart-discount.png"}}" alt="Magento discount code" title="Use discount code/coupon" />]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
@@ -377,10 +373,9 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 		<h6 class="block-title heading">About Ultimo</h6>
 		<div class="block-content">
+			<img src="{{media url="wysiwyg/infortis/ultimo/custom/logo-small.png"}}" alt="Ultimo Theme" style="padding-bottom:10px;" />
 			<div class="feature first last">
-				<img class="icon" src="{{media url="wysiwyg/infortis/ultimo/icons/info.png"}}" alt="About Ultimo Magento theme" />
 				<p>Ultimo is a premium Magento theme with advanced admin module. It’s extremely customizable, easy to use and fully responsive.</p>
-				<p>Suitable for every type of store. Great starting point for your custom projects.</p>
 				<h5><a class="go" href="http://themeforest.net/item/ultimo-fluid-responsive-magento-theme/3231798?ref=infortis">Buy this theme</a></h5>
 			</div>
 		</div>
@@ -492,7 +487,9 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 </div>
 <div class="grid12-3">
 
-	<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/01.png'}}" alt="Magento CMS blocks" />
+	<a href="{{store url='ultimo-responsive-magento-theme'}}">
+		<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/01.png'}}" class="fade-on-hover" alt="Magento CMS blocks" />
+	</a>
 	<h4 class="heading">50+ CMS blocks</h4>
 	<p>You can use CMS blocks as content placeholders to display custom content in almost every part of the store. Import sample CMS blocks from the demo.</p>
 	<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
@@ -500,20 +497,26 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 </div>
 <div class="grid12-3">
 
-	<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/02.png'}}" alt="Magento theme documentation" />
-	<h4 class="heading">140-pages documentation</h4>
+	<a href="{{store url='ultimo-responsive-magento-theme'}}">
+		<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/02.png'}}" class="fade-on-hover" alt="Magento theme documentation" />
+	</a>
+	<h4 class="heading">190-pages documentation</h4>
 	<p>The best Magento theme documentation on ThemeForest. It also describes selected Magento features which you need to know when starting to work with Magento.</p>
 	<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
 
 </div>
 <div class="grid12-3">
 
-	<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/03.png'}}" alt="Create Magento sub-themes" />
+	<a href="{{store url='ultimo-responsive-magento-theme'}}">
+		<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/03.png'}}" class="fade-on-hover" alt="Create Magento sub-themes" />
+	</a>
 	<h4 class="heading">Easy to customize</h4>
 	<p>Use Ultimo as a starting point for your custom projects. Unlike many other themes, Ultimo lets you create multiple custom sub-themes (theme variants) for your clients.</p>
 	<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
 
-</div>]]></content>
+</div>
+<div class="clearer"></div>
+<br/>]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
@@ -561,7 +564,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
       <cms_block>
          <title>Product replace up-sell</title>
          <identifier>block_product_replace_upsell</identifier>
-         <content><![CDATA[<div class="sample-block">Custom CMS block displayed when you want to replace up-sell products with custom content. You can put here simple text, images, HTML or whatever you like.</div>]]></content>
+         <content><![CDATA[<div style="background-color: #eee; padding: 20px;">Custom CMS block displayed when you want to replace up-sell products with custom content. You can display here some text, images or any other content.</div>]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
@@ -961,8 +964,8 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
       <cms_block>
          <title>Slideshow banners</title>
          <identifier>block_slideshow_banners</identifier>
-         <content><![CDATA[<a class="banner" href="{{store url='about-magento-demo-store'}}">
-	<img class="fade-on-hover" src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/01.png'}}" alt="Sample banner" />
+         <content><![CDATA[<a class="banner fade-on-hover" href="{{store url='about-magento-demo-store'}}">
+	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/01.png'}}" alt="Sample banner" />
 
 	<div class="caption light1 full-width right">
 		<p class="right">Sample caption</p>
@@ -970,8 +973,8 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 </a>
 
-<a class="banner" href="{{store url='about-magento-demo-store'}}">
-	<img class="fade-on-hover" src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/02.png'}}" alt="Sample banner" />
+<a class="banner fade-on-hover" href="{{store url='about-magento-demo-store'}}">
+	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/02.png'}}" alt="Sample banner" />
 
 	<div class="caption dark1 full-width right">
 		<p class="right">Add custom text</p>
@@ -979,8 +982,8 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 </a>
 
-<a class="banner" href="{{store url='about-magento-demo-store'}}">
-	<img class="fade-on-hover" src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/03.png'}}" alt="Sample banner" />
+<a class="banner fade-on-hover" href="{{store url='about-magento-demo-store'}}">
+	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/03.png'}}" alt="Sample banner" />
 
 	<div class="caption dark3 full-width right">
 		<p class="right">Caption sample</p>
@@ -1059,6 +1062,21 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
          <identifier>block_home_left2</identifier>
          <content><![CDATA[<div class="block">
 	<div class="block-title">
+		<strong><span>Another Custom Block</span></strong>
+	</div>
+
+	<p style="background-color: #f5f5f5; color:#666; padding:10px; margin-bottom:10px; margin-top:10px;">
+		Custom CMS block displayed at the left sidebar on the home page. Put your own content here: text, HTML, images - whatever you like.
+	</p>
+</div>]]></content>
+         <is_active>1</is_active>
+         <stores><item>0</item></stores>
+      </cms_block>
+      <cms_block>
+         <title>Home page - left 1</title>
+         <identifier>block_home_left1</identifier>
+         <content><![CDATA[<div class="block">
+	<div class="block-title">
 		<strong><span>Home Custom Block</span></strong>
 	</div>
 
@@ -1073,25 +1091,10 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
-         <title>Home page - left 1</title>
-         <identifier>block_home_left1</identifier>
-         <content><![CDATA[{{block type="ultramegamenu/navigation" template="infortis/ultramegamenu/categories.phtml"}}]]></content>
-         <is_active>0</is_active>
-         <stores><item>0</item></stores>
-      </cms_block>
-      <cms_block>
          <title>Home page - left 3</title>
          <identifier>block_home_left3</identifier>
-         <content><![CDATA[<div class="block">
-	<div class="block-title">
-		<strong><span>Another Custom Block</span></strong>
-	</div>
-
-	<p style="background-color: #f5f5f5; color:#666; padding:10px; margin-bottom:10px; margin-top:10px;">
-		Custom CMS block displayed at the left sidebar on the home page. Put your own content here: text, HTML, images - whatever you like.
-	</p>
-</div>]]></content>
-         <is_active>1</is_active>
+         <content><![CDATA[Container for custom content: block_home_left3]]></content>
+         <is_active>0</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>

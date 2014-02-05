@@ -57,8 +57,8 @@
             </general>
 			<images>
 				<aspect_ratio>1</aspect_ratio>
-				<main_width>364</main_width>
-				<main_height>364</main_height>
+				<main_width>363</main_width>
+				<main_height></main_height>
                 <!--<thumbnail_width>80</thumbnail_width>
                 <thumbnail_height>80</thumbnail_height>-->
 			</images>

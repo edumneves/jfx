@@ -29,16 +29,18 @@
 .the-slideshow-banners a.banner, /* Backward compatibility, link could have "banner" class */
 .the-slideshow-banners .banner a { display:block; }
 
-/* Additional effects - deprecated
+/* Additional effects
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-.the-slideshow-wrapper .fade-on-slideshow-hover {
+.the-slideshow 			.fade-on-slideshow-hover,
+.the-slideshow-wrapper	.fade-on-slideshow-wrapper-hover {
 	transition:			opacity 300ms ease-in-out;
 	-moz-transition:	opacity 300ms ease-in-out;
 	-webkit-transition:	opacity 300ms ease-in-out;
 	-o-transition:		opacity 300ms ease-in-out;
 }
-.the-slideshow-wrapper:hover .fade-on-slideshow-hover {
+.the-slideshow:hover 			.fade-on-slideshow-hover,
+.the-slideshow-wrapper:hover 	.fade-on-slideshow-wrapper-hover {
 	opacity:0.75;
 	filter:alpha(opacity=75);
 }

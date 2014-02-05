@@ -922,5 +922,169 @@ Banners can be placed on any CMS page, and in any CMS block. Each banner is a si
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
+      <cms_block>
+         <title>ULTIMO Home Page 5</title>
+         <identifier>ultimo-home-page5</identifier>
+         <content><![CDATA[<br/>
+<br/>
+<br/>
+<div class="grid12-4">
+
+	<div class="feature feature-icon-hover centered large">
+		<span class="icon large">
+			<img src="{{media url='wysiwyg/infortis/ultimo/icons/large/paintbrush.png'}}" alt="Customizable design" />
+		</span>
+		<h6 class="above-heading">Customizable design</h6>
+		<h3>Unlimited Colors</h3>
+		<p>You have never seen so many options! Change colors of dozens of elements, apply textures, upload background images...</p>
+		<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
+	</div>
+
+</div>
+<div class="grid12-4">
+
+	<div class="feature feature-icon-hover centered large">
+		<span class="icon large">
+			<img src="{{media url='wysiwyg/infortis/ultimo/icons/large/responsive.png'}}" alt="Responsive Layout" />
+		</span>
+		<h6 class="above-heading">12-column grid</h6>
+		<h3>Responsive Layout</h3>
+		<p>Ultimo can be displayed on any screen. It is based on fluid grid system. If screen is resized, layout will be automatically adjusted...</p>
+		<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
+	</div>
+
+</div>
+<div class="grid12-4">
+
+	<div class="feature feature-icon-hover centered large">
+		<span class="icon large">
+			<img src="{{media url='wysiwyg/infortis/ultimo/icons/large/menu.png'}}" alt="Mega Menu" />
+		</span>
+		<h6 class="above-heading">Customizable drop-down menu</h6>
+		<h3>Mega Menu</h3>
+		<p>Two styles: wide mega menu or classic drop-down menu. You can add any custom content (images, text, HTML) to any category in the catalog...</p>
+		<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
+	</div>
+
+</div>
+<div class="clearer"></div>
+<br/>
+<br/>
+<br/>
+
+
+
+
+<span class="section-title">Featured Products</span>
+<br />
+{{block type='catalog/product_list' category_id='6' grid_column_count='4' hide_toolbar='1' template='catalog/product/list.phtml'}}
+<br/>
+<br/>
+
+
+
+
+
+{{block type="brands/brands" template="infortis/brands/brand_slider.phtml" timeout="5000" move="1" pagination="1" block_name="Product Brands"}}
+<br/>
+<br/>
+
+
+
+
+<span class="section-title">Sample Custom Banners</span>
+<br />
+<div class="nested-container">
+
+	<!-- First banner has a link which adds a product to the cart (link was copied from product's button "Add to cart") -->
+	<div class="page-banners grid-container">
+		<div class="grid12-3 banner fade-on-hover hide-below-768">
+			<a href="#" title="Click to add sample product to your cart">
+				<img class="fade-on-hover" src="{{media url="wysiwyg/infortis/ultimo/custom/banners/1a.png"}}" alt="Add product to cart" />
+			</a>
+		</div>
+		<div class="grid12-3 banner fade-on-hover hide-below-768">
+			<a href="{{store direct_url='checkout/cart/'}}" title="Click to go to cart page">
+				<img class="fade-on-hover" src="{{media url="wysiwyg/infortis/ultimo/custom/banners/1b.png"}}" alt="Go to Magento cart page" />
+			</a>
+		</div>
+		<div class="grid12-6 banner">
+				<img class="fade-on-hover" src="{{media url="wysiwyg/infortis/ultimo/custom/banners/1c.png"}}" alt="Magento discount code" title="Use discount code/coupon on cart page" />
+		</div>
+	</div>
+
+</div>
+<br/>
+<br/>
+<br/>
+]]></content>
+         <is_active>1</is_active>
+         <stores><item>0</item></stores>
+      </cms_block>
+      <cms_block>
+         <title>ULTIMO Home Page 6</title>
+         <identifier>ultimo-home-page6</identifier>
+         <content><![CDATA[<br/>
+<br/>
+<br/>
+<div class="grid12-4">
+
+	<div class="feature feature-icon-hover centered large">
+		<span class="icon large">
+			<img src="{{media url='wysiwyg/infortis/ultimo/icons/large/paintbrush.png'}}" alt="Customizable design" />
+		</span>
+		<h6 class="above-heading">Customizable design</h6>
+		<h3>Unlimited Colors</h3>
+		<p>You have never seen so many options! Change colors of dozens of elements, apply textures, upload background images...</p>
+		<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
+	</div>
+
+</div>
+<div class="grid12-4">
+
+	<div class="feature feature-icon-hover centered large">
+		<span class="icon large">
+			<img src="{{media url='wysiwyg/infortis/ultimo/icons/large/responsive.png'}}" alt="Responsive Layout" />
+		</span>
+		<h6 class="above-heading">12-column grid</h6>
+		<h3>Responsive Layout</h3>
+		<p>Ultimo can be displayed on any screen. It is based on fluid grid system. If screen is resized, layout will be automatically adjusted...</p>
+		<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
+	</div>
+
+</div>
+<div class="grid12-4">
+
+	<div class="feature feature-icon-hover centered large">
+		<span class="icon large">
+			<img src="{{media url='wysiwyg/infortis/ultimo/icons/large/menu.png'}}" alt="Mega Menu" />
+		</span>
+		<h6 class="above-heading">Customizable drop-down menu</h6>
+		<h3>Mega Menu</h3>
+		<p>Two styles: wide mega menu or classic drop-down menu. You can add any custom content (images, text, HTML) to any category in the catalog...</p>
+		<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
+	</div>
+
+</div>
+<div class="clearer"></div>
+<br/>
+<br/>
+<br/>
+
+
+
+
+{{block type="ultimo/product_list_featured" template="catalog/product/list_featured_slider.phtml" category_id="6" product_count="20" breakpoints="[0, 1], [320, 2], [480, 3], [768, 4], [960, 5], [1280, 6]" pagination="1" centered="1" hide_button="1" block_name="Recommended Products"}}
+<br/>
+<br/>
+
+
+{{block type="brands/brands" template="infortis/brands/brand_slider.phtml" timeout="5000" move="1" pagination="1" block_name="Product Brands"}}
+<br/>
+<br/>
+]]></content>
+         <is_active>1</is_active>
+         <stores><item>0</item></stores>
+      </cms_block>
    </pages>
 </root>
