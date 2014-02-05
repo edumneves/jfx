@@ -33,7 +33,7 @@
 .grid-col2-sidebar,
 .grid-col2-main
 { 
-	position:relative;
+	/*position:relative;*/
 	display:inline;
 	float:left;
 	margin-left:1%;

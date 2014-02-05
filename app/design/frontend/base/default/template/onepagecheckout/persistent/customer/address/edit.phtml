@@ -140,26 +140,9 @@ if ($jquery !== '0') :
                 </ul>
             <?php endif; ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <li class="fields boxpf">
                 <div class="customer-name">
-                      <?php
+                    <?php
             			$identidade = Mage::getStoreConfig('onepagecheckout/outrasopcoes/rgiregistro');
             			if ($identidade !== 'hidden') : ?>
                           <div class="field">
@@ -180,7 +163,7 @@ if ($jquery !== '0') :
                           </div>
                       <?php endif; ?>
                       <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
-                      <?php if ($_taxvat->isEnabled() && $cpfcnpj === '1'): ?>
+                      <?php if ($_taxvat->isEnabled()): ?>
                           <div class="field">
                                 <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?>
                           </div>
@@ -230,9 +213,9 @@ if ($jquery !== '0') :
                           </div>
                       <?php endif; ?>
                       <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
-                      <?php if ($_taxvat->isEnabled() && $cpfcnpj === '1'): ?>
+                      <?php if ($_taxvat->isEnabled()): ?>
                           <div class="field">
-                                <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?>
+                              <?php echo $_taxvat->setTaxvat($this->getCustomer()->getTaxvat())->toHtml() ?>
                           </div>
                       <?php endif ?>
                         <?php
@@ -342,7 +325,7 @@ if ($jquery !== '0') :
                 <div class="field">
                     <label for="zip" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
                     <div class="input-box">
-                        <input type="text" name="postcode" id="billing:postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>"  class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>"  onblur="buscarEndereco('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)?>','billing');"/>
+                        <input type="text" name="postcode" id="billing:postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>"  class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>"  />
                     </div>
                 </div>
             </li>
@@ -432,9 +415,21 @@ if ($jquery !== '0') :
 
                 </div>
             </li>
-            <li class="fields" >
+
+
+            <?php
+            $country_r = Mage::getStoreConfig('onepagecheckout/address_form/country');
+            ?>
+            <li class="fields" <?php if($country_r === 'hidden'){ echo ' style="display:none" ';}?>>
                 <div class="field">
-                    <label for="country" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                    <label for="country" <?php if($country_r === 'required') { echo ' class="required" ';}?>><?php echo $this->__('Country') ?></label>
+                    <?php
+                    if($country_r === 'required') {
+                        echo ' <sup>*</sup> ';
+                    }else{
+                        echo ' <sup>&nbsp;</sup> ';
+                    }
+                    ?>
                     <div class="input-box">
                         <?php //echo $this->getCountryHtmlSelect() ?>
                         <select name="country_id" id="country" class="validate-select" title="Pais" >
@@ -553,3 +548,7 @@ if ($jquery !== '0') :
     } catch(err) {}
 
 </script>
+
+
+
+<script type="text/javascript">countryRegions = <?php echo $this->helper('directory')->getRegionJson() ?></script>

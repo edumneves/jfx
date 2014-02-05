@@ -1,68 +1,79 @@
 <?php
 /**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category    design
- * @package     base_default
- * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * Up-sell products slider
  */
 ?>
-
 <?php
-	$_collectionSize = count($this->getItemCollection()->getItems());
+    $_collectionSize = count($this->getItemCollection()->getItems());
 ?>
 <?php if($_collectionSize): ?>
 <?php
-	$theme = $this->helper('ultimo');
-	$helpImg = $this->helper('infortis/image');
-	
-	//Default image size
-	$imgWidth = 168;
-	$imgHeight = 168;
-	
-	//Aspect ratio settings
-	if ($theme->getCfg('category/aspect_ratio'))
-	{
-		$imgHeight = 0; //Height will be computed automatically (based on width) to keep the aspect ratio
-	}
-	
-	//Additional parameters
-	$isResponsive = true;
-	$showItems = 4;
-	
-	//Additional slider classes
-	$sliderClasses = '';
-	if ($isResponsive)
-	{
-		$sliderClasses .= ' itemslider-responsive';
-	}
-
-	if ($_collectionSize == 1)
-	{
-		$sliderClasses .= ' single-item';
-	}
-
-    //Additional grid classes
+    $theme = $this->helper('ultimo');
+    $helpImg = $this->helper('infortis/image');
+    $sliderClasses = '';
     $gridClasses = '';
+    
+    $sliderId = "itemslider-upsell";
 
-    //Align center
+    //Slider parameters
+    //--------------------------------------------------------------
+
+    //Responsive mode on/off
+    $isResponsive = true;
+
+    //Assign number of items in a row to specific viewport width
+    $breakpoints = '[0, 1], [320, 2], [480, 3], [960, 4], [1280, 5]';
+
+    //Pagination on/off
+    $pagination = false;
+
+    //Default image size
+    $imgWidth = 196;
+    $imgHeight = 196;
+    
+        //Image aspect ratio
+        if ($theme->getCfg('category/aspect_ratio'))
+        {
+            $imgHeight = 0; //Height will be computed automatically (based on width) to keep the aspect ratio
+        }
+
+    //Slider timeout. Set to enable automatic scrolling.
+    $timeout = intval($theme->getCfg('product_page/upsell_timeout'));
+
+    //Number of items that should move on scrolling
+    $move = 0;
+
+    //If set, slider will loop
+    $loop = $theme->getCfg('product_slider/loop');
+
+    //Speed (arrows / touch swipe)
+    $speed = intval($theme->getCfg('product_slider/speed'));
+
+    //Speed (automatic scrolling / pagination)
+    $autoSpeed = intval($theme->getCfg('product_slider/auto_speed'));
+
+    //Pause slider on mouse hover
+    $pause = $theme->getCfg('product_slider/pause');
+
+    //Lazy loading
+    $lazy = $theme->getCfg('product_slider/lazy');
+
+    //Slider classes
+    //--------------------------------------------------------------
+    if($isResponsive)
+    {
+        $sliderClasses .= ' itemslider-responsive';
+    }
+
+    if ($_collectionSize == 1)
+    {
+        $sliderClasses .= ' single-item';
+    }
+
+    //Product grid classes
+    //--------------------------------------------------------------
+
+    //Align elements to the center
     if ($theme->getCfg('category_grid/centered'))
     {
         $gridClasses .= ' centered';
@@ -70,60 +81,84 @@
 ?>
 
 <h3 class="section-title padding-right"><?php echo $this->__('You may also be interested in the following product(s)'); ?></h3>
-<div class="upsell-itemslider-wrapper itemslider-wrapper">
+<div class="itemslider-wrapper itemslider-upsell-wrapper slider-arrows1 slider-arrows1-pos-top-right slider-pagination1">
+    <div id="<?php echo $sliderId; ?>" class="itemslider <?php if($sliderClasses) echo $sliderClasses; ?> products-grid<?php if($gridClasses) echo $gridClasses; ?>">
+    <?php $this->resetItemsIterator() ?>
+    <?php foreach($this->getItemCollection()->getItems() as $_product): //$_link replaced with $_product ?>    
+        <div class="item">
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="product-image">
 
-	<div class="nav-wrapper gen-slider-arrows1 gen-slider-arrows1-pos-top-right">
-    </div>
-    
-    <div class="itemslider itemslider-horizontal<?php if($sliderClasses) echo $sliderClasses; ?>">
-        <ul class="slides products-grid<?php if($gridClasses) echo $gridClasses; ?>">
-            <?php $this->resetItemsIterator() ?>
-            <?php foreach($this->getItemCollection()->getItems() as $_product): //$_link replaced with $_product ?>    
-                <li class="item">
-                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="product-image"><img src="<?php echo $helpImg->getImg($_product, $imgWidth, $imgHeight, 'small_image'); ?>" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" /></a>
-                    <h3 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a></h3>
-                    <?php echo $this->getPriceHtml($_product, true, '-upsell') ?>
-                    <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
-                </li>
-            <?php endforeach; ?>
+                <?php if ($lazy): ?>
+                    <img class="lazyOwl" data-src="<?php echo $helpImg->getImg($_product, $imgWidth, $imgHeight, 'small_image'); ?>" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                <?php else: ?>
+                    <img src="<?php echo $helpImg->getImg($_product, $imgWidth, $imgHeight, 'small_image'); ?>" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                <?php endif; ?>
 
-            <?php //If only one item ?>
-
-
-        </ul> <!-- end: slides -->
+            </a>
+            <h3 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a></h3>
+            <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+            <?php echo $this->getPriceHtml($_product, true, '-upsell') ?>
+        </div>
+    <?php endforeach; ?>
     </div> <!-- end: itemslider -->
-
 </div> <!-- end: itemslider-wrapper -->
 <script type="text/javascript">
 //<![CDATA[
-	jQuery(function($) {
-					
-		$('.upsell-itemslider-wrapper .itemslider').flexslider({
-			namespace: "",
-			animation: "slide",
-			easing: "easeInQuart",
-			animationLoop: false,
-			slideshow: false,
-			
-			<?php if($speed = intval($theme->getCfg('product_slider/speed'))): ?>
-				animationSpeed: <?php echo $speed; ?>,
-			<?php endif; ?>
-			
-			pauseOnHover: true,
-			controlNav: false,
-			controlsContainer: ".upsell-itemslider-wrapper .nav-wrapper",
-			
-			itemWidth: 188,
-			<?php if ($showItems): ?>
-				minItems: <?php echo $showItems; ?>,
-				maxItems: <?php echo $showItems; ?>,
-			<?php endif; ?>
-			
-			move: <?php echo intval($theme->getCfg('product_slider/move_items')); ?>
-		})
-		.data("breakpoints", [ [1680, 7], [1440, 6], [1360, 5], [1280, 5], [960, 4], [768, 3], [640, 3], [480, 2], [320, 1] ] );
-		
-	});
+    jQuery(function($) {
+
+        var owl = $('#<?php echo $sliderId; ?>');
+        owl.owlCarousel({
+
+        <?php if ($lazy): ?>
+            lazyLoad: true,
+        <?php endif; ?>
+
+        <?php if(!$isResponsive): ?>
+            responsive: false,
+            items: <?php echo $showItems; ?>,
+        <?php else: ?>
+            itemsCustom: [ <?php echo $breakpoints; ?> ],
+            responsiveRefreshRate: 50,
+        <?php endif; ?>
+
+        <?php if ($speed): ?>
+            slideSpeed: <?php echo $speed; ?>,
+        <?php endif; ?>
+
+        <?php if ($autoSpeed): ?>
+            paginationSpeed: <?php echo $autoSpeed; ?>,
+        <?php endif; ?>
+
+        <?php if ($move !== 1): ?>
+            scrollPerPage: true,
+        <?php endif; ?>
+
+        <?php if ($timeout): ?>
+            autoPlay: <?php echo $timeout; ?>,
+        <?php endif; ?>
+
+        <?php if ($pause): ?>
+            stopOnHover: true,
+        <?php endif; ?>
+
+        <?php if ($loop): ?>
+            rewindNav: true,
+            rewindSpeed: 600,
+        <?php else: ?>
+            rewindNav: false,
+        <?php endif; ?>
+
+        <?php if ($pagination): ?>
+            pagination: true,
+        <?php else: ?>
+            pagination: false,
+        <?php endif; ?>
+
+            navigation: true
+
+        }); //end: owl
+
+    });
 //]]>
 </script>
 <?php endif; ?>

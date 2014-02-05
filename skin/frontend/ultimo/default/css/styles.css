@@ -392,9 +392,12 @@ p.required,
 .messages ul { list-style:none !important; margin:0; padding:0; }
 .messages { overflow:hidden; margin:0 0 10px; }
 .messages li { margin:0 0 1%; }
+.messages > li:last-child { margin-bottom:0; }
 .messages li li { margin:0; }
 .messages a { text-decoration:underline; }
-.catalog-category-view .messages { margin-top:15px; }
+.catalog-category-view .messages { margin-top:15px; margin-bottom:15px; }
+.cms-index-index .messages,
+.cms-home .messages { margin:20px 0 20px; }
 
 .error-msg,
 .success-msg,
@@ -756,7 +759,7 @@ tr.summary-details-excluded { font-style:italic; }
 -------------------------------------------------------------- */
 /* Common basic styling */
 ul.bullet,
-ul.disc { margin:1em 0; padding:0; }
+ul.disc { margin:0 0 1em; padding:0; }
 
 /* Disc */
 ul.disc { list-style:disc outside none; padding-left:1.5em; }
@@ -1011,6 +1014,7 @@ ul.disc ul li { background:url(../images/infortis/_shared/cck/list/bullet-small.
 	#mini-cart .product-details strong { font-weight:normal; }
 	#mini-cart .actions { margin:10px 0 0; padding:0; border:none; text-align:left; }
 	#mini-cart .actions button { float:left; margin-right:1px;  }
+	#mini-cart .truncated { margin-left:3px; }
 	
 
 /* Mini-cart on hover
@@ -1189,20 +1193,18 @@ ul.disc ul li { background:url(../images/infortis/_shared/cck/list/bullet-small.
 
 /* Block: Related. Simple thumbnails slider
 -------------------------------------------------------------- */
-.block-related-thumbnails .itemslider .slides { margin-top:10px; }
-.block-related-thumbnails .product {}
-	.block-related-thumbnails .product-image {
-		float:left;
-		margin-bottom:10px;
-	}
-	.block-related-thumbnails .product-details {
-		margin-left:110px;
-	}
-		.block-related-thumbnails .product-details > * { margin-bottom:5px; }
-		.block-related-thumbnails .product-name,
-		.block-related-thumbnails .related-add-to-wishlist { font-size:1em; line-height:1.25em; font-family:inherit; font-weight:inherit; display:inline-block; }
-		.block-related-thumbnails .price-box { font-size:1em; line-height:1.25em; }
-		.block-related-thumbnails .checkbox { float:left; margin:2px 5px 0 0; }
+.block-related-thumbnails .product-image {
+	float:left;
+	margin-bottom:10px;
+}
+.block-related-thumbnails .product-details {
+	margin-left:110px;
+}
+	.block-related-thumbnails .product-details > * { margin-bottom:5px; }
+	.block-related-thumbnails .product-name,
+	.block-related-thumbnails .related-add-to-wishlist { font-size:1em; line-height:1.25em; font-family:inherit; font-weight:inherit; display:inline-block; }
+	.block-related-thumbnails .price-box { font-size:1em; line-height:1.25em; }
+	.block-related-thumbnails .checkbox { float:left; margin:2px 5px 0 0; }
 
 
 /* Block: Compare Products
@@ -1476,10 +1478,10 @@ h3.product-name {
 
 	/* Align to the center
 	-------------------------------------------------------------- */
-	.products-grid.centered > li { text-align: center; }
+	.products-grid.centered .item { text-align: center; }
 	.products-grid.centered .item .ratings .rating-box,
 	.products-grid.centered .item .btn-cart { margin-left: 0; margin-right: 0; }
-	.products-grid.centered .item .ratings { display: inline-block; }
+	.products-grid.centered .item .ratings { display: inline-block; margin-bottom: 0; /* Remove margin from inline-block */ }
 	.products-grid.centered .item .ratings .rating-box { display: inline-block; vertical-align: middle; float: none; /* Remove default float */ }
 	.products-grid.centered .item .ratings .amount { display: inline-block; vertical-align: middle; margin-left: 3px; }
 	.products-grid.centered .item input.checkbox { float: none; }
@@ -1847,7 +1849,10 @@ a.availability-only { cursor:pointer; }
 /* Product images
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-.product-view .product-img-column { float:left; margin-bottom:10px;  }
+.product-view .product-img-column {
+	float:left; margin-bottom:10px;
+	position:relative; /* Stickers are positioned relative to this container. TODO: move to the stylesheet with sticker styles. */
+}
 .col3-layout .product-view .product-img-column { float:none; margin:0 auto; }
 
 
@@ -1962,7 +1967,7 @@ a.availability-only { cursor:pointer; }
 /* Other elements
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-/* Unordered list in product description */
+/* Unordered list in product description (for lists with no bullet class) */
 .product-view .short-description .std ul,
 .product-view .box-tabs .std ul { list-style:none outside none; }
 .product-view .short-description .std ul li,
@@ -1970,6 +1975,12 @@ a.availability-only { cursor:pointer; }
 
 /* Margin for list in long description */
 .product-view .box-tabs .std ul { margin-bottom:1em; }
+
+/* If unordered list has "disc" class, override  */
+.product-view .short-description .std ul.disc,
+.product-view .box-tabs .std ul.disc { list-style:disc outside none; padding-left:1.5em; }
+.product-view .short-description .std ul.disc li,
+.product-view .box-tabs .std ul.disc li { background-image:none; padding-left:0; }
 
 
 /* Product options 
@@ -2262,7 +2273,7 @@ a.availability-only { cursor:pointer; }
 
 /* Options Tool Tip
 -------------------------------------------------------------- */
-.truncated { cursor:help; display:inline-block; margin-left:3px; }
+.truncated { cursor:help; display:inline-block; }
 .truncated a.dots { cursor:help; }
 .truncated a.details { cursor:help; text-decoration:none; border-bottom:1px dotted #ccc; }
 .truncated .truncated_full_value { position:relative; z-index:999; }
@@ -3011,11 +3022,8 @@ body.cms-index-index .breadcrumbs { display:none; }
 /* Additional clearing */
 .my-account .order-info:after,
 #mini-cart .mini-products-list li.item:after,
-
 .block-related-thumbnails .product:after,
-
 .cart .crosssell:after,
-
 .section-line:after,
 .section-title:after
 

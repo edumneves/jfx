@@ -21,9 +21,13 @@ OPC.prototype = {
             if (!loginForm.validator.validate()) {
                 return
             }
-            $('login-please-wait').show();
+
+            $('login-please-wait').setStyle({
+                display: "inline-block"
+            })
+
             $('send2').setAttribute('disabled', 'disabled');
-            $$('#login-form .buttons-set')[0].addClassName('disabled').setOpacity(0.5);
+            //$$('#login-form .buttons-set')[0].addClassName('disabled').setOpacity(0.5);
             new Ajax.Request($('login-form').action, {
                 parameters: $('login-form').serialize(),
                 onSuccess: function (transport) {
@@ -49,7 +53,7 @@ OPC.prototype = {
             }
             $('forgot-please-wait').show();
             $('btn-forgot').setAttribute('disabled', 'disabled');
-            $$('#forgot-password-form .buttons-set')[0].addClassName('disabled').setOpacity(0.5);
+//            $$('#forgot-password-form .buttons-set')[0].addClassName('disabled').setOpacity(0.5);
             new Ajax.Request($('forgot-password-form').action, {
                 parameters: $('forgot-password-form').serialize(),
                 onSuccess: function (transport) {
@@ -113,7 +117,6 @@ OPC.prototype = {
                 isValid = false
             }
         }
-        $j('input[name*="tipopessoa"]:checked').click(); //ccd: bad hack: click artificial para habilitar/desabilitar campos (CPF/CNPJ)
         OPC.Messenger.clear('checkout-review-submit');
         $$('#checkout-review-submit .checkout-agreements input[type="checkbox"]').each(function (el) {
             if (!el.checked) {
@@ -150,9 +153,7 @@ OPC.prototype = {
         }
         checkout.setLoadWaiting(true);
         var params = Form.serialize(this.form);
-		//desabilita botão
-        this.disabled=true;
-        $('review-please-wait').show();
+        jQuery("#review-please-wait").show();
         var request = new Ajax.Request(this.saveUrl, {
             method: 'post',
             parameters: params,
@@ -161,6 +162,7 @@ OPC.prototype = {
         })
     },
     update: function (params) {
+        var skipPayment  = false;
         var parameters = $(this.form).serialize(true);
         for (var i in params) {
             if (!params[i]) {
@@ -173,7 +175,11 @@ OPC.prototype = {
                     'width': size.width + 'px',
                     'height': size.height + 'px'
                 }).update('').addClassName('loading');
-                parameters[i] = params[i]
+                parameters[i] = params[i];
+            }
+
+            if (i == "skip-payment") {
+                parameters["skip-payment"] = 1;
             }
         }
         checkout.setLoadWaiting(true);
@@ -236,9 +242,9 @@ BillingAddress.prototype = {
     initialize: function () {
         $('billing:country_id') && $('billing:country_id').observe('change', function () {
             if ($('billing:region_id')) {function resetRegionId() {
-                    $('billing:region_id').value = '';
-                    $('billing:region_id')[0].selected = true
-                }
+                $('billing:region_id').value = '';
+                $('billing:region_id')[0].selected = true
+            }
                 resetRegionId.delay(0.2)
             }
             if ($('shipping:same_as_billing') && $('shipping:same_as_billing').checked) {
@@ -274,11 +280,15 @@ BillingAddress.prototype = {
             if ($('shipping:same_as_billing') && $('shipping:same_as_billing').checked) {
                 shipping.syncWithBilling();
                 checkout.update({
-                    'review': 1
+                    'review': 1,
+                    'payment-method': 1,
+                    'shipping-method': 1
                 })
             } else if (!$('shipping:same_as_billing')) {
                 checkout.update({
-                    'review': 1
+                    'review': 1,
+                    'payment-method': 1,
+                    'shipping-method': 1
                 })
             }
         })
@@ -391,18 +401,21 @@ ShippingMethod.prototype = {
     initialize: function () {
         this.addObservers()
     },
-	addObservers:function(){
+    addObservers:function(){
         $$('input[name="shipping_method"]').each(function(el){
             el.observe('click',function(){
-                var methods=document.getElementsByName('shipping_method');
-                for(var i=0;i<methods.length;i++){
-                    if(!methods[i].checked){
-                        methods[i].disabled=true;
-                    }
-                }
                 checkout.update({
-                    'review':1
-                })
+                    //'review': 1,
+                    'payment-method': 1
+                    //'shipping-method': 1
+                });
+                setTimeout(function(){
+                    checkout.update({
+                        'review': 1
+                        //,'payment-method': 1
+                    });
+                }, 500);
+
             })
         })
     },
@@ -410,7 +423,7 @@ ShippingMethod.prototype = {
         OPC.Messenger.clear('checkout-shipping-method-load');
         var methods = document.getElementsByName('shipping_method');
         if (methods.length == 0) {
-            OPC.Messenger.add(Translator.translate('Your order cannot be completed at this time as there is no shipping methods available for it. Please make neccessary changes in your shipping address.'), 'checkout-shipping-method-load', 'error');
+            OPC.Messenger.add(Translator.translate('Sua compra não pode ser completada, pois não há método de entrega disponível, é preciso preencher o endereço de entrega.'), 'checkout-shipping-method-load', 'error');
             return false
         }
         for (var i = 0; i < methods.length; i++) {
@@ -418,7 +431,7 @@ ShippingMethod.prototype = {
                 return true
             }
         }
-        OPC.Messenger.add(Translator.translate('Please specify shipping method.'), 'checkout-shipping-method-load', 'error');
+        OPC.Messenger.add(Translator.translate('Escolha o método de entrega'), 'checkout-shipping-method-load', 'error');
         return false
     }
 };
@@ -680,26 +693,26 @@ OPC.Window.prototype = {
         $(document.body).insert(this.window)
     },
     _attachEventListeners: function () {
-    	
+
         this.close.observe('click', this.hide.bind(this));
         document.observe('keypress', this._onKeyPress.bind(this));
         if (this.config.triggers) {
-        	if (this.config.triggers.length!=0) {
-	            for (var i in this.config.triggers) {
-	                this.config.triggers[i].el.each(function (el) {
-	                    var trigger = this.config.triggers[i];
-	                    el.observe(this.config.triggers[i].event, function (e) {
-	                        Event.stop(e);
-	                        if (!trigger.window) {
-	                            return
-	                        }
-	                        var oldContent = this.content.down();
-	                        oldContent && $(document.body).insert(oldContent.hide());
-	                        this.update(trigger.window.show()).show()
-	                    }.bind(this))
-	                }.bind(this))
-	            }
-        	}
+            if (this.config.triggers.length!=0) {
+                for (var i in this.config.triggers) {
+                    this.config.triggers[i].el.each(function (el) {
+                        var trigger = this.config.triggers[i];
+                        el.observe(this.config.triggers[i].event, function (e) {
+                            Event.stop(e);
+                            if (!trigger.window) {
+                                return
+                            }
+                            var oldContent = this.content.down();
+                            oldContent && $(document.body).insert(oldContent.hide());
+                            this.update(trigger.window.show()).show()
+                        }.bind(this))
+                    }.bind(this))
+                }
+            }
         }
     },
     _onKeyPress: function (e) {
@@ -710,13 +723,10 @@ OPC.Window.prototype = {
     }
 };
 function open_login() {
-    $('onepagecheckout_forgotbox').hide();
     $('onepagecheckout_loginbox').show()
 }function open_forgot() {
     $('onepagecheckout_loginbox').hide();
-    $('onepagecheckout_forgotbox').show()
 }function close_login() {
-    $('onepagecheckout_forgotbox').hide();
     $('onepagecheckout_loginbox').hide()
 }function check_secure_url(url) {
     if (http_type == 'https') {
@@ -728,7 +738,6 @@ function open_login() {
     }
     return url
 }
-/*
 window.onload = function () {
     checkout.update({
         'payment-method': 1,
@@ -736,10 +745,3 @@ window.onload = function () {
         'review': 1
     })
 }
-*/
-
-/*
-    bugs:
-        - DOB e Gender obrigatórios com Pessoa Juridica
-
-*/
