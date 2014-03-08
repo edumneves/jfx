@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -41,34 +41,10 @@
         <div class="entry-edit">
             <div class="entry-edit-head">
                 <h4 class="icon-head head-payment-method"><?php echo Mage::helper('sales')->__('Payment Information') ?></h4>
-
-
-                <!-- Deivison -->
-                <!-- Impressão do admin -->
-                <?php // segunda via do boleto
-                if ((strpos($this->getPaymentHtml(), "Boleto")  !== false) && ( $_order->getStatus() == $this->__(Mage::getStoreConfig('payment/boleto_bancario/order_status')) )) {
-                    $orderid = $_order->getId();
-                    echo "<span style='float:right'>";
-			echo "<a style='color:#ffb81e' href='" . $this->getUrl('boleto/standard/adminView/order_id/' . $orderid) . "' class='link-cart' onclick='this.target=_blank'>" . $this->__('Gerar 2a Via do Boleto') . "</a></span>";
-
-			} //  segunda via do boleto ?>
-                <!-- Deivison -->
             </div>
             <fieldset>
                 <?php echo $this->getPaymentHtml() ?>
                 <div><?php echo Mage::helper('sales')->__('Order was placed using %s', $_order->getOrderCurrencyCode()) ?></div>
-
-                <!-- Deivison -->
-                <!-- Impress�o do admin -->
-                <?php // segunda via do boleto
-                if ((strpos($this->getPaymentHtml(), "Boleto")  !== false) && ( $_order->getStatus() == $this->__(Mage::getStoreConfig('payment/boleto_bancario/order_status')) )) {
-                			$orderid = $_order->getId();
-                			echo "<span style=\"float:right\">";
-                			echo "<a style=\"color:#ffb81e\" href=\"" . $this->getUrl('boleto/standard/adminView/order_id/' . $orderid) . "\" class=\"link-cart\" onclick=\"this.target='_blank'\">" . $this->__('Gerar 2a Via do Boleto') . "</a></span>";
-
-                			} //  segunda via do boleto ?>
-                <!-- Deivison -->
-
             </fieldset>
         </div>
     </div>
