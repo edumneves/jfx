@@ -67,8 +67,8 @@
 
 
 
-/* Collapsible blocks in the footer
+/* Mobile collapsible blocks (disable for old IE)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-.footer .mobile-collapsible .block-content { display: block !important; }
-.footer .mobile-collapsible .opener { display: none !important; }
+.mobile-collapsible .block-content { display: block !important; }
+.mobile-collapsible .opener { display: none !important; }

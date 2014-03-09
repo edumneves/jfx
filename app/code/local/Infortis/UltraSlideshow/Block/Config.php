@@ -1,4 +1,8 @@
 <?php
+/**
+ * @deprecated
+ */
+
 class Infortis_UltraSlideshow_Block_Config extends Mage_Core_Block_Template
 {
 	public function getSlideshowCfg()

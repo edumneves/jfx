@@ -6,25 +6,25 @@ class Infortis_Ultimo_Block_Product_List_Featured extends Mage_Catalog_Block_Pro
 	protected $_cacheKeyArray = NULL;
 	
 	/**
-     * Initialize block's cache
-     */
-    protected function _construct()
-    {
-        parent::_construct();
+	 * Initialize block's cache
+	 */
+	protected function _construct()
+	{
+		parent::_construct();
 
-        $this->addData(array(
-            'cache_lifetime'    => 99999999,
-            'cache_tags'        => array(Mage_Catalog_Model_Product::CACHE_TAG),
-        ));
-    }
+		$this->addData(array(
+			'cache_lifetime'    => 99999999,
+			'cache_tags'        => array(Mage_Catalog_Model_Product::CACHE_TAG),
+		));
+	}
 	
 	/**
-     * Get Key pieces for caching block content
-     *
-     * @return array
-     */
+	 * Get Key pieces for caching block content
+	 *
+	 * @return array
+	 */
 	public function getCacheKeyInfo()
-    {
+	{
 		if (NULL === $this->_cacheKeyArray)
 		{
 			$this->_cacheKeyArray = array(
@@ -52,39 +52,39 @@ class Infortis_Ultimo_Block_Product_List_Featured extends Mage_Catalog_Block_Pro
 			);
 		}
 		return $this->_cacheKeyArray;
-    }
+	}
 	
 	/**
-     * Get collection id
-     *
-     * @return string
-     */
-    public function getUniqueCollectionId()
-    {
-        if (NULL === $this->_productCollectionId)
+	 * Get collection id
+	 *
+	 * @return string
+	 */
+	public function getUniqueCollectionId()
+	{
+		if (NULL === $this->_productCollectionId)
 		{
-            $this->_prepareCollectionAndCache();
-        }
-        return $this->_productCollectionId;
-    }
+			$this->_prepareCollectionAndCache();
+		}
+		return $this->_productCollectionId;
+	}
 	
 	/**
-     * Get number of products in the collection
-     *
-     * @return int
-     */
-    public function getCollectionCount()
-    {
-        if (NULL === $this->_collectionCount)
+	 * Get number of products in the collection
+	 *
+	 * @return int
+	 */
+	public function getCollectionCount()
+	{
+		if (NULL === $this->_collectionCount)
 		{
-            $this->_prepareCollectionAndCache();
-        }
-        return $this->_collectionCount;
-    }
+			$this->_prepareCollectionAndCache();
+		}
+		return $this->_collectionCount;
+	}
 	
 	/**
-     * Prepare collection id, count collection
-     */
+	 * Prepare collection id, count collection
+	 */
 	protected function _prepareCollectionAndCache()
 	{
 		$ids = array();
@@ -141,6 +141,6 @@ class Infortis_Ultimo_Block_Product_List_Featured extends Mage_Catalog_Block_Pro
 	 */
 	public function getFrontendHash()
 	{
-		return md5( implode("+", $this->getCacheKeyInfo()) );
+		return md5(implode("+", $this->getCacheKeyInfo()));
 	}
 }

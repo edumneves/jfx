@@ -201,7 +201,7 @@ class Infortis_Ultimo_Helper_Data extends Mage_Core_Helper_Abstract
 				'<img class="alt-img" src="' . Mage::helper('infortis/image')->getImg($product, $w, $h, $imgVersion, $altImg->getFile()) . '" alt="' . $product->getName() . '" />';
 			}
 		}
-		
+
 		return '';
 	}
 	

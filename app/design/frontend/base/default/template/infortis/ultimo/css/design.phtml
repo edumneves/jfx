@@ -124,12 +124,23 @@ button.btn-checkout:hover span
 	.add-to-links span.icon,
 
 /* Slider arrows */
-.gen-slider-arrows1 .direction-nav a, /* Sliders */
-.gen-slider-arrows1 .direction-nav a.disabled:hover,
-.gen-slider-arrows2 .direction-nav a, /* Slideshow */
-.gen-slider-arrows2 .direction-nav a.disabled:hover,
-.gen-slider-arrows3 .direction-nav a, /* Cloud Zoom */
-.gen-slider-arrows3 .direction-nav a.disabled:hover,
+.slider-arrows1 .owl-controls .owl-buttons div,
+.slider-arrows1 .owl-controls.clickable .owl-buttons div.disabled:hover,
+.slider-arrows2 .owl-controls .owl-buttons div,
+.slider-arrows3 .owl-controls .owl-buttons div,
+.slider-arrows3 .owl-controls.clickable .owl-buttons div.disabled:hover,
+
+	/* deprecated */
+	.gen-slider-arrows1 .direction-nav a, /* Sliders */
+	.gen-slider-arrows1 .direction-nav a.disabled:hover,
+	.gen-slider-arrows2 .direction-nav a, /* Slideshow */
+	.gen-slider-arrows2 .direction-nav a.disabled:hover,
+	.gen-slider-arrows3 .direction-nav a, /* Cloud Zoom */
+	.gen-slider-arrows3 .direction-nav a.disabled:hover,
+
+/* Slider pagination */
+.slider-pagination1 .owl-controls .owl-page span,
+.slider-pagination2 .owl-controls .owl-page span,
 
 /* Lightbox */
 #cboxPrevious,
@@ -167,9 +178,19 @@ button.btn-checkout:hover span
 	.add-to-links .feature-icon-hover:hover span.icon,
 
 /* Slider arrows */
-.gen-slider-arrows1 .direction-nav a:hover,
-.gen-slider-arrows2 .direction-nav a:hover,
-.gen-slider-arrows3 .direction-nav a:hover,
+.slider-arrows1 .owl-controls.clickable .owl-buttons div:hover,
+.slider-arrows2 .owl-controls.clickable .owl-buttons div:hover,
+.slider-arrows3 .owl-controls.clickable .owl-buttons div:hover,
+
+	/* deprecated */
+	.gen-slider-arrows1 .direction-nav a:hover,
+	.gen-slider-arrows2 .direction-nav a:hover,
+	.gen-slider-arrows3 .direction-nav a:hover,
+
+/* Slider pagination */
+.slider-pagination1 .owl-controls.clickable .owl-page:hover span,
+.slider-pagination2 .owl-controls.clickable .owl-page:hover span,
+
 
 /* Lightbox */
 #cboxPrevious:hover,
@@ -188,6 +209,12 @@ button.btn-checkout:hover span
 
 
 /* Active icon */
+/* Slider pagination */
+.slider-pagination1 .owl-controls			.owl-page.active span,
+.slider-pagination1 .owl-controls.clickable .owl-page.active:hover span, /* Active state overrides hover state */
+.slider-pagination2 .owl-controls			.owl-page.active span,
+.slider-pagination2 .owl-controls.clickable .owl-page.active:hover span, /* Active state overrides hover state */
+
 .sorter .view-mode span.grid,
 .sorter .view-mode span.list,
 .pager .pages li.current
@@ -534,7 +561,16 @@ h3.product-name, /*TODO:remove*/
 	<?php if ($d['header_top']['bg_color']): ?>
 		background-color: <?php echo $d['header_top']['bg_color']; ?>;
 	<?php endif; ?>
+
+	<?php if ($d['header_top']['padding_top']): ?>
+		padding-top: <?php echo intval($d['header_top']['padding_top']); ?>px;
+	<?php endif; ?>
+
+	<?php if ($d['header_top']['padding_bottom']): ?>
+		padding-bottom: <?php echo intval($d['header_top']['padding_bottom']); ?>px;
+	<?php endif; ?>
 }
+
 .header-top
 {
 	<?php if ($d['header_top']['inner_bg_color']): ?>
@@ -548,6 +584,9 @@ h3.product-name, /*TODO:remove*/
 	<?php if ($d['header_top']['content_padding_top']): ?>
 		padding-top: <?php echo intval($d['header_top']['content_padding_top']); ?>px;
 	<?php endif; ?>
+	<?php if ($d['header_top']['content_padding_bottom']): ?>
+		padding-bottom: <?php echo intval($d['header_top']['content_padding_bottom']); ?>px;
+	<?php endif; ?>
 }
 .header-top a
 {
@@ -559,6 +598,33 @@ h3.product-name, /*TODO:remove*/
 {
 	<?php if ($t->isColor($d['header_top']['link_hover_color'])): ?>
 		color: <?php echo $d['header_top']['link_hover_color']; ?>;
+	<?php endif; ?>
+}
+
+
+
+<?php
+//Header primary
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+?>
+
+.header-primary-container
+{
+	<?php if ($d['header_primary']['padding_top']): ?>
+		padding-top: <?php echo intval($d['header_primary']['padding_top']); ?>px;
+	<?php endif; ?>
+
+	<?php if ($d['header_primary']['padding_bottom']): ?>
+		padding-bottom: <?php echo intval($d['header_primary']['padding_bottom']); ?>px;
+	<?php endif; ?>
+}
+.header-primary
+{
+	<?php if ($d['header_primary']['content_padding_top']): ?>
+		padding-top: <?php echo intval($d['header_primary']['content_padding_top']); ?>px;
+	<?php endif; ?>
+	<?php if ($d['header_primary']['content_padding_bottom']): ?>
+		padding-bottom: <?php echo intval($d['header_primary']['content_padding_bottom']); ?>px;
 	<?php endif; ?>
 }
 
@@ -749,7 +815,7 @@ li.level0 > a:hover > span > .pin-bottom:before,
 }
 
 <?php //Menu wrapper class ?>
-<?php //If menu bar has background color (to show an outline) ?>
+<?php //If menu bar has inner background color (to show an outline) ?>
 <?php if ($t->isColor($d['nav']['inner_bg_color'])): ?>
 
 	.nav
@@ -1078,6 +1144,52 @@ span.icon.icon-color-productview
 
 
 <?php
+//Slideshow
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+?>
+
+<?php //Slideshow interface icons: prev/next arrows, pagination
+//-------------------------------------------------------------- ?>
+
+<?php //Default icon ?>
+/* Slider arrows */
+.the-slideshow .owl-controls .owl-buttons div,
+
+/* Slider pagination */
+.the-slideshow.slider-pagination1 .owl-controls .owl-page span,
+
+/* For pagination2 default color overrides color of active state and hover state */
+.the-slideshow.slider-pagination2 .owl-controls .owl-page span,
+.the-slideshow.slider-pagination2 .owl-controls				.owl-page.active span,
+.the-slideshow.slider-pagination2 .owl-controls.clickable 	.owl-page.active:hover span 
+{
+	background-color: <?php echo $d['slideshow']['tool_icon_bg_color']; ?>;
+}
+
+
+<?php //Hover icon ?>
+/* Slider arrows */
+.the-slideshow .owl-controls.clickable .owl-buttons div:hover,
+
+/* Slider pagination */
+.the-slideshow.slider-pagination1 .owl-controls.clickable .owl-page:hover span,
+.the-slideshow.slider-pagination2 .owl-controls.clickable .owl-page:hover span
+{
+	background-color: <?php echo $d['slideshow']['tool_icon_hover_bg_color']; ?>;
+}
+
+
+<?php //Active icon ?>
+.the-slideshow.slider-pagination1 .owl-controls 			.owl-page.active span,
+.the-slideshow.slider-pagination1 .owl-controls.clickable 	.owl-page.active:hover span /* Active state overrides hover state */
+{
+	background-color: <?php echo $d['slideshow']['tool_icon_active_bg_color']; ?>;
+}
+
+
+
+
+<?php
 //Footer
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ?>
@@ -1148,12 +1260,23 @@ span.icon.icon-color-productview
 .footer .buttons-set .back-link small,
 
 /* Slider arrows */
-.footer .gen-slider-arrows1 .direction-nav a, /* Sliders */
-.footer .gen-slider-arrows1 .direction-nav a.disabled:hover,
-.footer .gen-slider-arrows2 .direction-nav a, /* Slideshow */
-.footer .gen-slider-arrows2 .direction-nav a.disabled:hover,
-.footer .gen-slider-arrows3 .direction-nav a, /* Cloud Zoom */
-.footer .gen-slider-arrows3 .direction-nav a.disabled:hover,
+.footer .slider-arrows1 .owl-controls .owl-buttons div,
+.footer .slider-arrows1 .owl-controls.clickable .owl-buttons div.disabled:hover,
+.footer .slider-arrows2 .owl-controls .owl-buttons div,
+.footer .slider-arrows3 .owl-controls .owl-buttons div,
+.footer .slider-arrows3 .owl-controls.clickable .owl-buttons div.disabled:hover,
+
+	/* deprecated */
+	.footer .gen-slider-arrows1 .direction-nav a, /* Sliders */
+	.footer .gen-slider-arrows1 .direction-nav a.disabled:hover,
+	.footer .gen-slider-arrows2 .direction-nav a, /* Slideshow */
+	.footer .gen-slider-arrows2 .direction-nav a.disabled:hover,
+	.footer .gen-slider-arrows3 .direction-nav a, /* Cloud Zoom */
+	.footer .gen-slider-arrows3 .direction-nav a.disabled:hover,
+
+/* Slider pagination */
+.footer .slider-pagination1 .owl-controls .owl-page span,
+.footer .slider-pagination2 .owl-controls .owl-page span,
 
 /* Accordion and collapsible: opener */
 .footer .accordion-style1 .opener,
@@ -1167,9 +1290,18 @@ span.icon.icon-color-productview
 .footer .buttons-set .back-link:hover small,
 
 /* Slider arrows */
-.footer .gen-slider-arrows1 .direction-nav a:hover,
-.footer .gen-slider-arrows2 .direction-nav a:hover,
-.footer .gen-slider-arrows3 .direction-nav a:hover,
+.footer .slider-arrows1 .owl-controls.clickable .owl-buttons div:hover,
+.footer .slider-arrows2 .owl-controls.clickable .owl-buttons div:hover,
+.footer .slider-arrows3 .owl-controls.clickable .owl-buttons div:hover,
+
+	/* deprecated */
+	.footer .gen-slider-arrows1 .direction-nav a:hover,
+	.footer .gen-slider-arrows2 .direction-nav a:hover,
+	.footer .gen-slider-arrows3 .direction-nav a:hover,
+
+/* Slider pagination */
+.footer .slider-pagination1 .owl-controls.clickable .owl-page:hover span,
+.footer .slider-pagination2 .owl-controls.clickable .owl-page:hover span,
 
 /* Accordion and collapsible: opener */
 .footer .accordion-style1 .opener:hover,

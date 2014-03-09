@@ -2,14 +2,12 @@
 /* Special styling for special browser */
 
 
+.the-slideshow .item { position:relative; }
+
 
 /* Header
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-
-/* Mini cart
--------------------------------------------------------------- */
-#mini-cart .block-title .to-checkout .icon { vertical-align:middle; }
 
 /* Quick search
 -------------------------------------------------------------- */

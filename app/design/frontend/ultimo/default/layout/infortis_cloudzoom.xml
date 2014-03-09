@@ -21,8 +21,10 @@
 			<action method="addJs"
 				ifconfig="cloudzoom/lightbox/enable"><script>infortis/jquery/plugins/jquery.colorbox.min.js</script></action>
 			
+			<!--
 			<action method="addJs"><script>infortis/jquery/plugins/jquery.easing.min.js</script></action>
 			<action method="addJs"><script>infortis/jquery/plugins/jquery.flexslider.min.js</script></action>
+			-->
 		</reference>
 
 		<reference name="product.info">

@@ -1,5 +1,5 @@
 /**
- * Infortis Themes
+ * Infortis themes styles
  */
 
 
@@ -73,7 +73,8 @@
 	-webkit-transition:	all 150ms ease-in-out;
 	-o-transition:		all 150ms ease-in-out;
 }
-.product-view .sticker-wrapper { z-index:99; /* On product page z-index gteater than Cloud Zoom image */ }
+.product-view .sticker-wrapper { z-index:99; /* On product page z-index greater than Cloud Zoom image */ }
+.product-view .product-img-column { position:relative; } /* Stickers are positioned relative to this container */
 
 .sticker-wrapper.top-right { top:-3px; right:-3px; }
 .sticker-wrapper.bottom-right { bottom:-3px; right:-3px; }
@@ -214,6 +215,7 @@
 .caption p {
 	clear:left;
 	padding:0.25em 0.5em;
+	margin-bottom:1px;
 	font-size: 1.3333em;
 	line-height:1em;
 }
@@ -295,3 +297,15 @@ a:hover .caption.light2 p { background-color:rgba(255,255,255, 0.85); color:#000
 .caption.light3 p { background-color:rgba(255,255,255, 0.8); color:#000; }
 a:hover .caption.light3 .heading,
 a:hover .caption.light3 p { background-color:rgba(255,255,255, 1); color:#000; }
+
+
+/* Other
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+/* Disable transitions, fade effect applied with JS */
+.fade-on-hover {
+	transition:			none;
+	-moz-transition:	none;
+	-webkit-transition:	none;
+	-o-transition:		none;
+}

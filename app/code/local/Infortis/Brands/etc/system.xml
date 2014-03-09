@@ -65,7 +65,7 @@
 						</link_search_enabled>
 						<page_base_path translate="label">
                             <label>Base Path to Brand's Pages</label>
-							<comment><![CDATA[This path can be used only when <strong>Brand Logo is a Link to Search Results</strong> option is disabled. Path will be appended with the brand's name to create a link to the brand's page.<br/>- Path is relative to the store root.<br/>- No leading or trailing slashes.<br/>- Enter "/" (single slash, without brackets), if no base path is needed.<br/>- Leave empty if you don't need a link for brand logo.<br/>
+							<comment><![CDATA[This path can be used only when option <strong>Brand Logo is a Link to Search Results</strong> is disabled. Path will be appended with the brand's name to create a link to the brand's page.<br/>- Path is relative to the store root.<br/>- No leading or trailing slashes.<br/>- Enter "/" (single slash, without brackets), if no base path is needed.<br/>- Leave empty if you don't need a link for brand logo.<br/>
 								- For more details please refer to the user guide.]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>310</sort_order>
@@ -128,7 +128,8 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <enable translate="label">
+                        <!-- Global switcher removed -->
+                        <!--<enable translate="label">
 							<label>Brand Sliders</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_enabledisable</source_model>
@@ -136,7 +137,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-						</enable>
+						</enable>-->
 						<all_brands translate="label">
 							<label>Show All Brands</label>
 							<comment><![CDATA[If set to "Yes", slider will display all existing brands. Otherwise slider will display only those brands, which are currently assigned to products.]]></comment>
@@ -147,19 +148,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
 						</all_brands>
-						
-						<!--
-						<fx translate="label">
-							<label>Transition Effect Animation</label>
-                            <frontend_type>select</frontend_type>
-							<source_model>brands/source_fx</source_model>
-                            <sort_order>50</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-						</fx>
-						-->
-						<easing translate="label">
+						<!--<easing translate="label">
 							<label>Easing Method</label>
 							<comment>The type of easing applied to the transition animation.</comment>
                             <frontend_type>select</frontend_type>
@@ -168,32 +157,40 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-						</easing>
-						
+						</easing>-->
 						<timeout translate="label">
                             <label>Timeout</label>
-							<comment>Time (in milliseconds) between slide transitions. Enter "0" to disable automatic transition. Note that 1000 miliseconds = 1 second.</comment>
+							<comment>To enable automatic scrolling, specify time (in milliseconds) between slide transitions. Leave empty to disable automatic scrolling. Note that 1000 miliseconds = 1 second.</comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>70</sort_order>
+                            <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </timeout>
 						<speed translate="label">
-                            <label>Transition Speed</label>
-							<comment>Time (in milliseconds) of slide transition animation.</comment>
+                            <label>Speed</label>
+							<comment>Duration (in milliseconds) of scrolling animation. Applied to scrolling with arrows (and touch swipe).</comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>80</sort_order>
+                            <sort_order>110</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </speed>
+                        <auto_speed translate="label">
+                            <label>Automatic Scrolling Speed</label>
+                            <comment><![CDATA[Duration (in milliseconds) of scrolling animation. Applied to automatic scrolling (if <strong>Timeout</strong> was specified) and to scrolling with pagination.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>115</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </auto_speed>
 						<pause translate="label">
 							<label>Pause on Hover</label>
 							<comment>If enabled, when the slider is mouseovered then the automatic transition functionality will pause.</comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_enabledisable</source_model>
-                            <sort_order>90</sort_order>
+                            <sort_order>120</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -203,11 +200,21 @@
 							<comment>If enabled, animation will loop.</comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_enabledisable</source_model>
-                            <sort_order>100</sort_order>
+                            <sort_order>130</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
 						</loop>
+                        <lazy translate="label">
+                            <label>Lazy Loading</label>
+                            <comment>Delays loading of images to speed up page loading. Images outside of viewport will not be loaded before user scrolls to them.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </lazy>
 					</fields>
 				</slider>
             </groups>

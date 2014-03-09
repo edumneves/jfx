@@ -172,4 +172,4 @@
 
 /* Mobile accordion
 -------------------------------------------------------------- */
-.mobile-collapsible {}
+.mobile-collapsible { position: static; }

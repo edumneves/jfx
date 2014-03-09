@@ -118,6 +118,12 @@
             <onepagecheckout_adminhtml>
                 <class>DeivisonArthur_OnepageCheckout_Adminhtml_Model</class>
             </onepagecheckout_adminhtml>
+            <core>
+                <rewrite>
+                    <session_abstract_varien>DeivisonArthur_OnepageCheckout_Model_Core_Session_Abstract_Varien
+                    </session_abstract_varien>
+                </rewrite>
+            </core>
         </models>
         <blocks>
             <checkout>

@@ -472,7 +472,16 @@ input.input-text, select, textarea,
 /* Shadow for the main containers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-.shadow .show-bg {
+
+/* Elements which have backgr. color can be marked with "show-bg". They will drop shadow if "shadow" class was added to the containing block. */
+.drop-shadow,
+.shadow .show-bg,
+
+/* Conditional shadow for main menu bar */
+.shadow .nav-bar-drop-shadow #mobnav-trigger,
+.shadow .nav-bar-drop-shadow .vertnav-top,
+.shadow .nav-bar-drop-shadow #nav
+{
 	-moz-box-shadow:	0 2px 3px rgba(0, 0, 0, 0.1);
 	-webkit-box-shadow:	0 2px 3px rgba(0, 0, 0, 0.1);
 	box-shadow:			0 2px 3px rgba(0, 0, 0, 0.1);

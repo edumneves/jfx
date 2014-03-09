@@ -84,8 +84,6 @@
 /* Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
 
-.header-main { margin: 10px 0; }
-
 /* Line breaker */
 .user-menu .line-break-after { clear:both; margin-bottom: 1px; }
 
@@ -157,6 +155,7 @@
 */
 /* Align block title with the tabs on product page */
 .block-related .section-title { padding-top: 19px; }
+.block-related-thumbnails .owl-wrapper { margin-top:15px; }
 
 
 /* Block: Account
@@ -326,9 +325,13 @@
 /* Add-to links */
 .add-to-links.addto-icons a,
 
-/* Slider arrows */
-.gen-slider-arrows3 .direction-nav a,
-.gen-slider-arrows3 .direction-nav a.disabled:hover
+/* Slider arrows (for zoom thumbnails) */
+.slider-arrows3 .owl-controls .owl-buttons div,
+.slider-arrows3 .owl-controls.clickable .owl-buttons div.disabled:hover,
+
+	/* Deprecated */
+	.gen-slider-arrows3 .direction-nav a,
+	.gen-slider-arrows3 .direction-nav a.disabled:hover
 {
 	background-color:transparent;
 }

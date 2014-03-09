@@ -2,7 +2,7 @@
 <config>
 	<tabs>
 		<ultimo translate="label" module="ultimo">
-			<label>Ultimo (1.5.10)</label>
+			<label>Ultimo (1.6.1)</label>
 			<sort_order>151</sort_order>
 			<class>ultimo</class>
 		</ultimo>
@@ -389,7 +389,7 @@
 				</category_list>
 				<product_page translate="label">
 					<label>Product Page</label>
-					<comment><![CDATA[<strong>IMPORTANT:</strong><br/>Width of the product page columns (<strong>Image Column</strong>, <strong>Primary Column</strong>, <strong>Secondary Column</strong>) is specified in grid units. Sum of all columns has to be <strong>equal 12 grid units</strong>. Otherwise default values will be used.<br/><br/>]]></comment>
+					<comment><![CDATA[<strong>IMPORTANT:</strong><br/>Width of the product page columns (<strong>Image Column</strong>, <strong>Primary Column</strong>, <strong>Secondary Column</strong>) is specified in grid units. Sum of all columns has to be <strong>equal 12 grid units</strong> if you want to display all columns in a single row.<br/><br/>]]></comment>
 					<frontend_type>text</frontend_type>
 					<sort_order>200</sort_order>
 					<show_in_default>1</show_in_default>
@@ -487,6 +487,15 @@
 								<related_template>catalog/product/list/related_multi.phtml</related_template>
 							</depends>
 						</related_count>
+						<related_timeout translate="label">
+							<label>Timeout</label>
+							<comment>To enable automatic scrolling of the slider, specify time (in milliseconds) between transitions. Leave empty to disable automatic scrolling. Note that 1000 miliseconds = 1 second.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>250</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</related_timeout>
 
 						<heading_upsell translate="label">
 							<label>Up-sell Products</label>
@@ -507,6 +516,15 @@
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</replace_upsell>
+						<upsell_timeout translate="label">
+							<label>Timeout</label>
+							<comment>To enable automatic scrolling of the slider, specify time (in milliseconds) between transitions. Leave empty to disable automatic scrolling. Note that 1000 miliseconds = 1 second.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>320</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</upsell_timeout>
 
 						<heading_misc translate="label">
 							<label>Other Elements</label>
@@ -577,7 +595,7 @@
 				</footer>
 				<product_slider translate="label">
 					<label>Product Sliders</label>
-					<comment>This section is related to product sliders. "Speed" will be applied for all existing product sliders, also on product page. Other settings are only applied to Featured Products Slider blocks and New Products blocks.</comment>
+					<comment><![CDATA[This section is related to all existing product sliders. "Timeout" will be applied only to Featured Products Slider and New Products. "Timeout" for Related Products and Up-Sell Products (blocks on product page) can be set in <strong>Product Page</strong> tab.]]></comment>
 					<frontend_type>text</frontend_type>
 					<sort_order>400</sort_order>
 					<show_in_default>1</show_in_default>
@@ -586,7 +604,7 @@
 					<fields>
 						<timeout translate="label">
 							<label>Timeout</label>
-							<comment>To enable automatic scrolling of the product sliders, specify time (in milliseconds) between slide transitions. Leave empty to disable automatic scrolling. Note that 1000 miliseconds = 1 second.</comment>
+							<comment>To enable automatic scrolling of the sliders, specify time (in milliseconds) between slide transitions. Leave empty to disable automatic scrolling. Note that 1000 miliseconds = 1 second.</comment>
 							<frontend_type>text</frontend_type>
 							<sort_order>10</sort_order>
 							<show_in_default>1</show_in_default>
@@ -595,14 +613,53 @@
 						</timeout>
 						<speed translate="label">
 							<label>Speed</label>
-							<comment>Duration (in milliseconds) of scrolling animation.</comment>
+							<comment>Duration (in milliseconds) of scrolling animation. Applied to scrolling with arrows (and touch swipe).</comment>
 							<frontend_type>text</frontend_type>
 							<sort_order>20</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</speed>
-						<move_items translate="label">
+						<auto_speed translate="label">
+							<label>Automatic Scrolling Speed</label>
+							<comment><![CDATA[Duration (in milliseconds) of scrolling animation. Applied to automatic scrolling (if <strong>Timeout</strong> was specified) and to scrolling with pagination.]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</auto_speed>
+						<pause translate="label">
+							<label>Pause on Hover</label>
+							<comment>If enabled, when the slider is mouseovered then the automatic scrolling will pause.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</pause>
+						<loop translate="label">
+							<label>Loop</label>
+							<comment>If enabled, scrolling will loop.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+						</loop>
+						<lazy translate="label">
+							<label>Lazy Loading</label>
+							<comment>Delays loading of images. If enabled, images outside of viewport will not be loaded before user scrolls to them.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</lazy>
+						<!--<move_items translate="label">
 							<label>Move Items</label>
 							<comment>Number of items that should move on animation. Enter 0 to move all visible items.</comment>
 							<frontend_type>text</frontend_type>
@@ -610,7 +667,7 @@
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
-						</move_items>
+						</move_items>-->
 					</fields>
 				</product_slider>
 				<magento_blocks translate="label">
@@ -1342,12 +1399,25 @@
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</shadow>
+						<shadow_nav translate="label">
+							<label>Main Menu Shadow</label>
+							<comment><![CDATA[Select which container of the menu will drop shadow. <strong>Important:</strong> unlike other sections, menu doesn't need to have <strong>Inner Background Color</strong> to drop shadow.]]></comment>
+							<frontend_type>select</frontend_type>
+							<source_model>ultimo/system_config_source_navshadow</source_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<shadow>1</shadow>
+							</depends>
+						</shadow_nav>
 						<structural_elements_transition translate="label">
 							<label>Structural Elements Transition</label>
 							<comment><![CDATA[If enabled, main structural elements of the page layout will be animated during web browser window resizing.]]></comment>
 							<frontend_type>select</frontend_type>
 							<source_model>adminhtml/system_config_source_enabledisable</source_model>
-							<sort_order>20</sort_order>
+							<sort_order>50</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
@@ -1844,18 +1914,109 @@
 							<show_in_store>1</show_in_store>
 						</heading_gap>
 
-						<content_padding_top translate="label">
-							<label>Content Top Padding</label>
-							<comment><![CDATA[Specify additional padding at the top of the content area of this section. Use when you want to move the content away from the top edge of the header. Especially useful if you also specified the top gap for the header (field <strong>Header > Gap at the Top</strong>). Value in pixels.]]></comment>
+						<padding_top translate="label">
+							<label>Gap at the Top</label>
+							<comment>Specify additional gap above this section of the header. Value in pixels.</comment>
 							<frontend_type>text</frontend_type>
 							<validate>validate-number validate-number-range number-range-0-50</validate>
 							<sort_order>510</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
+						</padding_top>
+						<padding_bottom translate="label">
+							<label>Gap at the Bottom</label>
+							<comment>Specify additional gap below this section of the header. Value in pixels.</comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number validate-number-range number-range-0-50</validate>
+							<sort_order>520</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</padding_bottom>
+
+						<content_padding_top translate="label">
+							<label>Content Top Padding</label>
+							<comment><![CDATA[Specify additional padding at the top of the content area of this section. Use when you want to move the content away from the top edge of the content area. Especially useful if you also configured the inner background color for this section (field: <strong>Header - Top > Inner Background Color</strong>) and the top gap for the entire header (field <strong>Header > Gap at the Top</strong>). Value in pixels.]]></comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number validate-number-range number-range-0-50</validate>
+							<sort_order>530</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
 						</content_padding_top>
+						<content_padding_bottom translate="label">
+							<label>Content Bottom Padding</label>
+							<comment><![CDATA[Specify additional padding at the bottom of the content area of this section. Similar to <strong>Content Top Padding</strong>. Value in pixels.]]></comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number validate-number-range number-range-0-50</validate>
+							<sort_order>540</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</content_padding_bottom>
 					</fields>
 				</header_top>
+				<header_primary translate="label">
+					<label>Header - Primary</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>36</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<heading_gap translate="label">
+							<label>Additional Spacing</label>
+							<frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+							<sort_order>500</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</heading_gap>
+
+						<padding_top translate="label">
+							<label>Gap at the Top</label>
+							<comment>Specify additional gap above this section of the header. Value in pixels.</comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number validate-number-range number-range-0-50</validate>
+							<sort_order>510</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</padding_top>
+						<padding_bottom translate="label">
+							<label>Gap at the Bottom</label>
+							<comment>Specify additional gap below this section of the header. Value in pixels.</comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number validate-number-range number-range-0-50</validate>
+							<sort_order>520</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</padding_bottom>
+
+						<content_padding_top translate="label">
+							<label>Content Top Padding</label>
+							<comment><![CDATA[Specify additional padding at the top of the content area of this section. Use when you want to move the content away from the top edge of the content area. Especially useful if you also configured the inner background color for this section (field: <strong>Header - Primary > Inner Background Color</strong>). Value in pixels.]]></comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number validate-number-range number-range-0-50</validate>
+							<sort_order>530</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</content_padding_top>
+						<content_padding_bottom translate="label">
+							<label>Content Bottom Padding</label>
+							<comment><![CDATA[Specify additional padding at the bottom of the content area of this section. Similar to <strong>Content Top Padding</strong>. Value in pixels.]]></comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-number validate-number-range number-range-0-50</validate>
+							<sort_order>540</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</content_padding_bottom>
+					</fields>
+				</header_primary>
 				<nav translate="label">
 					<label>Main Menu</label>
 					<frontend_type>text</frontend_type>
@@ -1877,7 +2038,7 @@
 						</outer_bg_color>
 						<inner_bg_color translate="label">
 							<label>Inner Background Color (Outline)</label>
-							<comment><![CDATA[Set background color to display an outline around the menu.</br><strong>Note:</strong> if option <strong>Stretched</strong> is enabled, outline will not be visible. In that case do not set inner background color and leave this field empty.]]></comment>
+							<comment><![CDATA[Background color of the inner container. Set this color to display an outline around the menu items.</br><strong>Note:</strong> if option <strong>Stretched</strong> is enabled, outline will not be visible.]]></comment>
 							<frontend_type>text</frontend_type>
 							<frontend_model>infortis/adminhtml_system_config_form_field_color</frontend_model>
 							<backend_model>infortis/system_config_backend_design_color_validatetransparent</backend_model>
@@ -1888,7 +2049,7 @@
 						</inner_bg_color>
 						<stretched translate="label">
 							<label>Stretched</label>
-							<comment>If set to "Yes", main menu bar will have the same width as the width of the main content area (including side margins).</comment>
+							<comment>If set to "Yes", menu items will be stretched to have the same width as the width of the inner container.</comment>
 							<frontend_type>select</frontend_type>
 							<source_model>adminhtml/system_config_source_yesno</source_model>
 							<sort_order>20</sort_order>
@@ -1948,7 +2109,7 @@
 						</padding_bottom>
 
 						<heading_menubar translate="label">
-							<label>Basic Colors</label>
+							<label>Menu Items Colors</label>
 							<frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
 							<sort_order>100</sort_order>
 							<show_in_default>1</show_in_default>
@@ -2579,6 +2740,56 @@ between the header and the footer.</comment>
 						</acco_active_color>
 					</fields>
 				</product_page>
+				<slideshow translate="label">
+					<label>Slideshow</label>
+					<comment>In this tab, you can configure elements related to slideshows.</comment>
+					<frontend_type>text</frontend_type>
+					<sort_order>100</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<heading_tool_icons translate="label">
+							<label>Interface Icons</label>
+							<frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+							<sort_order>0</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</heading_tool_icons>
+						
+						<tool_icon_bg_color translate="label">
+							<label>Icon Background Color</label>
+							<frontend_type>text</frontend_type>
+							<frontend_model>infortis/adminhtml_system_config_form_field_color</frontend_model>
+							<backend_model>infortis/system_config_backend_design_color_validatetransparent</backend_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</tool_icon_bg_color>
+						<tool_icon_hover_bg_color translate="label">
+							<label>Icon Hover Background Color</label>
+							<frontend_type>text</frontend_type>
+							<frontend_model>infortis/adminhtml_system_config_form_field_color</frontend_model>
+							<backend_model>infortis/system_config_backend_design_color_validatetransparent</backend_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</tool_icon_hover_bg_color>
+						<tool_icon_active_bg_color translate="label">
+							<label>Icon Active Background Color</label>
+							<frontend_type>text</frontend_type>
+							<frontend_model>infortis/adminhtml_system_config_form_field_color</frontend_model>
+							<backend_model>infortis/system_config_backend_design_color_validatetransparent</backend_model>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</tool_icon_active_bg_color>
+					</fields>
+				</slideshow>
 				<footer translate="label">
 					<label>Footer</label>
 					<comment>In this tab, you can configure the footer section of the page located at the bottom. Settings from this tab are inherited by all the other sub-sections of the footer. Some of the settings can be overridden in sub-sections.</comment>

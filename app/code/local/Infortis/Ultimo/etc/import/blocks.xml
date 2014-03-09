@@ -1,46 +1,20 @@
 <root>
    <blocks>
       <cms_block>
-         <title>Custom landing page 1</title>
-         <identifier>block_landing_page1</identifier>
-         <content><![CDATA[<div class="landing-page nested-container">
-	<br />
+         <title>Landing page 1</title>
+         <identifier>landing_page1</identifier>
+         <content><![CDATA[<div class="horizontal-section">
+
+	<a href="#">
+		<img src="{{media url="wysiwyg/infortis/ultimo/custom/landing/category01.jpg"}}" title="You can edit this block or replace it with custom content" alt="Sample banner" />
     
-	<div class="vertical-section grid12-4 persistent-grid2-1">
-        <a href="{{store direct_url="downloadable/ebooks.html"}}">
-        	<img class="center-block" src="{{media url="wysiwyg/infortis/ultimo/custom/landing/vert1.jpg"}}" alt="Sample banner" />
-            <div class="caption dark2 full-width">
-                <h2 class="heading permanent">Lorem</h2>
-                <p class="permanent">Nullam ornare enim nectis</p>
-                <p>Lorem ipsum dolor </p>
-            </div>
-        </a>
-	</div>
-	<div class="vertical-section grid12-4 persistent-grid2-1">
-        <a href="{{store direct_url="downloadable/music.html"}}">
-        	<img class="center-block" src="{{media url="wysiwyg/infortis/ultimo/custom/landing/vert2.jpg"}}" alt="Sample banner" />
-            <div class="caption dark2 full-width">
-	            <h2 class="heading permanent">Ipsum</h2>
-    	        <p class="permanent">In eget metus ornare itis est</p>
-        	    <p>Lorem ipsum dolor </p>
-            </div>
-        </a>
-	</div>
-	<div class="vertical-section grid12-4 persistent-grid2-1">
-        <a href="{{store direct_url="downloadable/software.html"}}">
-        	<img class="center-block" src="{{media url="wysiwyg/infortis/ultimo/custom/landing/vert3.jpg"}}" alt="Sample banner" />
-            <div class="caption dark2 full-width">
-	            <h2 class="heading permanent">Dolor</h2>
-    	        <p class="permanent">Etiam neque velit blandit sed</p>
-        	    <p>Lorem ipsum dolor </p>
-            </div>
-        </a>
-	</div>
-    <br />
+		<div class="caption light3 full-width">
+			<h2 class="heading permanent">Category Banner</h2>
+			<p>Upload image and description for every category in the store</p>
+			<p>Create landing pages for categories</p>
+		</div>
+	</a>
     
-	<div class="vertical-section grid-full">
-		{{block type="ultimo/product_list_featured" category_id="58" product_count="16" show_items="5" is_responsive="1" centered="1" size="size-s" move="2" hide_button="1" block_name="See Also: Recommended New Products" template="catalog/product/list_featured_slider.phtml"}}
-	</div>
 </div>]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
@@ -69,25 +43,10 @@
 <ul class="links">
 
     <li class="first">
-    	<a href="{{store url=''}}" title="">Custom Link</a>
-    </li>
-    <li>
-    	<a href="{{store url='catalog/seo_sitemap/category'}}" title="The Site Map">Site Map</a>
-    </li>
-    <li>
-    	<a href="{{store url='catalogsearch/term/popular'}}" title="Search Terms">Search Terms</a>
-    </li>
-    <li>
-    	<a href="{{store url='catalogsearch/advanced'}}" title="Advanced Search">Advanced Search</a>
-    </li>
-    <li>
-    	<a href="{{store url='sales/guest/form'}}" title="Orders and Returns">Orders and Returns</a>
-    </li>
-    <li>
-    	<a href="{{store url='contacts'}}" title="Contact Us">Contact Us</a>
+    	<a href="{{store url='about-magento-demo-store'}}" title="My custom link">Custom Link</a>
     </li>
     <li class=" last">
-    	<a class="link-rss" href="{{store url='rss'}}" title="RSS">RSS</a>
+    	<a href="{{store url='about-magento-demo-store'}}" title="My sample link">Sample Link</a>
     </li>
     
 </ul>]]></content>
@@ -213,7 +172,7 @@
 
 
 <!-- Social bookmarks from http://www.addthis.com/get/sharing  -->
-<!--
+<!-- AddThis Button BEGIN -->
 <div class="feature-wrapper top-border">
 	<div class="addthis_toolbox addthis_default_style ">
 	<a class="addthis_button_preferred_1"></a>
@@ -225,7 +184,8 @@
 	</div>
 	<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5054e6c6502d114f"></script>
 </div>
--->]]></content>
+<!-- AddThis Button END -->
+]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
@@ -292,22 +252,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
       <cms_block>
          <title>Cart - below table</title>
          <identifier>block_cart_below_table</identifier>
-         <content><![CDATA[<div class="nested-container hide-below-768">
-
-    <div class="page-banners clearer">
-        <div class="grid12-6 banner">
-            <a href="{{store direct_url="about-magento-demo-store"}}" title="Static CMS block displayed below the cart. Put your own content here.">
-                <img src="{{media url="wysiwyg/infortis/ultimo/custom/banners/01.png"}}" alt="Sample banner" />
-            </a>
-        </div>
-        <div class="grid12-6 banner">
-            <a href="{{store direct_url="about-magento-demo-store"}}" title="Static CMS block displayed below the cart. Put your own content here.">
-                <img src="{{media url="wysiwyg/infortis/ultimo/custom/banners/02.png"}}" alt="Sample banner" />
-            </a>
-        </div>
-    </div>
-
-</div>]]></content>
+         <content><![CDATA[<img src="{{media url="wysiwyg/infortis/ultimo/custom/banners/cart-discount.png"}}" alt="Magento discount code" title="Use discount code/coupon" />]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
@@ -328,45 +273,15 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 	</div>
 </div>]]></content>
-         <is_active>0</is_active>
+         <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
          <title>Footer column 2</title>
          <identifier>block_footer_column2</identifier>
          <content><![CDATA[<div class="collapsible mobile-collapsible">
-	<h6 class="block-title heading">Key Features</h6>
 
-	<div class="block-content">
-
-		<div class="feature feature-icon-hover indent first">
-			<span class="icon i-number">1</span>
-			<p class="no-margin">Unlimited colors, dozens of customizable elements</p>
-		</div>
-		<div class="feature feature-icon-hover indent">
-			<span class="icon i-number">2</span>
-			<p class="no-margin ">Customizable responsive layout based on fluid grid</p>
-		</div>
-		<div class="feature feature-icon-hover indent">
-			<span class="icon i-number">3</span>
-			<p class="no-margin ">50+ placeholders to display custom content</p>
-		</div>
-		<div class="feature feature-icon-hover indent">
-			<span class="icon i-number">4</span>
-			<p class="no-margin ">Create your custom sub-themes (variants)</p>
-		</div>
-
-	</div>
-</div>]]></content>
-         <is_active>0</is_active>
-         <stores><item>0</item></stores>
-      </cms_block>
-      <cms_block>
-         <title>Footer column 3</title>
-         <identifier>block_footer_column3</identifier>
-         <content><![CDATA[<div class="collapsible mobile-collapsible">
 	<h6 class="block-title heading">Theme Features</h6>
-
 	<div class="block-content">
 	
 		<ul class="bullet">
@@ -383,38 +298,71 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 		</ul>
 
 	</div>
+
 </div>]]></content>
-         <is_active>0</is_active>
+         <is_active>1</is_active>
+         <stores><item>0</item></stores>
+      </cms_block>
+      <cms_block>
+         <title>Footer column 3</title>
+         <identifier>block_footer_column3</identifier>
+         <content><![CDATA[<div class="collapsible mobile-collapsible">
+
+	<h6 class="block-title heading">Key Features</h6>
+	<div class="block-content">
+
+		<div class="feature feature-icon-hover indent first">
+			<span class="icon i-char">1</span>
+			<p class="no-margin">Unlimited colors, dozens of customizable elements</p>
+		</div>
+		<div class="feature feature-icon-hover indent">
+			<span class="icon i-char">2</span>
+			<p class="no-margin ">Customizable responsive layout based on fluid grid</p>
+		</div>
+		<div class="feature feature-icon-hover indent">
+			<span class="icon i-char">3</span>
+			<p class="no-margin ">50+ placeholders to display custom content</p>
+		</div>
+		<div class="feature feature-icon-hover indent">
+			<span class="icon i-char">4</span>
+			<p class="no-margin ">Create your custom sub-themes (variants)</p>
+		</div>
+
+	</div>
+
+</div>]]></content>
+         <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
          <title>Footer column 4</title>
          <identifier>block_footer_column4</identifier>
          <content><![CDATA[<div class="collapsible mobile-collapsible">
-	<h6 class="block-title heading">Company Info</h6>
 
-	<div class="block-content">
+		<h6 class="block-title heading">Company Info</h6>
+		<div class="block-content">
 
-		<div class="feature indent first">
-			<span class="icon i-telephone-w"></span>
-			<p class="no-margin ">Call Us +001 555 801<br/>Fax +001 555 802</p>
-		</div>
-		<div class="feature indent">
-			<span class="icon i-mobile-w"></span>
-			<p class="no-margin ">+77 123 1234<br/>+42 98 9876</p>
-		</div>
-		<div class="feature indent">
-			<span class="icon i-letter-w"></span>
-			<p class="no-margin ">boss@example.com<br/>me@example.com</p>
-		</div>
-		<div class="feature indent last">
-			<span class="icon i-skype-w"></span>
-			<p class="no-margin ">Skype: samplelogin<br/>skype_support</p>
+			<div class="feature feature-icon-hover indent first">
+				<span class="icon i-telephone-w"></span>
+				<p class="no-margin ">Call Us +001 555 801<br/>Fax +001 555 802</p>
+			</div>
+			<div class="feature feature-icon-hover indent">
+				<span class="icon i-mobile-w"></span>
+				<p class="no-margin ">+77 123 1234<br/>+42 98 9876</p>
+			</div>
+			<div class="feature feature-icon-hover indent">
+				<span class="icon i-letter-w"></span>
+				<p class="no-margin ">boss@example.com<br/>me@example.com</p>
+			</div>
+			<div class="feature feature-icon-hover indent last">
+				<span class="icon i-skype-w"></span>
+				<p class="no-margin ">Skype: samplelogin<br/>skype-support</p>
+			</div>
+
 		</div>
 
-	</div>
 </div>]]></content>
-         <is_active>0</is_active>
+         <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
@@ -425,10 +373,9 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 		<h6 class="block-title heading">About Ultimo</h6>
 		<div class="block-content">
+			<img src="{{media url="wysiwyg/infortis/ultimo/custom/logo-small.png"}}" alt="Ultimo Theme" style="padding-bottom:10px;" />
 			<div class="feature first last">
-				<img class="icon" src="{{media url="wysiwyg/infortis/ultimo/icons/info.png"}}" alt="About Ultimo Magento theme" />
 				<p>Ultimo is a premium Magento theme with advanced admin module. It’s extremely customizable, easy to use and fully responsive.</p>
-				<p>Suitable for every type of store. Great starting point for your custom projects.</p>
 				<h5><a class="go" href="http://themeforest.net/item/ultimo-fluid-responsive-magento-theme/3231798?ref=infortis">Buy this theme</a></h5>
 			</div>
 		</div>
@@ -464,19 +411,19 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 		<h6 class="block-title heading">Key Features</h6>
 		<div class="block-content">
 			<div class="feature feature-icon-hover indent first">
-				<span class="icon i-number">1</span>
+				<span class="icon i-char">1</span>
 				<p class="no-margin">Unlimited colors, dozens of customizable elements</p>
 			</div>
 			<div class="feature feature-icon-hover indent">
-				<span class="icon i-number">2</span>
+				<span class="icon i-char">2</span>
 				<p class="no-margin ">Customizable responsive layout based on fluid grid</p>
 			</div>
 			<div class="feature feature-icon-hover indent">
-				<span class="icon i-number">3</span>
+				<span class="icon i-char">3</span>
 				<p class="no-margin ">50+ placeholders to display custom content</p>
 			</div>
 			<div class="feature feature-icon-hover indent">
-				<span class="icon i-number">4</span>
+				<span class="icon i-char">4</span>
 				<p class="no-margin ">Create your custom sub-themes (variants)</p>
 			</div>
 		</div>
@@ -540,7 +487,9 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 </div>
 <div class="grid12-3">
 
-	<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/01.png'}}" alt="Magento CMS blocks" />
+	<a href="{{store url='ultimo-responsive-magento-theme'}}">
+		<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/01.png'}}" class="fade-on-hover" alt="Magento CMS blocks" />
+	</a>
 	<h4 class="heading">50+ CMS blocks</h4>
 	<p>You can use CMS blocks as content placeholders to display custom content in almost every part of the store. Import sample CMS blocks from the demo.</p>
 	<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
@@ -548,20 +497,26 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 </div>
 <div class="grid12-3">
 
-	<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/02.png'}}" alt="Magento theme documentation" />
-	<h4 class="heading">140-pages documentation</h4>
+	<a href="{{store url='ultimo-responsive-magento-theme'}}">
+		<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/02.png'}}" class="fade-on-hover" alt="Magento theme documentation" />
+	</a>
+	<h4 class="heading">190-pages documentation</h4>
 	<p>The best Magento theme documentation on ThemeForest. It also describes selected Magento features which you need to know when starting to work with Magento.</p>
 	<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
 
 </div>
 <div class="grid12-3">
 
-	<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/03.png'}}" alt="Create Magento sub-themes" />
+	<a href="{{store url='ultimo-responsive-magento-theme'}}">
+		<img src="{{media url='wysiwyg/infortis/ultimo/menu/custom/03.png'}}" class="fade-on-hover" alt="Create Magento sub-themes" />
+	</a>
 	<h4 class="heading">Easy to customize</h4>
 	<p>Use Ultimo as a starting point for your custom projects. Unlike many other themes, Ultimo lets you create multiple custom sub-themes (theme variants) for your clients.</p>
 	<a href="{{store url='ultimo-responsive-magento-theme'}}" class="go">See all features</a>
 
-</div>]]></content>
+</div>
+<div class="clearer"></div>
+<br/>]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
@@ -609,23 +564,23 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
       <cms_block>
          <title>Product replace up-sell</title>
          <identifier>block_product_replace_upsell</identifier>
-         <content><![CDATA[<div class="sample-block">Custom CMS block displayed when you want to replace up-sell products with custom content. You can put here simple text, images, HTML or whatever you like.</div>]]></content>
+         <content><![CDATA[<div style="background-color: #eee; padding: 20px;">Custom CMS block displayed when you want to replace up-sell products with custom content. You can display here some text, images or any other content.</div>]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
          <title>Header top left 2</title>
          <identifier>block_header_top_left2</identifier>
-         <content><![CDATA[<div class="links-wrapper-separators">
+         <content><![CDATA[<div class="links-wrapper-separators hide-below-480">
 
 	<ul class="links">
-		<li class="first hide-below-480">
+		<li class="first">
 			<a href="http://ultimo.infortis-themes.com/demo/select-demo/" title="See more demos">All demos</a>
 		</li>
-		<li class="hide-below-768">
+		<li>
 			<a href="{{store url='ultimo-responsive-magento-theme'}}" title="See the list of all features">Features</a>
 		</li>
-		<li class="last hide-below-480">
+		<li class="last">
 			<a href="http://themeforest.net/item/ultimo-fluid-responsive-magento-theme/3231798?ref=infortis" title="Click to buy this theme">Buy me!</a>
 		</li>
 	</ul>
@@ -716,7 +671,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 		<p>Custom CMS block displayed in the left sidebar below the other blocks. Put your own content here. There are many similar content placeholders across the store. All editable from admin panel.</p>
 	</div>
 </div>]]></content>
-         <is_active>1</is_active>
+         <is_active>0</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
@@ -742,7 +697,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 	</div>
 </div>]]></content>
-         <is_active>0</is_active>
+         <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
@@ -761,7 +716,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 	</div>
 </div>]]></content>
-         <is_active>0</is_active>
+         <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
@@ -780,7 +735,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 	</div>
 </div>]]></content>
-         <is_active>0</is_active>
+         <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
@@ -897,27 +852,15 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 	</div>
 </div>]]></content>
-         <is_active>0</is_active>
+         <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
-         <title>Custom landing page 2</title>
-         <identifier>block_landing_page2</identifier>
-         <content><![CDATA[<div class="landing-page">
+         <title>Landing page 2</title>
+         <identifier>landing_page2</identifier>
+         <content><![CDATA[<div class="horizontal-section">
 
-	<p class="horizontal-section sample-block">This is a custom landing page with sidebar: a CMS block which can replace category products. You can put your own content here: text, HTML, images - whatever you want. You can create landing page for every category.</p>
-
-	<a class="horizontal-section" href="{{store direct_url="about-magento-demo-store"}}" title="Replace this image with your own content.">
-		<img src="{{media url="wysiwyg/infortis/ultimo/custom/landing/horiz1.jpg"}}" alt="Sample Image" />
-	</a>
-
-	<a class="horizontal-section" href="{{store direct_url="about-magento-demo-store"}}" title="Replace this image with your own content.">
-		<img src="{{media url="wysiwyg/infortis/ultimo/custom/landing/horiz2.jpg"}}" alt="Sample Image" />
-	</a>
-
-	<a class="horizontal-section" href="{{store direct_url="about-magento-demo-store"}}" title="Replace this image with your own content.">
-		<img src="{{media url="wysiwyg/infortis/ultimo/custom/landing/horiz3.jpg"}}" alt="Sample Image" />
-	</a>
+{{block type="ultraslideshow/slideshow" template="infortis/ultraslideshow/slideshow.phtml" slides="block_category_slide1,block_category_slide2"}}
 
 </div>]]></content>
          <is_active>1</is_active>
@@ -927,12 +870,13 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
          <title>Home slide 1</title>
          <identifier>block_slide1</identifier>
          <content><![CDATA[<a href="{{store url='about-magento-demo-store'}}">
+
 	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/01.jpg'}}" alt="Sample slide" />
 
-		<div class="caption light2 full-width">
-			<h2 class="heading permanent">Sample Caption</h2>
-			<p>Lorem ipsum dolor sit amet consectetur</p>
-			<p>Nullam ornare enim nec justo</p>
+		<div class="caption light1 top-right">
+			<h2 class="heading permanent">Customizable Theme</h2>
+			<p>You can change colors of almost every element</p>
+			<p>You have never seen so many options</p>
 		</div>
 
 </a>]]></content>
@@ -943,26 +887,12 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
          <title>Home slide 2</title>
          <identifier>block_slide2</identifier>
          <content><![CDATA[<a href="{{store url='about-magento-demo-store'}}">
+
 	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/02.jpg'}}" alt="Sample slide" />
 
-		<div class="caption light3">
-			<h2 class="heading permanent">Sample Caption</h2>
-			<p>Lorem ipsum dolor sit amet consectetur</p>
-		</div>
-
-		<div class="caption light2 bottom-right narrow">
-			<h2 class="heading permanent">Sample Caption</h2>
-			<p>Lorem ipsum dolor sit amet consectetur</p>
-		</div>
-
-		<div class="caption light1 top-right narrow">
-			<h2 class="heading permanent">Sample Caption</h2>
-			<p>Lorem ipsum dolor sit amet consectetur</p>
-		</div>
-
-		<div class="caption light1 top">
-			<h2 class="heading permanent">Sample Caption</h2>
-			<p>Lorem ipsum dolor sit amet consectetur</p>
+		<div class="caption dark2">
+			<h2 class="heading permanent">Responsive</h2>
+			<p class="permanent">This theme can adapt to any mobile screen resolution</p>
 		</div>
 
 </a>]]></content>
@@ -973,38 +903,60 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
          <title>Home slide 3</title>
          <identifier>block_slide3</identifier>
          <content><![CDATA[<a href="{{store url='about-magento-demo-store'}}">
+
 	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/03.jpg'}}" alt="Sample slide" />
 
-		<div class="caption dark3">
-			<h2 class="heading permanent">Sample Caption</h2>
-			<p>Etiam neque velit, blandit sed scelerisque quis. Lorem ipsum.</p>
-			<p>Lorem ipsum dolor sit amet consectetur</p>
-		</div>
-
-		<div class="caption dark1 top-right">
-			<h2 class="heading permanent">Sample Caption</h2>
-			<p>Nullam ornare enim nec justo bibendum lobortis metus</p>
-		</div>
+	<a class="caption dark feature-icon-hover" href="{{store url='ultimo-responsive-magento-theme'}}" title="Click to see more">
+		<h2 class="heading permanent" style="color: #fff;">Super Promo</h2>
+		<p style="color: #fff;">Click to see more details</p>
+	</a>
 
 </a>]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
-         <title>Custom landing page 3 - category banner</title>
-         <identifier>block_landing_page3</identifier>
-         <content><![CDATA[<div class="horizontal-section">
+         <title>Landing page 3</title>
+         <identifier>landing_page3</identifier>
+         <content><![CDATA[<div class="landing-page nested-container clearer">
+	<br />
+    
+	<div class="vertical-section grid12-4 mobile-grid-half">
+        <a href="{{store direct_url="downloadable/ebooks.html"}}">
+        	<img class="center-block" src="{{media url="wysiwyg/infortis/ultimo/custom/landing/vert1.jpg"}}" alt="Sample banner" />
+            <div class="caption dark3 full-width">
+                <h2 class="heading permanent">e-Books</h2>
+                <p class="permanent">Sell e-Books with Magento</p>
+                <p>Lorem ipsum dolor </p>
+            </div>
+        </a>
+	</div>
+	<div class="vertical-section grid12-4 mobile-grid-half">
+        <a href="{{store direct_url="downloadable/music.html"}}">
+        	<img class="center-block" src="{{media url="wysiwyg/infortis/ultimo/custom/landing/vert2.jpg"}}" alt="Sample banner" />
+            <div class="caption dark3 full-width">
+	            <h2 class="heading permanent">Music</h2>
+    	        <p class="permanent">Sell music with Magento</p>
+        	    <p>Lorem ipsum dolor </p>
+            </div>
+        </a>
+	</div>
+	<div class="vertical-section grid12-4 mobile-grid-half">
+        <a href="{{store direct_url="downloadable/software.html"}}">
+        	<img class="center-block" src="{{media url="wysiwyg/infortis/ultimo/custom/landing/vert3.jpg"}}" alt="Sample banner" />
+            <div class="caption dark3 full-width">
+	            <h2 class="heading permanent">Software</h2>
+    	        <p class="permanent">Sell digital products</p>
+        	    <p>Lorem ipsum dolor </p>
+            </div>
+        </a>
+	</div>
 
-	<a href="{{store direct_url='#'}}">
-		<img src="{{media url="wysiwyg/infortis/ultimo/custom/landing/category01.jpg"}}" title="You can edit this block or replace it with custom content" alt="Sample banner" />
-    
-		<div class="caption light2 full-width">
-			<h2 class="heading permanent">Category Banner</h2>
-			<p>Upload image and description for every category in the store</p>
-			<p>Create custom category blocks</p>
-		</div>
-	</a>
-    
+	<div class="vertical-section grid-full mobile-grid-half">
+		<p class="horizontal-section" style="background-color: #f5f5f5; padding: 15px;">This is a custom landing page: a CMS block which can replace category products. You can put your own content here: text, HTML, images - whatever you want. You can create landing page for every category.</p>
+	</div>
+	<br />
+
 </div>]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
@@ -1012,7 +964,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
       <cms_block>
          <title>Slideshow banners</title>
          <identifier>block_slideshow_banners</identifier>
-         <content><![CDATA[<a class="banner" href="{{store url='about-magento-demo-store'}}">
+         <content><![CDATA[<a class="banner fade-on-hover" href="{{store url='about-magento-demo-store'}}">
 	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/01.png'}}" alt="Sample banner" />
 
 	<div class="caption light1 full-width right">
@@ -1021,7 +973,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 </a>
 
-<a class="banner" href="{{store url='about-magento-demo-store'}}">
+<a class="banner fade-on-hover" href="{{store url='about-magento-demo-store'}}">
 	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/02.png'}}" alt="Sample banner" />
 
 	<div class="caption dark1 full-width right">
@@ -1030,11 +982,11 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 
 </a>
 
-<a class="banner" href="{{store url='about-magento-demo-store'}}">
+<a class="banner fade-on-hover" href="{{store url='about-magento-demo-store'}}">
 	<img src="{{media url='wysiwyg/infortis/ultimo/slideshow/banner/03.png'}}" alt="Sample banner" />
 
 	<div class="caption dark3 full-width right">
-		<p class="right">Simple example</p>
+		<p class="right">Caption sample</p>
 	</div>
 </a>]]></content>
          <is_active>1</is_active>
@@ -1110,6 +1062,21 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
          <identifier>block_home_left2</identifier>
          <content><![CDATA[<div class="block">
 	<div class="block-title">
+		<strong><span>Another Custom Block</span></strong>
+	</div>
+
+	<p style="background-color: #f5f5f5; color:#666; padding:10px; margin-bottom:10px; margin-top:10px;">
+		Custom CMS block displayed at the left sidebar on the home page. Put your own content here: text, HTML, images - whatever you like.
+	</p>
+</div>]]></content>
+         <is_active>1</is_active>
+         <stores><item>0</item></stores>
+      </cms_block>
+      <cms_block>
+         <title>Home page - left 1</title>
+         <identifier>block_home_left1</identifier>
+         <content><![CDATA[<div class="block">
+	<div class="block-title">
 		<strong><span>Home Custom Block</span></strong>
 	</div>
 
@@ -1124,25 +1091,10 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
-         <title>Home page - left 1</title>
-         <identifier>block_home_left1</identifier>
-         <content><![CDATA[{{block type="ultramegamenu/navigation" template="infortis/ultramegamenu/categories.phtml"}}]]></content>
-         <is_active>0</is_active>
-         <stores><item>0</item></stores>
-      </cms_block>
-      <cms_block>
          <title>Home page - left 3</title>
          <identifier>block_home_left3</identifier>
-         <content><![CDATA[<div class="block">
-	<div class="block-title">
-		<strong><span>Another Custom Block</span></strong>
-	</div>
-
-	<p style="background-color: #f5f5f5; color:#666; padding:10px; margin-bottom:10px; margin-top:10px;">
-		Custom CMS block displayed at the left sidebar on the home page. Put your own content here: text, HTML, images - whatever you like.
-	</p>
-</div>]]></content>
-         <is_active>1</is_active>
+         <content><![CDATA[Container for custom content: block_home_left3]]></content>
+         <is_active>0</is_active>
          <stores><item>0</item></stores>
       </cms_block>
       <cms_block>
@@ -1212,7 +1164,7 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
       <cms_block>
          <title>Header top right 2</title>
          <identifier>block_header_top_right2</identifier>
-         <content><![CDATA[Sample content of the static block]]></content>
+         <content><![CDATA[Sample content of the static block block_header_top_right2]]></content>
          <is_active>0</is_active>
          <stores><item>0</item></stores>
       </cms_block>
@@ -1231,6 +1183,37 @@ Translated into over 60 languages, supporting multiple currencies, payment metho
 			<span>About Us</span>
 		</a>
 	</li>]]></content>
+         <is_active>1</is_active>
+         <stores><item>0</item></stores>
+      </cms_block>
+      <cms_block>
+         <title>Category slide 1</title>
+         <identifier>block_category_slide1</identifier>
+         <content><![CDATA[<a href="{{store url='about-magento-demo-store'}}">
+
+	<img src="{{media url='wysiwyg/infortis/ultimo/custom/landing/slide1.jpg'}}" alt="Sample image" />
+
+		<div class="caption light2 full-width">
+			<h2 class="heading permanent">Category Slideshow</h2>
+			<p>Add custom slideshows to store categories and other pages</p>
+			<p>Customize animation, speed etc.</p>
+		</div>
+
+</a>]]></content>
+         <is_active>1</is_active>
+         <stores><item>0</item></stores>
+      </cms_block>
+      <cms_block>
+         <title>Category slide 2</title>
+         <identifier>block_category_slide2</identifier>
+         <content><![CDATA[	<img src="{{media url='wysiwyg/infortis/ultimo/custom/landing/slide2.jpg'}}" alt="Sample image" />
+
+		<div class="caption light3 full-width">
+			<h2 class="heading permanent">Sample Image</h2>
+			<p>Upload image and description to any category in the store</p>
+			<p>Create landing pages for categories</p>
+		</div>
+]]></content>
          <is_active>1</is_active>
          <stores><item>0</item></stores>
       </cms_block>

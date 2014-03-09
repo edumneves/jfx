@@ -1,5 +1,44 @@
 <?php if ($this->isOnepageCheckoutAllowed()):?>
-    <button type="button" title="<?php echo $this->__('Proceed to Checkout') ?>" class="button btn-checkout<?php if (!$this->checkEnable()){ echo 'no-checkout'; }?>"<?php if (!$this->checkEnable()){ echo ' disabled="disabled" ';} ?> onclick="window.location='<?php echo $this->getOnepageCheckoutUrl() ?>';">
+    <button type="button" id="btn-checkout" title="<?php echo $this->__('Proceed to Checkout') ?>" class="button btn-checkout<?php if (!$this->checkEnable()){ echo 'no-checkout'; }?>"<?php if (!$this->checkEnable()){ echo ' disabled="disabled" ';} ?>">
     	<span><span><?php echo $this->__('Proceed to Checkout') ?></span></span>
     </button>
 <?php endif?>
+
+<script type="text/javascript">
+
+
+
+    //<![CDATA[
+    jQuery(document).ready(function(){
+
+        jQuery('#btn-checkout').bind("click", function(){
+            var url = '<?php echo $this->getOnepageCheckoutUrl(); ?>' ;
+
+            // remove trailing slashs
+            url = url.replace(/\/$/, "");
+
+            var params = '';
+            if (jQuery('#postcode')){
+                var postcode = jQuery('#postcode').val();
+                if (postcode != ''){
+                    params = '?cep='+postcode;
+                }
+            }
+
+            if (jQuery('#coupon_code')){
+                var couponcode = jQuery('#coupon_code').val();
+                if (couponcode != ''){
+                    if (params == '')
+                        params = params + '?';
+                    else
+                        params = params + '&';
+                    params = params + 'coupon='+couponcode;
+                }
+            }
+            setLocation(url + params);
+        });
+    });
+    //]]>
+
+
+</script>

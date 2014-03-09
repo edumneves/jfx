@@ -2,6 +2,12 @@
  * Wide drop-down menu
  */
 
+
+
+/* 1st level only
+-------------------------------------------------------------- */
+#nav > li:hover > a { position: relative; z-index: 1; /* Pull up above drop-down box */ }
+
 /* 2nd level only
 -------------------------------------------------------------- */
 /* 2nd-level links block: with subcategory title and a list of child categories */

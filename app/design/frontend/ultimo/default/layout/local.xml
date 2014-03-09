@@ -12,10 +12,12 @@
 
 			<!-- jQuery plugins -->
 			<action method="addJs"><script>infortis/jquery/plugins/jquery.easing.min.js</script></action>
-			<action method="addJs"><script>infortis/jquery/plugins/jquery.flexslider.min.js</script></action>
 			<action method="addJs"><script>infortis/jquery/plugins/jquery.tabs.min.js</script></action>
 			<action method="addJs"><script>infortis/jquery/plugins/jquery.accordion.min.js</script></action>
 			<action method="addJs"><script>infortis/jquery/plugins/jquery.ba-throttle-debounce.min.js</script></action>
+			<action method="addJs"><script>infortis/jquery/plugins/jquery.owlcarousel.min.js</script></action>
+			<!-- obsolete: flexslider -->
+			<!--<action method="addJs"><script>infortis/jquery/plugins/jquery.flexslider.min.js</script></action>-->
 			
 		<!-- CSS: -->
 			
@@ -26,10 +28,12 @@
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/generic-cck.css</name><params/></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/accordion.css</name><params/></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/dropdown.css</name><params/></action>
+			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/itemslider.css</name><params/></action>
+			<!-- obsolete: flexslider -->
+			<!--<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/itemslider-old.css</name><params/></action>-->
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/generic-nav.css</name><params/></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/icons.css</name><params/></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/itemgrid.css</name><params/></action>
-			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/itemslider.css</name><params/></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/tabs.css</name><params/></action>
 			<!-- Other components (add after shared) -->
 			<action method="addItem"><type>skin_css</type><name>css/icons-theme.css</name><params/></action>
@@ -51,7 +55,7 @@
 			<action method="addCss"><stylesheet helper="ultimo/cssgen/getGridFile" /></action>
 			<action method="addCss"><stylesheet helper="ultimo/cssgen/getLayoutFile" /></action>
 
-			<!-- Custom CSS -->
+			<!-- Custom CSS (has to be enabled in admin) -->
 			<action method="addCss"
 				ifconfig="ultimo/customization/custom_css"><stylesheet>css/custom.css</stylesheet></action>
 			
@@ -59,6 +63,11 @@
 			<action method="addCssIe"><css>css/styles-ie.css</css></action>
 			<action method="addItem"><type>skin_css</type><name>css/styles-ie7.css</name><params/><if>lte IE 7</if></action>
 			<action method="addItem"><type>skin_css</type><name>css/styles-ie8.css</name><params/><if>lte IE 8</if></action>
+			<!-- TODO
+			<action method="addItem"><type>skin_css</type><name>css/styles-lte-ie7.css</name><params/><if>lte IE 7</if></action>
+			<action method="addItem"><type>skin_css</type><name>css/styles-lte-ie8.css</name><params/><if>lte IE 8</if></action>
+			<action method="addItem"><type>skin_css</type><name>css/styles-lte-ie9.css</name><params/><if>lte IE 9</if></action>
+			-->
 			
 			<block type="core/template" name="head.theme.css" template="page/html/head_theme_css.phtml" before="-" />
 			
@@ -68,7 +77,6 @@
 		<!-- Footer scripts ====================================================================== -->
 		<reference name="before_body_end">
 			<block type="core/template" name="footer.theme.scripts" template="page/html/footer_theme_scripts.phtml" before="-" />
-			<block type="core/template" name="itemslider.scripts" template="page/html/itemslider_scripts.phtml" after="-" />
 		</reference>
 		
 		
@@ -78,6 +86,9 @@
 				<classname>shadow</classname>
 			</action>
 
+			<block type="core/text_list" name="main_before_top" as="main_before_top" translate="label">
+				<label>Main Before Top</label>
+			</block>
 			<block type="core/text_list" name="preface" as="preface" translate="label">
 				<label>Page Preface</label>
 			</block>
