@@ -1,9 +1,9 @@
 var BASE_URL = casper.cli.get('url');
 
 // Go to home
-casper.test.comment('Go to home');
+casper.test.comment('Abre a página inicial');
 casper.start(BASE_URL, function() {
-    this.test.pass('Home was loaded');
+    this.test.pass('Página inicial foi carregada');
 });
 
 // Go to product list
@@ -11,23 +11,25 @@ casper.then(function() {
     casper.test.comment('Clica no Menu');
     this.click('a#mobnav-trigger');
     this.test.assertExists('.nav-2-1 a', 'Encontrei categoria Bandas');
+    casper.test.comment('Clica na categoria Bandas');
     this.click('.nav-2-1 a');
 });
 
 // Go to product view
 casper.then(function() {
-    this.test.info('Current location is ' + this.getCurrentUrl());
-    this.test.comment('Go to product view');
-    this.test.assertExists('div.category-products li.item a.product-image', 'Found product view link');
+    this.test.info('Página atual: ' + this.getCurrentUrl());
+    this.test.comment('Abre o primeiro produto');
+    this.test.assertExists('div.category-products li.item a.product-image', 'Encontrou primeiro produto');
+    this.test.comment('Clica no primeiro produto');
     this.click('div.category-products li.item a.product-image');
 });
 
 // Select options and add product to cart
 casper.then(function() {
-    this.test.info('Current location is ' + this.getCurrentUrl());
-    this.test.comment('Select options');
+    this.test.info('Página atual ' + this.getCurrentUrl());
+    this.test.comment('Escolhe tamanhos');
     var option1 = this.evaluate(function() {
-        // Selecting first available gender, should be Mens
+        // Selecionar primeiro tamanho permitido
         document.querySelector('select.super-attribute-select').selectedIndex = 1;
         return true;
     });
@@ -38,22 +40,13 @@ casper.then(function() {
         evt.initEvent('change', false, true);
         element.dispatchEvent(evt);
     });
-    var option2 = this.evaluate(function() {
-        // Selecting first available size, should be 8
-        document.querySelector('dd.last select.super-attribute-select').selectedIndex = 1;
-        return true;
-    });
-    this.test.assert(option1 && option2, 'Selected options');
+
+    this.test.assert(option1, 'Opção de tamanho selecionada');
     // Adding product to cart
-    this.test.comment('Add product to cart');
+    this.test.comment('Adicionar produto ao carrinho');
     this.click('button.btn-cart');
 });
 
 casper.then(function() {
-    this.test.assertTextExists('was added to your shopping cart', 'Product was added');
-    this.test.info('Current location is ' + this.getCurrentUrl());
-});
 
-casper.run(function() {
-    this.test.done();
 });
