@@ -86,6 +86,8 @@ $j(document).ready(function(){
     var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
     var billingCEP             = jQuery('#billing\\:postcode');
 
+    var FN_CALLBACK_SHIPPING    = 'exibeEnderecoEntrega';
+    var shippingCEP             = jQuery('#shipping\\:postcode');
 
     getRegionIdByUF = function(UF){
         for(a in countryRegions.BR){
@@ -97,19 +99,31 @@ $j(document).ready(function(){
 
     exibeEnderecoCobranca = function(data) {
         if (data.status=="sucesso") {
-            jQuery("#billing\\:street1").val(data.endereco);
-            jQuery("#billing\\:street4").val(data.bairro);
-
-            jQuery("#billing\\:city").val(data.cidade);
-
-            regionId = getRegionIdByUF(data.uf);
-            jQuery("#billing\\:region_id").val(regionId);
-
-            // estilizando os campos
-            // hack para deixar o bairro em maiuscula
-            jQuery("#billing\\:street4").css("text-transform", "uppercase");
+            preencheEndereco('billing', data);
         }
     }
+
+    exibeEnderecoEntrega = function(data) {
+        if (data.status=="sucesso") {
+            preencheEndereco('shipping', data);
+        }
+    }
+
+    function preencheEndereco(modo, data){
+
+        jQuery("#" + modo + "\\:street1").val(data.endereco);
+        jQuery("#" + modo + "\\:street4").val(data.bairro);
+
+        jQuery("#" + modo + "\\:city").val(data.cidade);
+
+        regionId = getRegionIdByUF(data.uf);
+        jQuery("#" + modo + "\\:region_id").val(regionId);
+
+        // estilizando os campos
+        // hack para deixar o bairro em maiuscula
+        jQuery("#" + modo + "\\:street4").css("text-transform", "uppercase");
+    }
+
 
     getJSONP = {
         url: '',
@@ -130,23 +144,41 @@ $j(document).ready(function(){
     billingCEP.on("keyup", function() {
         if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
             jQuery("#view-address-more").show("slide");
-            updateReviewAndLoadAddress();
+            updateReviewAndLoadAddress('billing');
         };
     });
 
     billingCEP.on("blur",
-        updateReviewAndLoadAddress
+        updateReviewAndLoadAddress('billing')
+    );
+
+    shippingCEP.on("keyup", function() {
+        if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
+            jQuery("#view-address-more").show("slide");
+            updateReviewAndLoadAddress('shipping');
+        };
+    });
+
+    shippingCEP.on("blur",
+        updateReviewAndLoadAddress('shipping')
     );
 
 
-    function updateReviewAndLoadAddress(){
+    function updateReviewAndLoadAddress(modo){
         // update product cart
         if (typeof checkout !== 'undefined' ) {
             checkout.update({
                 'review': 1
             });
         }
-        getJSONP.run( URL_SERVICO + "?cep=" + jQuery('#billing\\:postcode').val() + "&format=json&callback=" + FN_CALLBACK_BILLING);
+        var funcao;
+        if (modo == 'billing'){
+            funcao = FN_CALLBACK_BILLING;
+        } else {
+            funcao = FN_CALLBACK_SHIPPING;
+        }
+
+        getJSONP.run( URL_SERVICO + "?cep=" + jQuery('#' + modo + '\\:postcode').val() + "&format=json&callback=" + funcao);
     }
 
     //<![CDATA[
