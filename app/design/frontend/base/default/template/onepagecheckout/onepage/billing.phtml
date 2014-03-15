@@ -74,8 +74,7 @@ $has_addr	= $this->customerHasAddresses();
             <script type="text/javascript">
                 //<![CDATA[
                 jQuery(document).ready(function(){
-                    jQuery('input[name="billing[firstname]"]').addClass("input-text");
-                    jQuery('input[name="billing[lastname]"]').addClass("input-text");
+                    jQuery('form#onepagecheckout_orderform input:text').addClass("input-text");
                     jQuery('input[name="billing[taxvat]"]').addClass("t1 required-entry");
                 });
                 //]]>

@@ -2,8 +2,6 @@ var BASE_URL = casper.cli.get('url');
 
 casper.options.retryTimeout = 10;
 
-phantom.page.injectJs( 'utils/adiciona_carrinho.js');
-
 var CEP, rua, bairro, cidade, estado;
 CEP = '20230-014';
 rua = 'RUA RIACHUELO';
@@ -32,6 +30,8 @@ var cepsDefinidos = [
     {cep:'50020-050', rua:'RUA DA CONCORDIA', bairro:'SÃO JOSÉ', cidade: 'RECIFE', estado: '500'},
     {cep:'22220-060', rua:'RUA MACHADO DE ASSIS', bairro:'FLAMENGO', cidade: 'RIO DE JANEIRO', estado: '502'}
 ];
+
+phantom.page.injectJs( 'utils/adiciona_carrinho.js');
 
 // Preenche CEP
 casper.waitForSelector("input[id='postcode']",
@@ -158,11 +158,11 @@ casper.waitForSelector('form#onepagecheckout_orderform input[name="billing[postc
                 this.capture('Erro de não mudou a cidade' + cepDefinido.cep.replace('-', '') + '.png');
             });
 
-                this.test.comment("Preenchendo CEP = " + cepDefinido.cep);
+            this.test.comment("Preenchendo CEP = " + cepDefinido.cep);
 
-                this.fill('form#onepagecheckout_orderform', {
-                    'billing[postcode]': cepDefinido.cep.replace('-', '')
-                }, false);
+            this.fill('form#onepagecheckout_orderform', {
+                'billing[postcode]': cepDefinido.cep.replace('-', '')
+            }, false);
 
             this.waitFor(function check() {
                 return this.evaluate(function() {

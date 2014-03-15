@@ -78,9 +78,6 @@ $j(document).ready(function(){
         }
     }).keyup();
 
-
-
-
     /**
      * Request AJAX para o servi?o de buscar endere?o do UOL HOST
      *
@@ -98,7 +95,6 @@ $j(document).ready(function(){
         }
     }
 
-
     exibeEnderecoCobranca = function(data) {
         if (data.status=="sucesso") {
             jQuery("#billing\\:street1").val(data.endereco);
@@ -108,7 +104,6 @@ $j(document).ready(function(){
 
             regionId = getRegionIdByUF(data.uf);
             jQuery("#billing\\:region_id").val(regionId);
-
 
             // estilizando os campos
             // hack para deixar o bairro em maiuscula
