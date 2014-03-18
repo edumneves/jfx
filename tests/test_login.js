@@ -7,7 +7,7 @@ casper.abrePaginaInicial();
 casper.abrePaginaLogin();
 //casper.assert(true, casper.fazLogin(usuarios[0]));
 casper.fazLogin(usuarios[0]);
-casper.testaLoginSucesso();
+casper.testaLoginSucesso(usuarios[0]);
 
 casper.run(function() {
     this.test.done();

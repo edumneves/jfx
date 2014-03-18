@@ -250,6 +250,8 @@ casper.preencheEndereco = function (modo, cepDefinido){
         values[modo + '[postcode]'] = cepDefinido.cep.replace('-', '');
         this.fill('form#onepagecheckout_orderform', values, false);
 
+        this.sendKeys('form#onepagecheckout_orderform input[name="' + modo + '[postcode]"]', cepDefinido.cep.replace('-', ''));
+
         this.waitFor(function check() {
             var cidadeTela = this.evaluate(function(modo) {
                 return jQuery('input[name = "' + modo + '[city]"]').val();
@@ -258,10 +260,14 @@ casper.preencheEndereco = function (modo, cepDefinido){
             return cidadeTela == cidadeEsperada;
         }, function then() {
             this.verificaEndereco(modo, cepDefinido);
+        }, function fail(){
+            this.capture('nao_mudou_cidade.png');
+            this.fail("Não mudou a cidade " + modo + " do CEP = " + cepDefinido.cep);
         });
 
     });
 }
+
 
 casper.abrePaginaLogin = function (){
     this.then(function(){
@@ -285,10 +291,12 @@ function testaLoginCerto (){
     return false;
 }
 
-casper.testaLoginSucesso = function (){
+casper.testaLoginSucesso = function (usuario){
     this.waitForText("Minha Conta", function success() {
         this.test.comment('Login feito com sucesso.');
         this.test.pass('Login feito com sucesso.');
+        this.test.comment('Olá, ' + usuario.nome + ' ' + usuario.sobreNome);
+        this.test.assertTextExists('Olá, ' + usuario.nome + ' ' + usuario.sobreNome, 'Testando saudação!');
     }, function fail (){
         this.test.comment('Login certo falhou.');
         this.fail('Login certo falhou.');
@@ -318,7 +326,6 @@ casper.fazLogin = function(usuario){
                 'login[password]': usuario.senha
             }, true);
 
-            this.capture("imagem.png");
         });
 
     },
@@ -326,3 +333,35 @@ casper.fazLogin = function(usuario){
         this.test.assertExists("#btn-checkout", "Não achou botão de finalizar pedido");
     });
 }
+
+casper.marcaMesmaEntrega = function (marca){
+    this.waitForSelector('input[name="shipping[same_as_billing]"]', function () {
+        var mesmaEntrega = this.evaluate(function () {
+            return jQuery('input[name="shipping[same_as_billing]"]').prop('checked');
+        });
+
+        this.test.comment("Check de mesmo endereço de entrega = " + mesmaEntrega);
+
+        // marca ou desmarca a checkbox
+        if ((!marca && mesmaEntrega) || (marca && !mesmaEntrega)){
+            this.test.comment("Clicando na checkbox de mesmo endereço de entrega");
+            this.click('input[name="shipping[same_as_billing]"]');
+        }
+
+        // Espera até o endereço de entrega sumir ou aparecer
+        if (!marca && mesmaEntrega) {
+            this.waitUntilVisible('input[name="shipping[same_as_billing]"]', function(){
+                this.test.comment("Endereço de entrega apareceu");
+            });
+        }
+        else if (marca && !mesmaEntrega){
+            this.waitWhileVisible('input[name="shipping[same_as_billing]"]', function(){
+                this.test.comment("Endereço de entrega sumiu");
+            },
+                function fail() {
+                });
+        }
+    });
+}
+
+
