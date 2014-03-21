@@ -82,11 +82,19 @@ $j(document).ready(function(){
      * Request AJAX para o servi?o de buscar endere?o do UOL HOST
      *
      */
-    var FN_CALLBACK_BILLING    = 'exibeEnderecoCobranca';
     var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
     var billingCEP             = jQuery('#billing\\:postcode');
 
-    var FN_CALLBACK_SHIPPING    = 'exibeEnderecoEntrega';
+    funcaoCallback = new Array();
+    funcaoCallback['billing'] = 'exibeEnderecoCobranca';
+    funcaoCallback['shipping'] = 'exibeEnderecoEntrega';
+
+
+    ultCep = new Array();
+    ultCep['billing'] = "";
+    ultCep['shipping'] = "";
+
+
     var shippingCEP             = jQuery('#shipping\\:postcode');
 
     getRegionIdByUF = function(UF){
@@ -164,21 +172,22 @@ $j(document).ready(function(){
     );
 
 
-    function updateReviewAndLoadAddress(modo){
-        // update product cart
-        if (typeof checkout !== 'undefined' ) {
-            checkout.update({
-                'review': 1
-            });
-        }
-        var funcao;
-        if (modo == 'billing'){
-            funcao = FN_CALLBACK_BILLING;
-        } else {
-            funcao = FN_CALLBACK_SHIPPING;
-        }
 
-        getJSONP.run( URL_SERVICO + "?cep=" + jQuery('#' + modo + '\\:postcode').val() + "&format=json&callback=" + funcao);
+    function updateReviewAndLoadAddress(modo){
+        var cepPesquisado = jQuery('#' + modo + '\\:postcode').val();
+        if (ultCep[modo] != cepPesquisado) {
+
+            // update product cart
+            if (typeof checkout !== 'undefined' ) {
+                checkout.update({
+                    'review': 1
+                });
+            }
+
+            // atualiza endereço
+            getJSONP.run( URL_SERVICO + "?cep=" + cepPesquisado + "&format=json&callback=" + window.funcaoCallback[modo]);
+            window.ultCep[modo] = cepPesquisado;
+        }
     }
 
     //<![CDATA[
