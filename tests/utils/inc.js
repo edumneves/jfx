@@ -202,6 +202,31 @@ casper.verificaEndereco = function (modo, cepDefinido) {
         }, modo);
         this.test.comment("Estado de cobrança = " + estadoTela);
         this.test.assertEquals(estadoTela.toUpperCase(), cepDefinido.estado.toUpperCase(), 'Estado correto.');
+
+        // imprime valor de PAC e Sedex
+        /*
+        var valorPACPT = this.evaluate(function() {
+            return jQuery('label[for="s_method_pedroteixeira_correios_41106"] span').html();
+        });
+        this.test.comment("CEP " + cepDefinido.cep.toUpperCase() + " PAC = " + valorPACPT);
+        var valorSedexPT = this.evaluate(function() {
+            return jQuery('label[for="s_method_pedroteixeira_correios_40010"] span').html();
+        });
+        this.test.comment("CEP " + cepDefinido.cep.toUpperCase() + " Sedex = " + valorSedexPT);
+
+        var valorPACAV5 = this.evaluate(function() {
+            return jQuery('label[for="s_method_av5_correios_41106"] span').html();
+        });
+        this.test.comment("CEP " + cepDefinido.cep.toUpperCase() + " PAC = " + valorPACAV5);
+        var valorSedexAV5 = this.evaluate(function() {
+            return jQuery('label[for="s_method_av5_correios_40010"] span').html();
+        });
+        this.test.comment("CEP " + cepDefinido.cep.toUpperCase() + " Sedex = " + valorSedexAV5);
+
+        this.test.assertEquals(valorPACAV5, valorPACPT, 'PAC valores batendo.');
+        this.test.assertEquals(valorSedexAV5, valorSedexPT, 'Sedex valores batendo.');
+        this.capture(cepDefinido.cep.toUpperCase() + ".png")
+        */
     });
 }
 
@@ -364,4 +389,12 @@ casper.marcaMesmaEntrega = function (marca){
     });
 }
 
-
+casper.inicioAteFinalizaCompra = function (){
+    this.abrePaginaInicial();
+    this.abrePaginaProduto();
+    this.selecionaPrimeiroTamanho();
+    this.adicionaCarrinho();
+    this.preencheCEPCarrinho(cepsDefinidos[0]);
+    this.escolheFretePACCarrinho();
+    this.finalizaPedidoCarrinho();    
+}
