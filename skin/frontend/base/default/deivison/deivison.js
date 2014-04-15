@@ -48,7 +48,7 @@ $j(document).ready(function(){
 
     var telefone_selector = 'input[name*="celular"], input[name*="telephone"], input[name*="fax"]';
     $j(telefone_selector).mask('(99) 9999-9999?9');
-    $j(telefone_selector).live("keyup",function() {
+    $j(telefone_selector).on("keyup",function() {
         var tmp = $j(this).val();
         tmp = tmp.replace(/[^0-9]/g,'');
         var ddd = tmp.slice(0, 2);
@@ -82,20 +82,17 @@ $j(document).ready(function(){
      * Request AJAX para o servi?o de buscar endere?o do UOL HOST
      *
      */
-    var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
-    var billingCEP             = jQuery('#billing\\:postcode');
+    //var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
+    var URL_SERVICO            = 'skin/frontend/base/default/deivison/buscacep.php';
+
+    var billingCEP             = $j('#billing\\:postcode');
 
     funcaoCallback = new Array();
     funcaoCallback['billing'] = 'exibeEnderecoCobranca';
     funcaoCallback['shipping'] = 'exibeEnderecoEntrega';
 
 
-    ultCep = new Array();
-    ultCep['billing'] = "";
-    ultCep['shipping'] = "";
-
-
-    var shippingCEP             = jQuery('#shipping\\:postcode');
+    var shippingCEP             = $j('#shipping\\:postcode');
 
     getRegionIdByUF = function(UF){
         for(a in countryRegions.BR){
@@ -119,17 +116,17 @@ $j(document).ready(function(){
 
     function preencheEndereco(modo, data){
 
-        jQuery("#" + modo + "\\:street1").val(data.endereco);
-        jQuery("#" + modo + "\\:street4").val(data.bairro);
+        $j("#" + modo + "\\:street1").val(data.endereco);
+        $j("#" + modo + "\\:street4").val(data.bairro);
 
-        jQuery("#" + modo + "\\:city").val(data.cidade);
+        $j("#" + modo + "\\:city").val(data.cidade);
 
         regionId = getRegionIdByUF(data.uf);
-        jQuery("#" + modo + "\\:region_id").val(regionId);
+        $j("#" + modo + "\\:region_id").val(regionId);
 
         // estilizando os campos
         // hack para deixar o bairro em maiuscula
-        jQuery("#" + modo + "\\:street4").css("text-transform", "uppercase");
+        $j("#" + modo + "\\:street4").css("text-transform", "uppercase");
     }
 
 
@@ -149,9 +146,10 @@ $j(document).ready(function(){
         }
     }
 
-    billingCEP.on("keyup", function() {
-        if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
-            jQuery("#view-address-more").show("slide");
+    billingCEP.on("input", function() {
+        alert($j(this).val());
+        if ( ($j(this).val().length==9) && ($j(this).val().indexOf("_")==-1)) {
+            $j("#view-address-more").show("slide");
             updateReviewAndLoadAddress('billing');
         };
     });
@@ -161,8 +159,8 @@ $j(document).ready(function(){
     );
 
     shippingCEP.on("keyup", function() {
-        if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
-            jQuery("#view-address-more").show("slide");
+        if ( ($j(this).val().length==9) && ($j(this).val().indexOf("_")==-1)) {
+            $j("#view-address-more").show("slide");
             updateReviewAndLoadAddress('shipping');
         };
     });
@@ -174,8 +172,10 @@ $j(document).ready(function(){
 
 
     function updateReviewAndLoadAddress(modo){
-        var cepPesquisado = jQuery('#' + modo + '\\:postcode').val();
-        if (ultCep[modo] != cepPesquisado) {
+        var $cep = $j('#' + modo + '\\:postcode');
+        var cepPesquisado = $cep.val();
+        var ultCep = $cep.data('ultCep');
+        if (ultCep != cepPesquisado) {
 
             // update product cart
             if (typeof checkout !== 'undefined' ) {
@@ -186,7 +186,7 @@ $j(document).ready(function(){
 
             // atualiza endereço
             getJSONP.run( URL_SERVICO + "?cep=" + cepPesquisado + "&format=json&callback=" + window.funcaoCallback[modo]);
-            window.ultCep[modo] = cepPesquisado;
+            $cep.data('ultCep', cepPesquisado);
         }
     }
 
@@ -199,9 +199,9 @@ $j(document).ready(function(){
     }
     //]]>
 
-    jQuery(function(){
-        jQuery("#taxvat").unmask();
-        jQuery("#taxvat").mask("999.999.999-99");
+    $j(function(){
+        $j("#taxvat").unmask();
+        $j("#taxvat").mask("999.999.999-99");
     })
 
 });

@@ -80,7 +80,7 @@ phpQuery::newDocumentHTML($html, $charset = 'utf-8');
 ///////////////////////////////////////////////////
 $dados =
   array(
-  	'logradouro'=> trim(pq('.caixacampobranco .resposta:contains("Logradouro: ") + .respostadestaque:eq(0)')->html()),
+  	'endereco'=> trim(pq('.caixacampobranco .resposta:contains("Logradouro: ") + .respostadestaque:eq(0)')->html()),
   	'bairro'=> trim(pq('.caixacampobranco .resposta:contains("Bairro: ") + .respostadestaque:eq(0)')->html()),
   	'cidade/uf'=> trim(pq('.caixacampobranco .resposta:contains("Localidade / UF: ") + .respostadestaque:eq(0)')->html()),
   	'cep'=> trim(pq('.caixacampobranco .resposta:contains("CEP: ") + .respostadestaque:eq(0)')->html())
@@ -99,15 +99,20 @@ $dados =
 //LADO DA RUA COMO PODE SER VISTO NESSE LINK
 //(http://m.correios.com.br/movel/buscaCepConfirma.do?cepEntrada=21061020&metodo=buscarCep)
 ///////////////////////////////////////////////////
-  $logradouro = explode('-',$dados['logradouro']);
-  $dados['logradouro'] = trim($logradouro[0]);
-  unset($logradouro);
+  $endereco = explode('-',$dados['endereco']);
+  $dados['endereco'] = trim($endereco[0]);
+
+    $endereco = explode('(',$dados['endereco']);
+    $dados['endereco'] = trim($endereco[0]);
+    unset($endereco);
 
 ///////////////////////////////////////////////////
 //var_dump($dados);   //para testar
 ///////////////////////////////////////////////////
 
-if ( isset($dados) ) {
+$funcaoCallback = $_GET['callback'];
+
+if ( isset($dados) and isset($funcaoCallback) and $dados['uf'] != '') {
 
 ///////////////////////////////////////////////////
 //MONTA SWITC PARA SELECIONAR NO COMBO DO MAGENTO
@@ -170,14 +175,24 @@ if ( isset($dados) ) {
             ('BR', 'TO', 'Tocantins'),
             ('BR', 'DF', 'Distrito Federal');
 */
-        //$texto = $dados['logradouro'].":".$dados['bairro'].":".$dados['cidade'].":".$uf.":".$num.":".$estado.";";
-            $dados['codigo'] = $num;
-            $dados['indice'] = $estado;
-            $dados['uf_extenso'] = $uf;
-        echo json_encode($dados);
 
+//            $dados['codigo'] = $num;
+//            $dados['indice'] = $estado;
+            $dados['estado'] = $uf;
+            $dados['status'] = 'sucesso';
+//        echo json_encode($dados);
+        echo $funcaoCallback . '(' . json_encode($dados) . ')';
+   // exibeEnderecoEntrega({"status":"sucesso","endereco":"TRAVESSA PLANO INCLINADO","bairro":"Santa Teresa","cidade":"RIO DE JANEIRO","uf":"RJ","estado":"RIO DE JANEIRO"})
 }else {
-        $texto = false;
-        echo $texto;
+    $dados['status'] = 'erro';
+    $dados['msg'] = 'CEP informado não é válido';
+
+    unset($dados['endereco']);
+    unset($dados['cidade']);
+    unset($dados['bairro']);
+    unset($dados['uf']);
+    unset($dados['cep']);
+
+    echo $funcaoCallback . '(' . json_encode($dados) . ')';
 };
 ?>
