@@ -1,4 +1,5 @@
-var lastPostCode = "";
+
+var dictCeps = {};
 
 $j(document).ready(function(){
 
@@ -82,20 +83,17 @@ $j(document).ready(function(){
      * Request AJAX para o servi?o de buscar endere?o do UOL HOST
      *
      */
-    var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
-    var billingCEP             = jQuery('#billing\\:postcode');
+    //var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
+    var URL_SERVICO            = 'skin/frontend/base/default/deivison/buscacep.php';
+
+    var billingCEP             = $j('#billing\\:postcode');
 
     funcaoCallback = new Array();
     funcaoCallback['billing'] = 'exibeEnderecoCobranca';
     funcaoCallback['shipping'] = 'exibeEnderecoEntrega';
 
 
-    ultCep = new Array();
-    ultCep['billing'] = "";
-    ultCep['shipping'] = "";
-
-
-    var shippingCEP             = jQuery('#shipping\\:postcode');
+    var shippingCEP             = $j('#shipping\\:postcode');
 
     getRegionIdByUF = function(UF){
         for(a in countryRegions.BR){
@@ -118,20 +116,21 @@ $j(document).ready(function(){
     }
 
     function preencheEndereco(modo, data){
+        // preenche no dicionário os dados no índice do CEP, para não precisar buscar novamente
+        dictCeps[$j('#' + modo + '\\:postcode').val()] = data;
 
-        jQuery("#" + modo + "\\:street1").val(data.endereco);
-        jQuery("#" + modo + "\\:street4").val(data.bairro);
+        $j("#" + modo + "\\:street1").val(data.endereco);
+        $j("#" + modo + "\\:street4").val(data.bairro);
 
-        jQuery("#" + modo + "\\:city").val(data.cidade);
+        $j("#" + modo + "\\:city").val(data.cidade);
 
         regionId = getRegionIdByUF(data.uf);
-        jQuery("#" + modo + "\\:region_id").val(regionId);
+        $j("#" + modo + "\\:region_id").val(regionId);
 
         // estilizando os campos
         // hack para deixar o bairro em maiuscula
-        jQuery("#" + modo + "\\:street4").css("text-transform", "uppercase");
+        $j("#" + modo + "\\:street4").css("text-transform", "uppercase");
     }
-
 
     getJSONP = {
         url: '',
@@ -150,44 +149,56 @@ $j(document).ready(function(){
     }
 
     billingCEP.on("keyup", function() {
-        if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
-            jQuery("#view-address-more").show("slide");
-            updateReviewAndLoadAddress('billing');
+        if ( ($j(this).val().length==9) && ($j(this).val().indexOf("_")==-1)) {
+            $j("#view-address-more").show("slide");
+//            updateReviewAndLoadAddress('billing');
         };
     });
 
-    billingCEP.on("blur",
-        updateReviewAndLoadAddress('billing')
-    );
+    billingCEP.on("blur", function(event){
+            updateReviewAndLoadAddress('billing')
+        }
+     );
 
     shippingCEP.on("keyup", function() {
-        if ( (jQuery(this).val().length==9) && (jQuery(this).val().indexOf("_")==-1)) {
-            jQuery("#view-address-more").show("slide");
-            updateReviewAndLoadAddress('shipping');
+        if ( ($j(this).val().length==9) && ($j(this).val().indexOf("_")==-1)) {
+            $j("#view-address-more").show("slide");
+//            updateReviewAndLoadAddress('shipping');
         };
     });
 
-    shippingCEP.on("blur",
-        updateReviewAndLoadAddress('shipping')
-    );
+    shippingCEP.on("blur", function(event){
+            updateReviewAndLoadAddress('shipping')
+    });
 
 
+    function preenchido(modo){
+        if ($j("#" + modo + "\\:city").val().trim() != '')
+            return true;
+
+        if ($j("#" + modo + "\\:region_id").val() != '')
+            return true;
+
+        return false;
+    }
 
     function updateReviewAndLoadAddress(modo){
-        var cepPesquisado = jQuery('#' + modo + '\\:postcode').val();
-        if (ultCep[modo] != cepPesquisado) {
+        var $cep = $j('#' + modo + '\\:postcode');
+        var cepPesquisado = $cep.val();
 
-            // update product cart
-            if (typeof checkout !== 'undefined' ) {
-                checkout.update({
-                    'review': 1
-                });
-            }
-
-            // atualiza endereço
-            getJSONP.run( URL_SERVICO + "?cep=" + cepPesquisado + "&format=json&callback=" + window.funcaoCallback[modo]);
-            window.ultCep[modo] = cepPesquisado;
+        // Se for shipping recalcula ou
+        // Se for billing e está desmarcada a opção de mesmo endereço
+        if (typeof checkout !== 'undefined' && (modo == 'shipping' || $j('#shipping\\:same_as_billing').is(':checked'))) {
+            checkout.update({
+                'review': 1
+            });
         }
+        if (dictCeps[cepPesquisado] != undefined){
+            preencheEndereco(modo, dictCeps[cepPesquisado]);
+        } else {
+            getJSONP.run( URL_SERVICO + "?cep=" + cepPesquisado + "&format=json&callback=" + window.funcaoCallback[modo]);
+        }
+
     }
 
     //<![CDATA[
@@ -199,9 +210,9 @@ $j(document).ready(function(){
     }
     //]]>
 
-    jQuery(function(){
-        jQuery("#taxvat").unmask();
-        jQuery("#taxvat").mask("999.999.999-99");
+    $j(function(){
+        $j("#taxvat").unmask();
+        $j("#taxvat").mask("999.999.999-99");
     })
 
 });

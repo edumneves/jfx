@@ -458,6 +458,7 @@ $has_addr	= $this->customerHasAddresses();
             $postCodeCustomer = $this->htmlEscape($this->getBillAddress()->getPostcode());
             $postCodeSession = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getPostcode();
             $postCodeQuery = $_GET['cep'];
+
 //            echo "POSTCODE CUSTOMER = " . $postCodeCustomer . "<br>";
 //            echo "POSTCODE SESSION = " . $postCodeSession . "<br>";
 //            echo "POSTCODE QUERY = " . $postCodeQuery . "<br>";
@@ -467,6 +468,8 @@ $has_addr	= $this->customerHasAddresses();
                 $postCodeFinal =$postCodeSession;
             if ($postCodeCustomer != '')
                 $postCodeFinal =$postCodeCustomer;
+            if ($postCodeQuery != '')
+                $postCodeFinal =$postCodeQuery;
 
 			if ($zip_r !== 'hidden') :
 			?>
@@ -772,7 +775,7 @@ $has_addr	= $this->customerHasAddresses();
                 jQuery("#view-address-more").hide();
             else {
                 jQuery("#view-address-more").show("slide");
-                jQuery('#billing\\:postcode').keyup();
+                jQuery('#billing\\:postcode').blur();
             }
         }
     });

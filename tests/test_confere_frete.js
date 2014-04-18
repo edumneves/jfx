@@ -1,16 +1,12 @@
 /**
+ * Created by edumneves on 21/03/14.
+ */
+/**
  * Created by edumneves on 15/03/14.
  */
 
 casper.test.info('Teste de preenchimento de vários CEPS');
 casper.inicioAteFinalizaCompra();
-
-casper.verificaEndereco('billing', cepsDefinidos[0]);
-
-// Mudando o timeout pois o clique do endereço está lento
-casper.options.waitTimeout = 10000;
-casper.marcaMesmaEntrega(false);
-casper.options.waitTimeout = 5000;
 
 // Testar o preenchimento de vários CEPs tanto no billing quanto no shipping
 casper.eachThen(cepsDefinidos, function(response){
@@ -21,7 +17,6 @@ casper.eachThen(cepsDefinidos, function(response){
     // Testa um cep aleatório no billing
     var idCepBilling = Math.floor(Math.random()*cepsDefinidos.length);
     this.echo("Identificador aleatório = " + idCepBilling);
-    this.limpaEndereco('billing', cepsDefinidos[idCepBilling]);
     this.preencheEndereco('billing', cepsDefinidos[idCepBilling]);
 });
 
