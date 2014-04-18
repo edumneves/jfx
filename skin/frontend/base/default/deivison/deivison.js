@@ -1,4 +1,5 @@
-var lastPostCode = "";
+
+var dictCeps = {};
 
 $j(document).ready(function(){
 
@@ -48,7 +49,7 @@ $j(document).ready(function(){
 
     var telefone_selector = 'input[name*="celular"], input[name*="telephone"], input[name*="fax"]';
     $j(telefone_selector).mask('(99) 9999-9999?9');
-    $j(telefone_selector).on("keyup",function() {
+    $j(telefone_selector).live("keyup",function() {
         var tmp = $j(this).val();
         tmp = tmp.replace(/[^0-9]/g,'');
         var ddd = tmp.slice(0, 2);
@@ -115,6 +116,8 @@ $j(document).ready(function(){
     }
 
     function preencheEndereco(modo, data){
+        // preenche no dicionário os dados no índice do CEP, para não precisar buscar novamente
+        dictCeps[$j('#' + modo + '\\:postcode').val()] = data;
 
         $j("#" + modo + "\\:street1").val(data.endereco);
         $j("#" + modo + "\\:street4").val(data.bairro);
@@ -128,7 +131,6 @@ $j(document).ready(function(){
         // hack para deixar o bairro em maiuscula
         $j("#" + modo + "\\:street4").css("text-transform", "uppercase");
     }
-
 
     getJSONP = {
         url: '',
@@ -146,48 +148,57 @@ $j(document).ready(function(){
         }
     }
 
-    billingCEP.on("input", function() {
-        alert($j(this).val());
+    billingCEP.on("keyup", function() {
         if ( ($j(this).val().length==9) && ($j(this).val().indexOf("_")==-1)) {
             $j("#view-address-more").show("slide");
-            updateReviewAndLoadAddress('billing');
+//            updateReviewAndLoadAddress('billing');
         };
     });
 
-    billingCEP.on("blur",
-        updateReviewAndLoadAddress('billing')
-    );
+    billingCEP.on("blur", function(event){
+            updateReviewAndLoadAddress('billing')
+        }
+     );
 
     shippingCEP.on("keyup", function() {
         if ( ($j(this).val().length==9) && ($j(this).val().indexOf("_")==-1)) {
             $j("#view-address-more").show("slide");
-            updateReviewAndLoadAddress('shipping');
+//            updateReviewAndLoadAddress('shipping');
         };
     });
 
-    shippingCEP.on("blur",
-        updateReviewAndLoadAddress('shipping')
-    );
+    shippingCEP.on("blur", function(event){
+            updateReviewAndLoadAddress('shipping')
+    });
 
 
+    function preenchido(modo){
+        if ($j("#" + modo + "\\:city").val().trim() != '')
+            return true;
+
+        if ($j("#" + modo + "\\:region_id").val() != '')
+            return true;
+
+        return false;
+    }
 
     function updateReviewAndLoadAddress(modo){
         var $cep = $j('#' + modo + '\\:postcode');
         var cepPesquisado = $cep.val();
-        var ultCep = $cep.data('ultCep');
-        if (ultCep != cepPesquisado) {
 
-            // update product cart
-            if (typeof checkout !== 'undefined' ) {
-                checkout.update({
-                    'review': 1
-                });
-            }
-
-            // atualiza endereço
-            getJSONP.run( URL_SERVICO + "?cep=" + cepPesquisado + "&format=json&callback=" + window.funcaoCallback[modo]);
-            $cep.data('ultCep', cepPesquisado);
+        // Se for shipping recalcula ou
+        // Se for billing e está desmarcada a opção de mesmo endereço
+        if (typeof checkout !== 'undefined' && (modo == 'shipping' || $j('#shipping\\:same_as_billing').is(':checked'))) {
+            checkout.update({
+                'review': 1
+            });
         }
+        if (dictCeps[cepPesquisado] != undefined){
+            preencheEndereco(modo, dictCeps[cepPesquisado]);
+        } else {
+            getJSONP.run( URL_SERVICO + "?cep=" + cepPesquisado + "&format=json&callback=" + window.funcaoCallback[modo]);
+        }
+
     }
 
     //<![CDATA[

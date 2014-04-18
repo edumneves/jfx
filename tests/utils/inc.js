@@ -12,20 +12,19 @@ var cepsDefinidos = [
     {cep:'36844-000', rua:'', bairro:'', cidade: 'TOMBOS', estado: '496'},
     {cep:'36010-030', rua:'RUA HENRIQUE SURERUS', bairro:'Centro', cidade: 'JUIZ DE FORA', estado: '496'},
     {cep:'32060-040', rua:'AVENIDA E', bairro:'Tupã', cidade: 'CONTAGEM', estado: '496'},
-    {cep:'09530-120', rua:'RUA JOAQUIM NABUCO', bairro:'SANTO ANTÔNIO', cidade: 'SAO CAETANO DO SUL', estado: '508'},
-    {cep:'03206-040', rua:'RUA BISPO EUGENIO DEMAZEMOD', bairro:'VILA ALPINA', cidade: 'SAO PAULO', estado: '508'},
+    {cep:'09530-120', rua:'RUA JOAQUIM NABUCO', bairro:'SANTO ANTÔNIO', cidade: 'SÃO CAETANO DO SUL', estado: '508'},
+    {cep:'03206-040', rua:'RUA BISPO EUGÊNIO DEMAZEMOD', bairro:'VILA ALPINA', cidade: 'SÃO PAULO', estado: '508'},
     {cep:'11960-000', rua:'', bairro:'', cidade: 'ELDORADO', estado: '508'},
     {cep:'88990-000', rua:'', bairro:'', cidade: 'PRAIA GRANDE', estado: '507'},
-    {cep:'29101-320', rua:'RUA JOSE PENNA MEDINA', bairro:'PRAIA DA COSTA', cidade: 'VILA VELHA', estado: '491'},
+    {cep:'29101-320', rua:'RUA JOSÉ PENNA MEDINA', bairro:'PRAIA DA COSTA', cidade: 'VILA VELHA', estado: '491'},
     {cep:'87660-000', rua:'', bairro:'', cidade: 'PARANACITY', estado: '499'},
     {cep:'99700-000', rua:'', bairro:'', cidade: 'ERECHIM', estado: '504'},
     {cep:'93310-050', rua:'RUA TEIXEIRA DE FREITAS', bairro:'RIO BRANCO', cidade: 'NOVO HAMBURGO', estado: '504'},
     {cep:'97010-490', rua:'RUA SILVA JARDIM', bairro:'NOSSA SENHORA DO ROSÁRIO', cidade: 'SANTA MARIA', estado: '504'},
     {cep:'68440-000', rua:'', bairro:'', cidade: 'ABAETETUBA', estado: '497'},
-    {cep:'68506-000', rua:'QUADRA ZERO', bairro:'NOVA MARABÁ', cidade: 'MARABA', estado: '497'},
-    {cep:'68506-000', rua:'QUADRA ZERO', bairro:'NOVA MARABÁ', cidade: 'MARABA', estado: '497'},
+    {cep:'68506-000', rua:'QUADRA ZERO', bairro:'NOVA MARABÁ', cidade: 'MARABÁ', estado: '497'},
     {cep:'65710-000', rua:'', bairro:'', cidade: 'LAGO DO JUNCO', estado: '493'},
-    {cep:'50020-050', rua:'RUA DA CONCORDIA', bairro:'SÃO JOSÉ', cidade: 'RECIFE', estado: '500'},
+    {cep:'50020-050', rua:'RUA DA CONCÓRDIA', bairro:'SÃO JOSÉ', cidade: 'RECIFE', estado: '500'},
     {cep:'22220-060', rua:'RUA MACHADO DE ASSIS', bairro:'FLAMENGO', cidade: 'RIO DE JANEIRO', estado: '502'}
 ];
 
@@ -231,20 +230,26 @@ casper.verificaEndereco = function (modo, cepDefinido) {
 }
 
 casper.limpaEndereco = function (modo, cepDefinido){
+    this.test.comment('Limpa endereço - vou esperar o input');
     this.waitForSelector('form#onepagecheckout_orderform input[name="' + modo + '[postcode]"]', function () {
+        this.test.comment('Limpa endereço - já esperei o input');
         // Verifica se tem algum valor preenchido
         var cepTela = this.evaluate(function(modo) {
             return __utils__.getFieldValue(modo + '[postcode]');
         }, modo);
+
         var ruaTela = this.evaluate(function(modo) {
             return __utils__.getFieldValue(modo + '[street][1]');
         }, modo);
+
         var bairroTela = this.evaluate(function(modo) {
             return __utils__.getFieldValue(modo + '[street][4]');
         }, modo);
+
         var cidadeTela = this.evaluate(function(modo) {
             return __utils__.getFieldValue(modo + '[city]');
         }, modo);
+
         var estadoTela = this.evaluate(function(modo) {
             return __utils__.getFieldValue(modo + '[region_id]');
         }, modo);
@@ -261,33 +266,51 @@ casper.limpaEndereco = function (modo, cepDefinido){
             this.fill('form#onepagecheckout_orderform', values, false);
         }
 
-        this.waitForSelectorTextChange(modo + '[city]', function() {
+        this.waitFor(function check() {
+            var cidadeTela = this.evaluate(function(modo) {
+                return jQuery('input[name = "' + modo + '[city]"]').val();
+            }, modo).toUpperCase().trim();
+            return cidadeTela == '';
+        }, function then() {
             this.test.comment('Limpou o formulário!!');
-        },function fail() {
+        }, function fail(){
+            this.fail("Não limpou o formulário " );
         });
     });
 }
 
 casper.preencheEndereco = function (modo, cepDefinido){
     this.waitForSelector('form#onepagecheckout_orderform input[name="' + modo + '[postcode]"]', function () {
-
+        this.test.info("### Preenchendo endereço de " + modo + " do CEP = " + cepDefinido.cep);
         var values = {};
         values[modo + '[postcode]'] = cepDefinido.cep.replace('-', '');
-        this.fill('form#onepagecheckout_orderform', values, false);
 
-        this.sendKeys('form#onepagecheckout_orderform input[name="' + modo + '[postcode]"]', cepDefinido.cep.replace('-', ''));
+//        this.test.comment('Preenche usando fill ' + cepDefinido.cep);
+//        this.fill('form#onepagecheckout_orderform', values, false);
+//
+//        this.test.comment('Preenche usando send keys' + cepDefinido.cep);
+//        this.sendKeys('form#onepagecheckout_orderform input[name="' + modo + '[postcode]"]', cepDefinido.cep.replace('-', ''));
 
+        this.evaluate(function(modo, cep) {
+            jQuery('form#onepagecheckout_orderform input[name="' + modo + '[postcode]"]').val(cep).blur();
+        }, modo, cepDefinido.cep.replace('-', ''));
+
+        this.test.comment('Wait for muda cidade');
+        this.options.waitTimeout = 10000;
         this.waitFor(function check() {
             var cidadeTela = this.evaluate(function(modo) {
                 return jQuery('input[name = "' + modo + '[city]"]').val();
-            }, modo).toUpperCase();
-            var cidadeEsperada = cepDefinido.cidade.toUpperCase();
+            }, modo).toUpperCase().trim();
+            var cidadeEsperada = cepDefinido.cidade.toUpperCase().trim();
+
             return cidadeTela == cidadeEsperada;
         }, function then() {
+            this.options.waitTimeout = 5000;
             this.verificaEndereco(modo, cepDefinido);
         }, function fail(){
+            this.options.waitTimeout = 5000;
             this.capture('nao_mudou_cidade.png');
-            this.fail("Não mudou a cidade " + modo + " do CEP = " + cepDefinido.cep);
+            this.fail("Não mudou a cidade " );
         });
 
     });

@@ -21,6 +21,7 @@ casper.eachThen(cepsDefinidos, function(response){
     // Testa um cep aleatório no billing
     var idCepBilling = Math.floor(Math.random()*cepsDefinidos.length);
     this.echo("Identificador aleatório = " + idCepBilling);
+    this.limpaEndereco('billing', cepsDefinidos[idCepBilling]);
     this.preencheEndereco('billing', cepsDefinidos[idCepBilling]);
 });
 
