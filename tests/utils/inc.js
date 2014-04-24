@@ -296,7 +296,7 @@ casper.preencheEndereco = function (modo, cepDefinido){
         }, modo, cepDefinido.cep.replace('-', ''));
 
         this.test.comment('Wait for muda cidade');
-        this.options.waitTimeout = 10000;
+        this.options.waitTimeout = 20000;
         this.waitFor(function check() {
             var cidadeTela = this.evaluate(function(modo) {
                 return jQuery('input[name = "' + modo + '[city]"]').val();
@@ -305,7 +305,7 @@ casper.preencheEndereco = function (modo, cepDefinido){
 
             return cidadeTela == cidadeEsperada;
         }, function then() {
-            this.options.waitTimeout = 5000;
+            this.options.waitTimeout = 15000;
             this.verificaEndereco(modo, cepDefinido);
         }, function fail(){
             this.options.waitTimeout = 5000;

@@ -8,9 +8,9 @@ casper.inicioAteFinalizaCompra();
 casper.verificaEndereco('billing', cepsDefinidos[0]);
 
 // Mudando o timeout pois o clique do endereço está lento
-casper.options.waitTimeout = 10000;
+casper.options.waitTimeout = 15000;
 casper.marcaMesmaEntrega(false);
-casper.options.waitTimeout = 5000;
+casper.options.waitTimeout = 10000;
 
 // Testar o preenchimento de vários CEPs tanto no billing quanto no shipping
 casper.eachThen(cepsDefinidos, function(response){
