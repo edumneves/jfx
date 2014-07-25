@@ -36,9 +36,11 @@ class Av5_Correios_Model_Updater extends Varien_Object {
 	protected $_defHeight			= NULL; // Altura padrão de pacotes
 	protected $_defWidth			= NULL; // Comprimento padrão de pacotes
 	protected $_defDepth			= NULL; // Largura padrão de pacotes
+	protected $_weightType			= NULL; // Medida de peso padrão
 	protected $_maxWeight			= NULL; // Peso máximo permitido
 	protected $_updateFrequency		= NULL; // Frequencia de atualização da tabela
 	protected $_postingMethods		= NULL; // Serviços de postagem
+	protected $_deleteCodes			= NULL; // Códigos de erro para exclusão do serviço da base
 	protected $_limitRecords		= NULL; // Número de registros atualizados por iteração
 	protected $_ownerHands			= NULL; // Entrega em mãos próprias
 	protected $_receivedWarning		= NULL; // Aviso de recebimento
@@ -56,9 +58,11 @@ class Av5_Correios_Model_Updater extends Varien_Object {
 			$this->_defHeight = $this->getConfigData('default_height');
 			$this->_defWidth = $this->getConfigData('default_width');
 			$this->_defDepth = $this->getConfigData('default_depth');
-			$this->_maxWeight = $this->getConfigData('max_weight');
+			$this->_weightType = $this->getConfigData('weight_type');
+			$this->_maxWeight = $this->_fixWeight($this->getConfigData('max_weight'));
 			$this->_updateFrequency = $this->getConfigData('update_frequency');
 			$this->_postingMethods = $this->getConfigData('posting_methods');
+			$this->_deleteCodes = explode(",",$this->getConfigData('delete_codes'));
 			$this->_limitRecords = $this->getConfigData('limit_records');
 			$this->_ownerHands = ($this->getConfigData('owner_hands')) ? 'S' : 'N';
 			$this->_receivedWarning = ($this->getConfigData('received_warning')) ? 'S' : 'N';
@@ -83,22 +87,44 @@ class Av5_Correios_Model_Updater extends Varien_Object {
 	}
 	
 	/**
+	 * Corrige o peso informado com base na medida de peso configurada
+	 * @param string|int|float $weight
+	 * @return double
+	 */
+	protected function _fixWeight($weight) {
+		$result = $weight;
+		if ($this->_weightType == 'gr') {
+			$result = number_format($weight/1000, 2, '.', '');
+		}
+		 
+		return $result;
+	}
+	
+	/**
+	 * Retorna todos os serviços habilitados na loja
+	 * @return array
+	 */
+	public function allServices(){
+		$this->_init();
+		return explode(',',$this->_postingMethods);
+	} 
+	
+	/**
 	 * Executa atualização de tabela de preços do serviço informado
 	 * @param string $services
 	 */
 	public function update($services=null) {
 		$this->_init();
 		
-		$model = Mage::getResourceModel('av5_correios_shipping/carrier_correios');
+		$model = Mage::getResourceModel('av5_correios/carrier_correios');
 		
-//		if (!$services) {
-//			$services = $this->_postingMethods;
-//		}
-        $services = $this->_postingMethods;
-
+		if (!is_array($services)) {
+			$services = $this->_postingMethods;
+		}
+		
 		$totalSuccess = $totalErrors = 0;
+		$cep_origem = $this->_from;
 		foreach($model->listServices($services, $this->_updateFrequency, $this->_limitRecords) as $row) {
-			$cep_origem = trim(Mage::getStoreConfig('shipping/origin/postcode', $this->getStore()));
 			$cep_destino = $row['cep_destino_ref'];
 			$peso = $row['peso'];
 			$url_d = $this->_wsUrl."&nCdEmpresa=".$this->_login."&sDsSenha=".$this->_password."&nCdFormato=1&nCdServico=".$row['servico']."&nVlComprimento=".$this->_defWidth."&nVlAltura=".$this->_defHeight."&nVlLargura=".$this->_defDepth."&sCepOrigem=".$cep_origem."&sCdMaoPropria=".$this->_ownerHands."&sCdAvisoRecebimento=".$this->_receivedWarning."&nVlValorDeclarado=".$this->_declaredValue."&nVlPeso=".$peso."&sCepDestino=".$cep_destino;
@@ -137,7 +163,10 @@ class Av5_Correios_Model_Updater extends Varien_Object {
 							$totalErrors++;
 						}
 					} else {
-						Mage::log("AV5_Correios Erro: " . $servico->MsgErro." – ".$row['cep_destino_ini']." – ".$row['cep_destino_fim']." – ".$row['cep_dest_ref']." : " . $url_d);
+						if (in_array($servico->Erro,$this->_deleteCodes)) {
+							$model->deleteService($row['id']);
+						}
+						Mage::log("AV5_Correios Erro: " . $servico->Erro . " >> " . $servico->MsgErro." – ".$row['cep_destino_ini']." – ".$row['cep_destino_fim']." – ".$row['cep_destino_ref']." : " . $url_d);
 						$totalErrors++;
 					}
 	  			}
@@ -155,17 +184,37 @@ class Av5_Correios_Model_Updater extends Varien_Object {
 	 */
 	public function toUpdate() {
 		$this->_init();
-		$model = Mage::getResourceModel('av5_correios_shipping/carrier_correios');
+		$model = Mage::getResourceModel('av5_correios/carrier_correios');
 		return $model->toUpdate($this->_postingMethods, $this->_updateFrequency);
 	}
 	
+	/**
+	 * Retorna o numero de registros desatualizados de um serviço
+	 * @param Zend_Db_Table_Row
+	 */
+	public function hasToUpdate($method){
+		$this->_init();
+		$model = Mage::getResourceModel('av5_correios/carrier_correios');
+		return $model->hasToUpdate($method, $this->_updateFrequency);
+	}
+	
+	/**
+	 * Retorna o número de registros atualizados de um serviço
+	 * @param Zend_Db_Table_Row
+	 */
+	public function updatedCount($method){
+		$this->_init();
+		$model = Mage::getResourceModel('av5_correios/carrier_correios');
+		return $model->updatedCount($method, $this->_updateFrequency);
+	}
+	
 	public function getServiceName($service) {
-		list($name, $days) = explode(',', $this->getConfigData('serv_' . $service));
+		list($name, $days, $weight) = explode(',', $this->getConfigData('serv_' . $service));
 		return $name;
 	}
 	
 	public function stillUpdate($service) {
-		$model = Mage::getResourceModel('av5_correios_shipping/carrier_correios');
+		$model = Mage::getResourceModel('av5_correios/carrier_correios');
 		$result = $model->hasToUpdate($service, $this->_updateFrequency);
 		
 		if ($result['total'] > 0) {
@@ -179,23 +228,22 @@ class Av5_Correios_Model_Updater extends Varien_Object {
 	 * Popula a tabela de preços com os dados básicos para os serviços selecionados
 	 */
 	public function populate() {
-
-        $this->_init();
-		$model = Mage::getResourceModel('av5_correios_shipping/carrier_correios');
+		$this->_init();
+		$model = Mage::getResourceModel('av5_correios/carrier_correios');
 		
 		$postingMethods = explode(',', $this->_postingMethods);
 		$methods = array();
-
+		
 		if (is_array($postingMethods)) {
 			foreach ($postingMethods as $method) {
-				list($name, $days) = explode(',', $this->getConfigData('serv_' . $method));
-				$methods[] = array($method,$name,$days);
+				list($name, $days, $weight, $minWeight) = explode(',', $this->getConfigData('serv_' . $method));
+				$methods[] = array($method,$name,$days,$weight,$minWeight);
 			}
 		} else {
-			list($name, $days) = explode(',', $this->getConfigData('serv_' . $postingMethods));
-			$methods[] = array($postingMethods,$name,$days);
+			list($name, $days, $weight, $minWeight) = explode(',', $this->getConfigData('serv_' . $postingMethods));
+			$methods[] = array($postingMethods,$name,$days,$weight,$minWeight);
 		}
-
-        $model->populate($methods, $this->_maxWeight, $this->_from);
+		
+		$model->populate($methods, $this->_from);
 	}
 }

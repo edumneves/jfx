@@ -29,7 +29,7 @@ class Av5_Correios_Model_Mysql4_Carrier_Correios_Collection extends Varien_Data_
     public function __construct()
     {
         parent::__construct(Mage::getSingleton('core/resource')->getConnection('shipping_read'));
-        $this->_shipTable = Mage::getSingleton('core/resource')->getTableName('av5_correios_shipping/correios');
+        $this->_shipTable = Mage::getSingleton('core/resource')->getTableName('av5_correios/correios');
         $this->_select->from(array("s" => $this->_shipTable))
             ->order("valor");
         $this->_setIdFieldName('id');

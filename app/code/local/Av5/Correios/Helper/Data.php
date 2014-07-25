@@ -29,7 +29,7 @@ class Av5_Correios_Helper_Data extends Mage_Core_Helper_Abstract {
 		 
 		if(!preg_match("/^[0-9]{7,8}$/", $new)){
 			return false;
-		} elseif(preg_match("/^[0-9]{7}$/", $new)){ // tratamento para CEP com 7 dígitos
+		} elseif(preg_match("/^[0-9]{7}$/", $new)){ // tratamento para CEP com 7 dï¿½gitos
 			$new = "0" . $new;
 		}
 	
@@ -46,4 +46,18 @@ class Av5_Correios_Helper_Data extends Mage_Core_Helper_Abstract {
 		return $model->getServiceName($srv);
 	}
 	
+	public function allServices() {
+		$model = Mage::getModel("av5_correios/updater");
+		return $model->allServices();
+	}
+	
+	public function hasToUpdate($srv) {
+		$model = Mage::getModel("av5_correios/updater");
+		return $model->hasToUpdate($srv);
+	}
+	
+	public function updatedCount($srv) {
+		$model = Mage::getModel("av5_correios/updater");
+		return $model->updatedCount($srv);
+	}
 }

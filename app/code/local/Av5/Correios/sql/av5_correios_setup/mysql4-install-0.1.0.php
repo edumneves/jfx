@@ -2,13 +2,10 @@
 $installer = $this;
 /* @var $installer Mage_Core_Model_Resource_Setup */
 
-$installer = $this;
-/* @var $installer Mage_Core_Model_Resource_Setup */
-
 $installer->startSetup();
 
 $installer->run("
--- DROP TABLE IF EXISTS {$this->getTable('tabela_correios')};
+DROP TABLE IF EXISTS {$this->getTable('tabela_correios')};
 CREATE TABLE {$this->getTable('tabela_correios')} (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `servico` VARCHAR(50),

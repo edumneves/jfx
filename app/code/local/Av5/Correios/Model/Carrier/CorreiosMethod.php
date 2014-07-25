@@ -65,6 +65,8 @@ class Av5_Correios_Model_Carrier_CorreiosMethod extends Mage_Shipping_Model_Carr
     protected $_postingMethods		= NULL; // Métodos de envio disponíveis
     protected $_title				= NULL; // Título do método de envio
     protected $_handlingFee			= NULL; // Taxa de envio
+    protected $_request				= NULL; // Controle de requisição
+    protected $_pacCodes			= NULL; // Serviços PAC
     
 	
     /**
@@ -143,6 +145,7 @@ class Av5_Correios_Model_Carrier_CorreiosMethod extends Mage_Shipping_Model_Carr
     	$this->_declaredValue = $this->getConfigData('declared_value');
     	$this->_receivedWarning = $this->getConfigData('received_warning');
     	$this->_ownerHands = $this->getConfigData('owner_hands');
+    	$this->_pacCodes = explode(",", $this->getConfigData('pac_codes'));
     	
     	$this->_result = Mage::getModel('shipping/rate_result');
     	$this->_value = $request->getBaseCurrency()->convert($request->getPackageValue(), $request->getPackageCurrency());
@@ -234,16 +237,31 @@ class Av5_Correios_Model_Carrier_CorreiosMethod extends Mage_Shipping_Model_Carr
     protected function _getCubicWeight(){
     	$cubicWeight = 0;
     	$items = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
+    	$maxH = $this->getConfigData('cubic_validation/max_height');
+    	$minH = $this->getConfigData('cubic_validation/min_height');
+    	$maxW = $this->getConfigData('cubic_validation/max_width');
+    	$minW = $this->getConfigData('cubic_validation/min_width');
+    	$maxD = $this->getConfigData('cubic_validation/max_depth');
+    	$minD = $this->getConfigData('cubic_validation/min_depth');
+    	$sumMax = $this->getConfigData('cubic_validation/sum_max');
+    	$coefficient = $this->getConfigData('cubic_validation/coefficient');
+    	$validate = $this->getConfigData('validate_dimensions');
     	foreach($items as $item){
     		$product = $item->getProduct();
     		$width = (!$product->getVolumeComprimento()) ? $this->_defWidth : $product->getVolumeComprimento();
     		$height = (!$product->getVolumeAltura()) ? $this->_defHeight : $product->getVolumeAltura();
    			$depth = (!$product->getVolumeLargura()) ? $this->_defDepth : $product->getVolumeLargura();
+   			
+   			if ($validate && ($height > $maxH || $height < $minH || $depth > $maxD || $depth < $minD || $width > $maxW || $width < $minW || ($height+$depth+$width) > $sumMax)) {
+   				return false;
+   			}
     		
-   			$cubicWeight += (($width * $depth * $height) / 4800) * $item->getQty(); // Calcula o peso cúbico do item atual
+   			$cubicWeight += (($width * $depth * $height) / $coefficient) * $item->getQty(); // Calcula o peso cúbico do item atual
     	}
     
     	$this->_cubic = $this->_fixWeight($cubicWeight);
+    	
+    	return true;
     }
     
     /**
@@ -300,19 +318,37 @@ class Av5_Correios_Model_Carrier_CorreiosMethod extends Mage_Shipping_Model_Carr
 		if(!$this->_checkWeightRange()) return $this->_result;
              
         // Calcula o peso cúbico
-        $this->_getCubicWeight();
+        if($this->_getCubicWeight() === false){
+        	$this->_throwError('dimensionerror', 'Dimension error', __LINE__);
+            return $this->_result;
+        }
 
         // Recupera as cotações de frete
-        $quotes = Mage::getResourceModel('av5_correios_shipping/carrier_correios');
-        $request->setPostingMethods($this->_postingMethods);
-        foreach ($quotes->getRates($request) as $rate) {
-        	$this->_appendShippingReturn($rate['servico'], $rate['valor'], $rate['prazo']);
-        }
+        $this->_request = $request;
+        $this->_getQuotes();
 
         // Use descont codes
         $this->_updateFreeMethodQuote($request);
 
         return $this->_result;
+   	}
+   	
+   	/**
+   	 * Recupera cotações de frete
+   	 *
+   	 * @return object
+   	 */
+   	protected function _getQuotes(){
+   		$quotes = Mage::getResourceModel('av5_correios/carrier_correios');
+   		$this->_request->setPostingMethods($this->_postingMethods);
+   		$this->_request->setPacCodes($this->_pacCodes);
+   		$this->_request->setFixedPackageWeight($this->_fixWeight($this->_request->getPackageWeight()));
+   		$this->_request->setCubicPackageWeight($this->_cubic);
+   		foreach ($quotes->getRates($this->_request) as $rate) {
+   			$this->_appendShippingReturn($rate['servico'], $rate['valor'], $rate['prazo']);
+   		}
+   		
+   		return $this->_result;
    	}
    	
    	/**
@@ -468,4 +504,25 @@ class Av5_Correios_Model_Carrier_CorreiosMethod extends Mage_Shipping_Model_Carr
    		return array($this->_code => $this->getConfigData('title'));
    	}
    	
+   	/**
+   	 * Gera frete grátis para um produto
+   	 *
+   	 * @param string $freeMethod
+   	 * @return void
+   	 */
+   	protected function _setFreeMethodRequest($freeMethod)
+   	{
+   		// Set request as free method request
+   		$this->_freeMethodRequest = true;
+   		$this->_freeMethodRequestResult = Mage::getModel('shipping/rate_result');
+   	
+   		$this->_postMethods = $freeMethod;
+   		$this->_postMethodsExplode = array($freeMethod);
+   	
+   		// Tranform free shipping weight
+   		$this->_freeWeight = $this->_fixWeight($this->_freeWeight);
+   	
+   		$this->_weight = $this->_freeWeight;
+   		$this->_cubic = $this->_freeWeight;
+   	}
 }

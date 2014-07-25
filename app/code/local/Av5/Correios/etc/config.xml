@@ -19,7 +19,7 @@
 <config>
     <modules>
         <Av5_Correios>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
             <depends>
                 <Mage_Shipping />
             </depends>
@@ -40,11 +40,8 @@
     	<models>
             <av5_correios>
                 <class>Av5_Correios_Model</class>
-            </av5_correios>
-            <av5_correios_shipping>
-				<class>Av5_Correios_Model</class>
-				<resourceModel>av5_correios_mysql4</resourceModel>
-			</av5_correios_shipping>
+        		<resourceModel>av5_correios_mysql4</resourceModel>
+			</av5_correios>
 			<av5_correios_mysql4>
 				<class>Av5_Correios_Model_Mysql4</class>
 				<entities>
@@ -89,7 +86,6 @@
             </shipping>
         </sales>
     </global>
-
     <default>
         <carriers>
             <av5_correios>
@@ -120,13 +116,12 @@
                 <depth_sent>11</depth_sent>
 
                 <!-- CONFIG -->
-                <free_method>
-
-                </free_method>
+                <free_method>40010</free_method>
                 <weight_type>kg</weight_type>
                 <add_delivery_days>0</add_delivery_days>
                 <showmethod>1</showmethod>
-
+                <validate_dimensions>1</validate_dimensions>
+                
                 <!-- MESSAGES -->
                 <msgprazo>%s - Em média %d dia(s)</msgprazo>
                 <correioserror>Houve um erro inesperado, por favor entre em contato. %s</correioserror>
@@ -135,27 +130,42 @@
                 <maxweighterror>Peso dos produtos acima do permitido pelos Correios. Por favor entre em contato conosco.</maxweighterror>
                 <weightzeroerror>Lojista: O peso do produto deverá ser maior que zero. Se você está usando a media de peso como gramas, o peso mínimo é de 10 gramas.</weightzeroerror>
                 <coderror>Lojista: Para calcular esse serviço você precisa ter contrato com os Correios.</coderror>
+                <dimensionerror>Dimensões dos produtos fora do permitido pelos Correios.</dimensionerror>
                 
                 <!-- SYSTEM -->
-                <serv_40010>Sedex,3</serv_40010>
-                <serv_40096>Sedex,3</serv_40096>
-                <serv_81019>E-Sedex,3</serv_81019>
-                <serv_41025>PAC,3</serv_41025>
-                <serv_41106>PAC,3</serv_41106>
-                <serv_41068>PAC,3</serv_41068>
-                <serv_40215>Sedex 10,1</serv_40215>
-                <serv_40290>Sedex HOJE,1</serv_40290>
-                <serv_40045>Sedex a Cobrar,5</serv_40045>
+                <serv_40010>Sedex,3,30,0.3</serv_40010>
+                <serv_40096>Sedex,3,30,0.3</serv_40096>
+                <serv_40436>Sedex,3,30,0.3</serv_40436>
+                <serv_40444>Sedex,3,30,0.3</serv_40444>
+                <serv_81019>E-Sedex,3,15,0.3</serv_81019>
+                <serv_41025>PAC,3,30,1</serv_41025>
+                <serv_41106>PAC,3,30,1</serv_41106>
+                <serv_41068>PAC,3,30,1</serv_41068>
+                <serv_40215>Sedex 10,1,10,0.3</serv_40215>
+                <serv_40290>Sedex HOJE,1,10,0.3</serv_40290>
+                <serv_40045>Sedex a Cobrar,5,30,0.3</serv_40045>
                 
                 <pac_codes>41025,41106,41068</pac_codes>
                 <acobrar_code>40045</acobrar_code>
-                <contrato_codes>40096,81019,41068</contrato_codes>
+                <contrato_codes>40096,40436,40444,81019,41068</contrato_codes>
+                
+                <delete_codes>008,-10,16</delete_codes>
+                
+                <cubic_validation>
+                    <max_height>90</max_height>
+                    <min_height>2</min_height>
+                    <max_width>90</max_width>
+                    <min_width>16</min_width>
+                    <max_depth>90</max_depth>
+                    <min_depth>11</min_depth>
+                    <sum_max>160</sum_max>
+                    <coefficient>6000</coefficient>
+                </cubic_validation>
 				
 				<!-- UPDATER SETTINGS -->
-                <!-- url_ws_correios>http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo</url_ws_correios -->
                 <url_ws_correios>http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?StrRetorno=xml</url_ws_correios>
-                <update_frequency>1</update_frequency>
-                <limit_records>400</limit_records>
+                <update_frequency>15</update_frequency>
+                <limit_records>200</limit_records>
             </av5_correios>
         </carriers>
     </default>
@@ -182,7 +192,6 @@
                 </children>
             </sales>
         </menu>
-        
         <acl>
             <resources>
                 <admin>
@@ -210,7 +219,7 @@
     	<jobs>
     		<av5_correios_updater>
     			<schedule>
-    				<cron_expr>0,10,20,30,40,50 * * * *</cron_expr>
+    				<cron_expr>*/5 * */15 * *</cron_expr>
     			</schedule>
     			<run>
     				<model>av5_correios/updater::update</model>

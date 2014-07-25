@@ -6,6 +6,7 @@ $helper = Mage::helper("av5_correios");
         <tr>
             <td><h3>Atualiza&ccedil;&otilde;es Correios</h3></td>
             <td class="a-right">
+				<button onclick="top.location.href='<?php echo $this->getUrl('*/*/clean')?>';" class="scalable delete" type="button"><span>Limpar Base</span></button>
             	<button onclick="top.location.href='<?php echo $this->getUrl('*/*/populate')?>';" class="scalable save" type="button"><span>Popular Base</span></button>
                 <button onclick="editForm.submit()" class="scalable save" type="button"><span>Atualizar</span></button>
             </td>
@@ -15,24 +16,52 @@ $helper = Mage::helper("av5_correios");
 <div class="entry-edit">
     <form id="edit_form" name="edit_form" method="post" action="<?php echo $this->getUrl('*/*/post')?>" target="_self">
         <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-        <fieldset id="my-fieldset">
-            <table class="form-list">
-            	<thead>
-            		<tr>
-            		<th width="30">#</th>
-            		<th width="80%">Servi&ccedil;o</th>
-            		<th align="center">Registros para atualizar</th>
-            		</tr>
-            	</thead>
-            	<?php foreach($helper->services() as $service): ?>
-                <tr>
-                    <td><input type="radio" name="formulario[servico_id]" id="servico_id_<?php echo $service['servico']; ?>" value="<?php echo $service['servico']; ?>" /></td>
-                    <td><label for="servico_id_<?php echo $service['servico']; ?>"><?php echo $helper->getServiceName($service['servico']) . " ( " . $service['servico'] . " )"; ?></label></td>
-                    <td align="center"><b><?php echo $service['total']; ?></b></td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-        </fieldset>
+        	<div class="grid">
+	            <table class="data" cellspacing="0" cellpadding="0">
+	            	<colgroup>
+	            		<col width="20" class="a-center">
+                        <col>
+                        <col width="120" class="a-center">
+                        <col width="180" class="a-center">
+                        <col width="180" class="a-center">
+                        <col width="180" class="a-center">
+                    </colgroup>
+	            	<thead>
+	            		<tr class="headings">
+		            		<th >#</th>
+		            		<th>Servi&ccedil;o</th>
+		            		<th class="a-center">Status</th>
+		            		<th class="a-center">Total de registros</th>
+		            		<th class="a-center">Registros atualizados</th>
+		            		<th class="a-center">Registros para atualizar</th>
+	            		</tr>
+	            	</thead>
+	            	<?php 
+	            		$even = true;
+	            		foreach($helper->allServices() as $service):
+	            			$toUpdate = $helper->hasToUpdate($service);
+	            			$updated = $helper->updatedCount($service);
+	            			$name = $helper->getServiceName($service);
+	            	?>
+	                <tr class="<?php echo ($even) ? "even" : ""; $even = !$even;?>">
+	                    <td><?php if ($toUpdate['total']): ?><input type="radio" name="formulario[servico_id]" id="servico_id_<?php echo $service; ?>" value="<?php echo $service; ?>" /><?php endif; ?></td>
+	                    <td><label for="servico_id_<?php echo $service; ?>"><?php echo $name . " ( " . $service . " )"; ?></label></td>
+	                    <td align="center"><?php 
+	                    	if ($toUpdate['total']) {
+								$class = "critical";
+								$text = "Atualizar";
+    						} else {
+								$class = "notice";
+								$text = "Atualizado";
+            				}
+	                    ?><span class="grid-severity-<?php echo $class; ?>"><span><?php echo $text; ?></span></span></td>
+	                    <td align="center"><b><?php echo $updated['total'] + $toUpdate['total']; ?></b></td>
+	                    <td align="center"><b><?php echo $updated['total']; ?></b></td>
+	                    <td align="center"><b><?php echo $toUpdate['total']; ?></b></td>
+	                </tr>
+	                <?php endforeach; ?>
+	            </table>
+	    	</div>
     </form>
 </div>
 <script type="text/javascript">

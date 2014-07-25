@@ -27,4 +27,15 @@ class Av5_Correios_Adminhtml_UpdateController extends Mage_Adminhtml_Controller_
 		}
 		$this->_redirect('*/*');
 	}
+	
+	public function cleanAction() {
+		try {
+			$model = Mage::getResourceModel('av5_correios/carrier_correios');
+			$model->cleanDatabase();
+			Mage::getSingleton('adminhtml/session')->addSuccess("Banco de dados limpo com sucesso!");
+		} catch (Exception $e) {
+			Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+		}
+		$this->_redirect('*/*');
+	}
 }
