@@ -91,10 +91,11 @@ class Av5_Correios_Model_Updater extends Varien_Object {
 		
 		$model = Mage::getResourceModel('av5_correios_shipping/carrier_correios');
 		
-		if (!$services) {
-			$services = $this->_postingMethods;
-		}
-		
+//		if (!$services) {
+//			$services = $this->_postingMethods;
+//		}
+        $services = $this->_postingMethods;
+
 		$totalSuccess = $totalErrors = 0;
 		foreach($model->listServices($services, $this->_updateFrequency, $this->_limitRecords) as $row) {
 			$cep_origem = trim(Mage::getStoreConfig('shipping/origin/postcode', $this->getStore()));

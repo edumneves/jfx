@@ -141,12 +141,14 @@ class Av5_Correios_Model_Mysql4_Carrier_Correios extends Mage_Core_Model_Mysql4_
     	$read = $this->_getReadAdapter();
     	$table = Mage::getSingleton('core/resource')->getTableName('av5_correios_shipping/correios');
 		
-    	//Mage::log("AV5 Correios - PostMethods: " . var_export($postMethods,true));
-    	
+    	Mage::log("AV5 Correios - PostMethods: " . var_export($postMethods,true));
+
     	$select = $read->select()->from($table);
     	$select->where("(lastupdate IS NULL OR lastupdate < SUBDATE(NOW(),".$frequency.")) AND servico in (".$postMethods.")");
     	$select->limit($limit);
-    	
+
+        error_log("AV5 EDU NOVO -  " . $select);
+
     	return $read->fetchAll($select);
     }
     
