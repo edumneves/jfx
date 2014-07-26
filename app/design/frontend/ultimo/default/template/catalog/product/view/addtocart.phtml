@@ -29,7 +29,7 @@
 <?php $buttonTitle = $this->__('Add to Cart'); ?>
 <?php if ($_product->isSaleable()): ?>
 	<div class="add-to-cart v-centered-content">
-    	<button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart v-center" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+    	<button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart v-center" onclick="productAddToCartForm.submit(this)" style="display: none"><span><span><?php echo $buttonTitle ?></span></span></button>
 		<?php if(!$_product->isGrouped()): ?>
 			<div class="qty-wrapper v-center">
 				<label for="qty"><?php echo $this->__('Qty:') ?></label>
