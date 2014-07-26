@@ -208,7 +208,9 @@ $j(document).ready(function(){
         RegionUpdater.prototype.setMarkDisplay = function(){};
         ZipUpdater.prototype._setPostcodeOptional = function(){};
         var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', countryRegions, undefined, 'billing:postcode');
-    }
+        alert('carreguei');
+    } else
+        alert('NÃO carreguei');
     //]]>
 
     $j(function(){
