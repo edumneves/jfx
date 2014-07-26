@@ -84,7 +84,8 @@ $j(document).ready(function(){
      *
      */
     //var URL_SERVICO            = 'https://lvws0001.lojablindada.com/endereco/';
-    var URL_SERVICO            = 'skin/frontend/base/default/deivison/buscacep.php';
+    var URL_SERVICO            = 'http://www.jfxrockwear.com.br/test/' +
+        'skin/frontend/base/default/deivison/buscacep.php';
 
     var billingCEP             = $j('#billing\\:postcode');
 
