@@ -46,7 +46,7 @@
     if($order->getPayment()->getMethod() == "boleto_bancario"): /*caso tenha cido escolhido boleto como meio de pagamento exibe o botão abaixo*/
         ?>
         <center>
-            <button class="button" title="Clique aqui para imprimir o Boleto" onclick="window.open('<?php $this->getUrl('boleto/standard/view/order_id/'.$order->getId())?>','_blank')" type="button"><span><span>Clique aqui para imprimir o Boleto</span></span></button>
+            <button class="button" title="Clique aqui para imprimir o Boleto" onclick="window.open('<?php echo $this->getUrl('boleto/standard/view/order_id/'.$order->getId())?>','_blank')" type="button"><span><span>Clique aqui para imprimir o Boleto</span></span></button>
         </center>
     <?php endif; ?>
     <!-- Deivison -->
