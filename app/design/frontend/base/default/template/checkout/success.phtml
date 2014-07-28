@@ -37,6 +37,18 @@
     <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
 <?php endif;?>
     <p><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track its progress.') ?></p>
+    <?php
+    $orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+
+    Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
+    $order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+    if($order->getPayment()->getMethod() == "boleto_bancario"): /*caso tenha cido escolhido boleto como meio de pagamento exibe o botão abaixo*/
+        ?>
+        <center>
+            <button class="button" title="Clique aqui para imprimir o Boleto" onclick="window.open('<?=$this->getUrl('boleto/standard/view/order_id/'.$order->getId())?>','_blank')" type="button"><span><span>Clique aqui para imprimir o Boleto</span></span></button>
+        </center>
+    <?php endif; ?>
+    <!-- Deivison -->
 <?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
     <p>
         <?php echo $this->__('Click <a href="%s" onclick="this.target=\'_blank\'">here to print</a> a copy of your order confirmation.', $this->getPrintUrl()) ?>
