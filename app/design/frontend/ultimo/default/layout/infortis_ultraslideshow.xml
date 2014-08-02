@@ -28,12 +28,6 @@
 		<reference name="root">
 			<block type="ultraslideshow/slideshow" name="ultraslideshow" as="ultraslideshow" template="infortis/ultraslideshow/slideshow.phtml">
 				<action method="setPredefined"><value>1</value></action>
-                <action method="setEsiOptions">
-                    <params>
-                        <access>public</access>
-                        <scope>global</scope>
-                    </params>
-                </action>
 			</block>
 		</reference>
 
