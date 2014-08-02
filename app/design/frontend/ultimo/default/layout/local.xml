@@ -532,12 +532,6 @@
 				<action method="setBlockId"><block_id>block_category_below_collection</block_id></action>
 			</block>
 
-            <action method="setEsiOptions">
-                <params>
-                    <access>public</access>
-                    <scope>page</scope>
-                </params>
-            </action>
 		</reference>
 		
 		<!-- Remove currency switcher from sidebar -->
@@ -567,13 +561,6 @@
 				<action method="setBlockId"><block_id>block_category_below_collection</block_id></action>
 			</block>
 
-            <action method="setEsiOptions">
-                <params>
-                    <access>public</access>
-                    <scope>page</scope>
-                </params>
-            </action>
-			
 		</reference>
 
 		<!-- Remove currency switcher from sidebar -->
