@@ -176,7 +176,14 @@
 		<reference name="header">
 
 			<!-- Welcome message as block (added after Magento 1.7.0.2) -->
-			<block type="page/html_welcome" name="welcome" as="welcome"/>
+			<block type="page/html_welcome" name="welcome" as="welcome">
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
+            </block>
 		
 			<!-- Add mini cart to the header -->			
 			<block type="checkout/cart_sidebar" name="mini_cart_sidebar" as="miniSidebar" template="checkout/cart/mini.phtml" before="-">
@@ -196,10 +203,22 @@
                 </action>
 				<block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions" translate="label" module="checkout">
 					<label>Shopping Cart Sidebar Extra Actions</label>
-				</block>
+                    <action method="setEsiOptions">
+                        <params>
+                            <access>public</access>
+                            <scope>global</scope>
+                        </params>
+                    </action>
+                </block>
 				<block type="cms/block" name="block_mini_cart_above_products">
 					<action method="setBlockId"><block_id>block_mini_cart_above_products</block_id></action>
-				</block>
+                    <action method="setEsiOptions">
+                        <params>
+                            <access>public</access>
+                            <scope>global</scope>
+                        </params>
+                    </action>
+                </block>
 			</block>
 			
 			<!-- Add currency switcher to the header -->
