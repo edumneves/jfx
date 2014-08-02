@@ -2,17 +2,17 @@
 <!--
     Nexcess.net Turpentine Extension for Magento
     Copyright (C) 2012  Nexcess.net L.L.C.
-
+ 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
-
+ 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
+ 
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -36,42 +36,9 @@
         message and the number of items in the shopping cart so it must be
         cached per-client.
         -->
-        <reference name="header">
-            <action method="setEsiOptions">
-                <params>
-                    <access>private</access>
-                    <flush_events>
-                        <wishlist_item_save_after/>
-                        <wishlist_item_delete_after/>
-                        <sales_quote_save_after/>
-                    </flush_events>
-                </params>
-            </action>
-        </reference>
+
         <!-- This block is inside of the header block on mage EE, so it could
         be commented out for EE stores for a small performance increase -->
-        <reference name="cart_sidebar">
-            <action method="setEsiOptions">
-                <params>
-                    <access>private</access>
-                    <flush_events>
-                        <sales_quote_save_after/>
-                    </flush_events>
-                </params>
-            </action>
-        </reference>
-        <reference name="catalog.compare.sidebar">
-            <action method="setEsiOptions">
-                <params>
-                    <access>private</access>
-                    <flush_events>
-                        <catalog_product_compare_add_product/>
-                        <catalog_product_compare_remove_product/>
-                        <catalog_product_compare_item_collection_clear/>
-                    </flush_events>
-                </params>
-            </action>
-        </reference>
         <reference name="right.reports.product.viewed">
             <action method="setEsiOptions">
                 <params>
@@ -274,53 +241,53 @@
         <turpentine_cache_flag value="0"/>
     </customer_account_confirmation>
 
-<!--
-    <customer_account_edit>
-        <turpentine_cache_flag value="0"/>
-    </customer_account_edit>
+    <!--
+        <customer_account_edit>
+            <turpentine_cache_flag value="0"/>
+        </customer_account_edit>
 
-    <customer_account_index>
-        <turpentine_cache_flag value="1"/>
-        <reference name="customer_account_dashboard">
-            <action method="setEsiOptions">
-                <params>
-                    <access>private</access>
-                    <dummy_blocks>
-                        <head/>
-                    </dummy_blocks>
-                </params>
-            </action>
-        </reference>
-    </customer_account_index>
-    <customer_address_index>
-        <turpentine_cache_flag value="0"/>
-    </customer_address_index>
+        <customer_account_index>
+            <turpentine_cache_flag value="1"/>
+            <reference name="customer_account_dashboard">
+                <action method="setEsiOptions">
+                    <params>
+                        <access>private</access>
+                        <dummy_blocks>
+                            <head/>
+                        </dummy_blocks>
+                    </params>
+                </action>
+            </reference>
+        </customer_account_index>
+        <customer_address_index>
+            <turpentine_cache_flag value="0"/>
+        </customer_address_index>
 
-    <customer_address_view>
-        <turpentine_cache_flag value="0"/>
-    </customer_address_view>
+        <customer_address_view>
+            <turpentine_cache_flag value="0"/>
+        </customer_address_view>
 
-    <customer_address_form>
-        <turpentine_cache_flag value="0"/>
-    </customer_address_form>
--->
+        <customer_address_form>
+            <turpentine_cache_flag value="0"/>
+        </customer_address_form>
+    -->
     <!-- End Customer Account -->
 
     <!-- Sales -->
-<!--
-    <sales_order_history>
-        <turpentine_cache_flag value="1"/>
-        <reference name="sales.order.history">
-            <action method="setEsiOptions">
-                <params>
-                    <access>private</access>
-                    <dummy_blocks>
-                        <root/>
-                    </dummy_blocks>
-                </params>
-            </action>
-        </reference>
-    </sales_order_history>
--->
+    <!--
+        <sales_order_history>
+            <turpentine_cache_flag value="1"/>
+            <reference name="sales.order.history">
+                <action method="setEsiOptions">
+                    <params>
+                        <access>private</access>
+                        <dummy_blocks>
+                            <root/>
+                        </dummy_blocks>
+                    </params>
+                </action>
+            </reference>
+        </sales_order_history>
+    -->
     <!-- End Sales -->
 </layout>
