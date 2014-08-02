@@ -176,15 +176,39 @@
 		<reference name="header">
 
 			<!-- Welcome message as block (added after Magento 1.7.0.2) -->
-			<block type="page/html_welcome" name="welcome" as="welcome"/>
+			<block type="page/html_welcome" name="welcome" as="welcome">
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
+            </block>
 		
 			<!-- Add mini cart to the header -->			
 			<block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/mini.phtml" before="-">
 				<action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
 				<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
 				<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>private</access>
+                        <scope>global</scope>
+                        <flush_events>
+                            <wishlist_item_save_after/>
+                            <wishlist_item_delete_after/>
+                            <sales_quote_save_after/>
+                        </flush_events>
+                    </params>
+                </action>
 				<block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions" translate="label" module="checkout">
 					<label>Shopping Cart Sidebar Extra Actions</label>
+                    <action method="setEsiOptions">
+                        <params>
+                            <access>public</access>
+                            <scope>global</scope>
+                        </params>
+                    </action>
 				</block>
 				<block type="cms/block" name="block_mini_cart_above_products">
 					<action method="setBlockId"><block_id>block_mini_cart_above_products</block_id></action>
@@ -192,27 +216,70 @@
 			</block>
 			
 			<!-- Add currency switcher to the header -->
-			<block type="directory/currency" name="currency" template="directory/currency.phtml"/>
+			<block type="directory/currency" name="currency" template="directory/currency.phtml">
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
+            </block>
 			
 			<!-- Custom top links - can override Magento's top links -->
 			<block type="cms/block" name="block_header_top_links">
 				<action method="setBlockId"><block_id>block_header_top_links</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_header_top_links2">
 				<action method="setBlockId"><block_id>block_header_top_links2</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			
 			<block type="cms/block" name="block_header_top_left">
 				<action method="setBlockId"><block_id>block_header_top_left</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_header_top_left2">
 				<action method="setBlockId"><block_id>block_header_top_left2</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_header_top_right">
 				<action method="setBlockId"><block_id>block_header_top_right</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_header_top_right2">
 				<action method="setBlockId"><block_id>block_header_top_right2</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			
 			<!-- Compare block -->
@@ -243,61 +310,169 @@
 			<!-- Custom footer links - override default Magento footer links (id: footer_links) -->
 			<block type="cms/block" name="block_footer_links">
 				<action method="setBlockId"><block_id>block_footer_links</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_links2">
 				<action method="setBlockId"><block_id>block_footer_links2</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 
 			<block type="cms/block" name="block_footer_primary_bottom_left">
 				<action method="setBlockId"><block_id>block_footer_primary_bottom_left</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_primary_bottom_right">
 				<action method="setBlockId"><block_id>block_footer_primary_bottom_right</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			
 			<block type="cms/block" name="block_footer_column1">
 				<action method="setBlockId"><block_id>block_footer_column1</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_column2">
 				<action method="setBlockId"><block_id>block_footer_column2</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_column3">
 				<action method="setBlockId"><block_id>block_footer_column3</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_column4">
 				<action method="setBlockId"><block_id>block_footer_column4</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_column5">
 				<action method="setBlockId"><block_id>block_footer_column5</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_column6">
 				<action method="setBlockId"><block_id>block_footer_column6</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 
 			<block type="cms/block" name="block_footer_row2_column1">
 				<action method="setBlockId"><block_id>block_footer_row2_column1</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_row2_column2">
 				<action method="setBlockId"><block_id>block_footer_row2_column2</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_row2_column3">
 				<action method="setBlockId"><block_id>block_footer_row2_column3</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_row2_column4">
 				<action method="setBlockId"><block_id>block_footer_row2_column4</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_row2_column5">
 				<action method="setBlockId"><block_id>block_footer_row2_column5</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_row2_column6">
 				<action method="setBlockId"><block_id>block_footer_row2_column6</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			
 			<block type="cms/block" name="block_footer_payment">
 				<action method="setBlockId"><block_id>block_footer_payment</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 			<block type="cms/block" name="block_footer_bottom">
 				<action method="setBlockId"><block_id>block_footer_bottom</block_id></action>
+                <action method="setEsiOptions">
+                    <params>
+                        <access>public</access>
+                        <scope>global</scope>
+                    </params>
+                </action>
 			</block>
 
 		</reference>
